@@ -1,0 +1,52 @@
+import { auth } from "@/lib/auth";
+import { connectDB } from "@/lib/db";
+import { Consultation } from "@/models/Consultation";
+
+export const POST = auth(async (req) => {
+  const session = req.auth;
+  if (!session?.user) {
+    return Response.json(
+      { success: false, message: "Unauthorized" },
+      { status: 401 }
+    );
+  }
+
+  const userId = (session.user as any).userId || (session.user as any).id;
+  const role = (session.user as any).role;
+
+  if (role !== "patient") {
+    return Response.json(
+      { success: false, message: "Only patients can create consultations" },
+      { status: 403 }
+    );
+  }
+
+  try {
+    const { condition, intakeForm, doctorId, type, amount } = await req.json();
+
+    await connectDB();
+
+    const consultation = await Consultation.create({
+      patientId: userId,
+      doctorId,
+      condition,
+      intakeForm,
+      type: type || "async",
+      amount: amount || 149,
+      paymentStatus: "paid",
+      status: "active",
+      responseDeadline: new Date(Date.now() + 15 * 60 * 1000),
+    });
+
+    return Response.json({
+      success: true,
+      consultationId: consultation._id.toString(),
+    });
+  } catch (error) {
+    console.error("Create consultation error:", error);
+    return Response.json(
+      { success: false, message: "Failed to create consultation" },
+      { status: 500 }
+    );
+  }
+}) as any;
