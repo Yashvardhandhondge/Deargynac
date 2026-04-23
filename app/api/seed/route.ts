@@ -2,10 +2,11 @@ import { connectDB } from "@/lib/db";
 import { User } from "@/models/User";
 import { Consultation } from "@/models/Consultation";
 
-export async function GET() {
-  if (process.env.NODE_ENV !== "development") {
+export async function GET(request: Request) {
+  const url = new URL(request.url);
+  if (url.searchParams.get("key") !== "deargynac_seed_2024") {
     return Response.json(
-      { success: false, message: "Seed endpoint is disabled in production" },
+      { success: false, message: "Unauthorized. Append ?key=deargynac_seed_2024" },
       { status: 403 }
     );
   }
