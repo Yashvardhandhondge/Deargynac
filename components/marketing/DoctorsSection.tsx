@@ -156,6 +156,7 @@ export default function DoctorsSection() {
                   padding: "1.5rem",
                   boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
                   position: "relative",
+                  minWidth: 0,
                   border: doc.featured
                     ? "2px solid #C2185B"
                     : "1px solid #f3f4f6",
@@ -197,7 +198,7 @@ export default function DoctorsSection() {
                 <p style={{ fontSize: "0.875rem", color: "#9CA3AF" }}>{doc.specialty}</p>
 
                 {/* Bio */}
-                <p style={{ fontSize: "0.875rem", color: "#4B5563", lineHeight: 1.6, marginTop: "0.75rem" }}>
+                <p style={{ fontSize: "0.875rem", color: "#4B5563", lineHeight: 1.6, marginTop: "0.75rem", overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical" as any }}>
                   {doc.bio}
                 </p>
 
@@ -221,7 +222,7 @@ export default function DoctorsSection() {
                     ))}
                   </div>
                 ) : (
-                  <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginTop: "1rem" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginTop: "1rem", flexWrap: "wrap" }}>
                     {doc.stats.map((s, i) => (
                       <div key={i} style={{ textAlign: "center" }}>
                         <div style={{ fontSize: "1.125rem", fontWeight: 700, color: "#1A0A12" }}>

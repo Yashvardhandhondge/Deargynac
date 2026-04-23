@@ -47,11 +47,11 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#1A0A12] text-white py-16 px-4">
+    <footer className="bg-[#1A0A12] text-white py-16 px-4 overflow-hidden w-full">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
           {/* Col 1 — Brand */}
-          <div className="sm:col-span-2 lg:col-span-1">
+          <div className="sm:col-span-2 lg:col-span-1 min-w-0">
             <Link href="/" className="flex items-baseline">
               <span className="font-serif font-bold text-xl text-white">
                 Dear
@@ -146,7 +146,7 @@ export default function Footer() {
             <div className="space-y-4">
               <div className="flex gap-3 text-gray-400 text-sm items-start">
                 <Mail className="w-4 h-4 mt-0.5 shrink-0" />
-                <span>hello@deargynac.com</span>
+                <span className="break-all">hello@deargynac.com</span>
               </div>
               <div className="flex gap-3 text-gray-400 text-sm items-start">
                 <Phone className="w-4 h-4 mt-0.5 shrink-0" />

@@ -97,7 +97,7 @@ export default function JourneySection() {
         </div>
 
         {/* Steps */}
-        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'flex-start' : 'flex-start', justifyContent: 'center', gap: isMobile ? '2rem' : '0', marginTop: '4rem' }}>
+        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'flex-start' : 'flex-start', justifyContent: 'center', gap: isMobile ? '2rem' : '0', marginTop: '4rem', overflowX: 'hidden', width: '100%' }}>
           {steps.map((step, i) => {
             const Icon = step.icon;
             return (

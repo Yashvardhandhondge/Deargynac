@@ -127,7 +127,7 @@ export default function PricingSection() {
         </div>
 
         {/* Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '2rem', marginTop: '4rem', maxWidth: '64rem', marginLeft: 'auto', marginRight: 'auto' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '2rem', marginTop: '4rem', maxWidth: '64rem', marginLeft: 'auto', marginRight: 'auto', width: '100%', overflowX: 'hidden' }}>
           {plans.map((plan) => {
             const Icon = plan.icon;
             return (
@@ -138,6 +138,8 @@ export default function PricingSection() {
                   padding: "2rem",
                   position: "relative",
                   backgroundColor: "white",
+                  minWidth: 0,
+                  width: "100%",
                   border: plan.popular
                     ? "2px solid #C2185B"
                     : "1px solid #e5e7eb",
@@ -193,6 +195,7 @@ export default function PricingSection() {
                         display: "flex",
                         alignItems: "flex-start",
                         gap: "0.5rem",
+                        flexWrap: "wrap",
                         fontSize: "0.875rem",
                         marginBottom: "0.75rem",
                       }}

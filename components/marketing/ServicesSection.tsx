@@ -155,6 +155,7 @@ function Card({ card }: { card: ServiceCard }) {
         flexDirection: "column",
         position: "relative",
         overflow: "hidden",
+        minWidth: 0,
       }}
     >
       {/* Icon */}
@@ -186,7 +187,7 @@ function Card({ card }: { card: ServiceCard }) {
       </h3>
 
       {/* Description */}
-      <p style={{ fontSize: "0.875rem", color: "#4B5563", lineHeight: 1.6, marginTop: "0.5rem" }}>
+      <p style={{ fontSize: "0.875rem", color: "#4B5563", lineHeight: 1.6, marginTop: "0.5rem", overflow: "hidden", textOverflow: "ellipsis" }}>
         {card.description}
       </p>
 
@@ -274,14 +275,14 @@ export default function ServicesSection() {
         </div>
 
         {/* Row 1 */}
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr 1fr' : 'repeat(4, 1fr)', gap: '1.5rem', marginTop: '4rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr 1fr' : 'repeat(4, 1fr)', gap: '1.5rem', marginTop: '4rem', width: '100%' }}>
           {row1.map((card) => (
             <Card key={card.title} card={card} />
           ))}
         </div>
 
         {/* Row 2 */}
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr 1fr' : 'repeat(4, 1fr)', gap: '1.5rem', marginTop: '1.5rem' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : isTablet ? '1fr 1fr' : 'repeat(4, 1fr)', gap: '1.5rem', marginTop: '1.5rem', width: '100%' }}>
           {row2.map((card) => (
             <Card key={card.title} card={card} />
           ))}

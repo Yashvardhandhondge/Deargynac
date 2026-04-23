@@ -70,11 +70,19 @@ function getPageTitle(pathname: string) {
 
 export default function AdminDashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [mobileOpen, setMobileOpen] = useState(false);
   const router = useRouter();
   const userName = (session?.user as any)?.name || "Admin";
   const initial = userName.charAt(0).toUpperCase();
+
+  if (status === 'loading') {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', backgroundColor: '#FDF8F5' }}>
+        <div style={{ width: '3rem', height: '3rem', border: '4px solid #FDE8F0', borderTop: '4px solid #C2185B', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#FDF8F5]">

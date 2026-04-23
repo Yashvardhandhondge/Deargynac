@@ -20,7 +20,9 @@ export const GET = auth(async (req) => {
       .sort({ responseDeadline: 1 })
       .lean();
 
-    return Response.json({ success: true, breaches });
+    return Response.json({ success: true, breaches }, {
+      headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate', 'Pragma': 'no-cache' },
+    });
   } catch (error) {
     console.error("SLA breaches error:", error);
     return Response.json({ success: false, message: "Failed" }, { status: 500 });

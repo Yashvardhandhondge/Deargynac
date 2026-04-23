@@ -116,6 +116,8 @@ export default function ProblemSection() {
                     display: "flex",
                     flexDirection: "column",
                     gap: "0.25rem",
+                    minWidth: 0,
+                    overflow: "hidden",
                     backgroundColor: stat.bg,
                     border: `1px solid ${stat.border}`,
                   }}
@@ -151,6 +153,8 @@ export default function ProblemSection() {
                   boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
                   border: "1px solid #f3f4f6",
                   position: "relative",
+                  minWidth: 0,
+                  wordBreak: "break-word" as any,
                 }}
               >
                 {/* Decorative quote mark */}

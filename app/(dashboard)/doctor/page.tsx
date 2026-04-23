@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import {
   ClipboardList,
@@ -60,11 +61,13 @@ function timeAgo(date: string) {
 
 export default function DoctorDashboard() {
   const router = useRouter();
+  const { status } = useSession();
   const [stats, setStats] = useState<Stats | null>(null);
   const [cases, setCases] = useState<CaseItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (status !== 'authenticated') return;
     Promise.all([
       fetch("/api/doctor/stats").then((r) => r.json()),
       fetch("/api/doctor/consultations?status=active,pending").then((r) => r.json()),
@@ -75,7 +78,7 @@ export default function DoctorDashboard() {
       })
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, []);
+  }, [status]);
 
   const statCards = stats
     ? [

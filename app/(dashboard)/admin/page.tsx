@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Users, ClipboardList, Activity, AlertTriangle, RefreshCw } from "lucide-react";
 
@@ -17,6 +18,7 @@ const conditionLabels: Record<string, string> = { pcos: "PCOS", periods: "Period
 
 export default function AdminDashboard() {
   const router = useRouter();
+  const { status: sessionStatus } = useSession();
   const [stats, setStats] = useState<Stats | null>(null);
   const [consultations, setConsultations] = useState<ConsultationRow[]>([]);
   const [loading, setLoading] = useState(true);
@@ -37,7 +39,7 @@ export default function AdminDashboard() {
     }).catch(() => setHealthStatus("Error")).finally(() => setLoading(false));
   };
 
-  useEffect(() => { fetchData(); }, []);
+  useEffect(() => { if (sessionStatus === 'authenticated') fetchData(); }, [sessionStatus]);
 
   const statCards = stats ? [
     { label: "Total Users", value: stats.totalUsers, icon: Users, color: "text-[#C2185B]", bg: "bg-rose-50" },

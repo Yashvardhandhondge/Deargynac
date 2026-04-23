@@ -44,7 +44,7 @@ function timeAgo(date: string) {
 }
 
 export default function PatientDashboard() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const [consultations, setConsultations] = useState<ConsultationItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -55,6 +55,7 @@ export default function PatientDashboard() {
     "Patient";
 
   useEffect(() => {
+    if (status !== 'authenticated') return;
     async function fetchConsultations() {
       try {
         const res = await fetch("/api/consultation/my");
@@ -69,7 +70,7 @@ export default function PatientDashboard() {
       }
     }
     fetchConsultations();
-  }, []);
+  }, [status]);
 
   const activeConsultations = consultations.filter(
     (c) => c.status === "active" || c.status === "pending"

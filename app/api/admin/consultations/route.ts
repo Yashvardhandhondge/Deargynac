@@ -50,6 +50,8 @@ export const GET = auth(async (req) => {
       total,
       page,
       totalPages: Math.ceil(total / limit),
+    }, {
+      headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate', 'Pragma': 'no-cache' },
     });
   } catch (error) {
     console.error("Admin consultations error:", error);

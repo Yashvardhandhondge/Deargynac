@@ -10,6 +10,7 @@ export default function CTASection() {
       style={{
         padding: isMobile ? "3rem 1.5rem" : "5rem 1rem",
         background: "linear-gradient(to right, #880E4F, #C2185B, #9C27B0)",
+        overflow: "hidden",
       }}
     >
       <div style={{ maxWidth: "56rem", marginLeft: "auto", marginRight: "auto", textAlign: "center" }}>
@@ -43,7 +44,7 @@ export default function CTASection() {
           health — privately, confidently, and on their own terms.
         </p>
 
-        <div style={{ marginTop: "2.5rem", display: "flex", flexDirection: isMobile ? "column" : "row", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+        <div style={{ marginTop: "2.5rem", display: "flex", flexDirection: isMobile ? "column" : "row", gap: "1rem", justifyContent: "center", flexWrap: "wrap", alignItems: "center" }}>
           <Link
             href="/patient/book"
             style={{

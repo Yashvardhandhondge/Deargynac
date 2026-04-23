@@ -11,7 +11,7 @@ const items = [
 
 export default function TickerBar() {
   return (
-    <div className="relative w-full bg-[#880E4F] overflow-hidden py-2">
+    <div className="relative w-full bg-[#880E4F] overflow-hidden py-2" style={{ width: '100%', maxWidth: '100vw' }}>
       <div className="ticker-animate flex whitespace-nowrap">
         {[...items, ...items].map((item, i) => (
           <span key={i} className="text-white text-xs sm:text-sm font-medium mx-1">

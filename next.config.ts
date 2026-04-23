@@ -16,6 +16,8 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "**.cloudflare.com" },
     ],
   },
+  poweredByHeader: false,
+  compress: true,
 };
 
 export default nextConfig;

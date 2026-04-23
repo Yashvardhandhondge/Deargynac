@@ -78,6 +78,8 @@ export default function TestimonialsSection() {
                 padding: "2rem",
                 boxShadow: "0 1px 3px rgba(0,0,0,0.05)",
                 border: "1px solid #f3f4f6",
+                overflow: "hidden",
+                minWidth: 0,
               }}
             >
               {/* Stars */}
@@ -86,7 +88,7 @@ export default function TestimonialsSection() {
               </div>
 
               {/* Quote */}
-              <p style={{ fontStyle: "italic", color: "#374151", lineHeight: 1.6, fontSize: "1rem", marginTop: "1rem" }}>
+              <p style={{ fontStyle: "italic", color: "#374151", lineHeight: 1.6, fontSize: "1rem", marginTop: "1rem", wordBreak: "break-word" }}>
                 &ldquo;{t.quote}&rdquo;
               </p>
 

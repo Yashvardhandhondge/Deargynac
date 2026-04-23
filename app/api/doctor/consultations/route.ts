@@ -26,7 +26,9 @@ export const GET = auth(async (req) => {
       .sort({ createdAt: -1 })
       .lean();
 
-    return Response.json({ success: true, consultations });
+    return Response.json({ success: true, consultations }, {
+      headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate', 'Pragma': 'no-cache' },
+    });
   } catch (error) {
     console.error("Doctor consultations error:", error);
     return Response.json({ success: false, message: "Failed to fetch" }, { status: 500 });

@@ -145,7 +145,7 @@ export default function PrivacySection() {
 
           {/* Right — shield visual */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <div style={{ position: "relative", width: isMobile ? "12rem" : "18rem", height: isMobile ? "12rem" : "18rem" }}>
+            <div style={{ position: "relative", width: isMobile ? "12rem" : "18rem", height: isMobile ? "12rem" : "18rem", overflow: "hidden" }}>
               {/* Outer circle */}
               <div style={{ position: "absolute", inset: 0, backgroundColor: "#FDE8F0", borderRadius: "9999px" }} />
 

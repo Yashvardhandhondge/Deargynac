@@ -22,7 +22,9 @@ export const GET = auth(async (req) => {
       .limit(10)
       .lean();
 
-    return Response.json({ success: true, consultations });
+    return Response.json({ success: true, consultations }, {
+      headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate', 'Pragma': 'no-cache' },
+    });
   } catch (error) {
     console.error("Fetch consultations error:", error);
     return Response.json(

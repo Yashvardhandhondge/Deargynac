@@ -230,6 +230,7 @@ export default function HeroSection() {
               alignItems: 'center',
               justifyContent: 'center',
               minHeight: '500px',
+              overflow: 'hidden',
             }}
           >
             {/* Decorative circles */}
@@ -257,7 +258,7 @@ export default function HeroSection() {
               style={{
                 position: 'absolute',
                 top: '2rem',
-                right: '1rem',
+                right: '0',
                 backgroundColor: 'white',
                 borderRadius: '1rem',
                 boxShadow: '0 10px 40px rgba(0,0,0,0.12)',
@@ -322,7 +323,7 @@ export default function HeroSection() {
               style={{
                 position: 'absolute',
                 top: '45%',
-                left: '-1rem',
+                left: '0.5rem',
                 transform: 'translateY(-50%)',
                 backgroundColor: 'white',
                 borderRadius: '1rem',
@@ -385,7 +386,7 @@ export default function HeroSection() {
               style={{
                 position: 'absolute',
                 bottom: '3rem',
-                right: '2rem',
+                right: '0.5rem',
                 backgroundColor: 'white',
                 borderRadius: '1rem',
                 boxShadow: '0 10px 40px rgba(0,0,0,0.12)',

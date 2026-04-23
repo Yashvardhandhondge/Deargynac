@@ -32,6 +32,8 @@ export const GET = auth(async (req) => {
       totalConsultations,
       activeNow,
       slaBreachesToday,
+    }, {
+      headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate', 'Pragma': 'no-cache' },
     });
   } catch (error) {
     console.error("Admin stats error:", error);
