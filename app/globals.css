@@ -182,6 +182,17 @@ h1, h2, h3, h4, h5, h6 {
   color: #1A0A12;
 }
 
+/* Login brand panel: unlayered heading/body colors must not override layered utilities */
+.login-brand-panel,
+.login-brand-panel h1,
+.login-brand-panel h2,
+.login-brand-panel h3,
+.login-brand-panel h4,
+.login-brand-panel h5,
+.login-brand-panel h6 {
+  color: #ffffff;
+}
+
 p, span, li, a, label, input, button, textarea, select {
   color: inherit;
 }
@@ -194,10 +205,24 @@ p, span, li, a, label, input, button, textarea, select {
   100% { transform: translateX(-50%); }
 }
 
+/* Row must size to duplicated content so translateX(-50%) == one full cycle (not 50% of viewport). */
+/* Explicit color: unlayered `span { color: inherit }` overrides layered Tailwind utilities. */
 .ticker-animate {
   animation: ticker 30s linear infinite;
-  display: flex;
+  color: #ffffff;
+  display: inline-flex;
+  flex-wrap: nowrap;
   white-space: nowrap;
+  width: max-content;
+  min-width: max-content;
+}
+
+.ticker-animate span.ticker-sep {
+  color: #d4a017;
+}
+
+.ticker-animate > * {
+  flex-shrink: 0;
 }
 
 .ticker-animate:hover {

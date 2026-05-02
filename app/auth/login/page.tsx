@@ -224,60 +224,60 @@ export default function LoginPage() {
           display: isMobile ? "none" : "flex",
         }}
       >
-        <div className="max-w-md text-center">
+        <div className="login-brand-panel max-w-md text-center text-white">
           {/* Logo */}
           <div className="flex items-baseline justify-center mb-8">
-            <span className="font-serif font-bold text-3xl text-white">
+            <span className="font-serif font-bold text-3xl !text-white">
               Dear
             </span>
-            <span className="font-serif italic text-3xl text-rose-200">
+            <span className="font-serif italic text-3xl !text-rose-100">
               Gynac
             </span>
-            <span className="text-[#D4A017] font-bold text-4xl leading-none">
+            <span className="!text-[#F5E4A8] font-bold text-4xl leading-none">
               .
             </span>
           </div>
 
-          <p className="text-rose-100 text-lg mb-12">
+          <p className="!text-white/90 text-lg mb-12">
             India&apos;s most trusted women&apos;s health platform
           </p>
 
           {/* Trust points */}
           <div className="space-y-6 text-left">
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
-                <Shield className="w-5 h-5 text-white" />
+              <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
+                <Shield className="w-5 h-5 text-black" strokeWidth={2} />
               </div>
               <div>
-                <h3 className="text-white font-semibold">100% Anonymous</h3>
-                <p className="text-rose-200 text-sm mt-1">
+                <h3 className="font-semibold !text-white">100% Anonymous</h3>
+                <p className="!text-white/85 text-sm mt-1">
                   No real name required. Your identity stays completely private.
                 </p>
               </div>
             </div>
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
-                <ShieldCheck className="w-5 h-5 text-white" />
+              <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-5 h-5 text-black" strokeWidth={2} />
               </div>
               <div>
-                <h3 className="text-white font-semibold">
+                <h3 className="font-semibold !text-white">
                   NMC-Verified Doctors
                 </h3>
-                <p className="text-rose-200 text-sm mt-1">
+                <p className="!text-white/85 text-sm mt-1">
                   Every doctor is verified against the National Medical
                   Commission registry.
                 </p>
               </div>
             </div>
             <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
-                <Heart className="w-5 h-5 text-white" />
+              <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
+                <Heart className="w-5 h-5 text-black" strokeWidth={2} />
               </div>
               <div>
-                <h3 className="text-white font-semibold">
+                <h3 className="font-semibold !text-white">
                   Compassionate Care
                 </h3>
-                <p className="text-rose-200 text-sm mt-1">
+                <p className="!text-white/85 text-sm mt-1">
                   Stigma-free, judgement-free support for every health concern.
                 </p>
               </div>
@@ -285,7 +285,7 @@ export default function LoginPage() {
           </div>
 
           {/* Quote */}
-          <p className="italic text-white/80 text-base mt-16">
+          <p className="italic !text-white/75 text-base mt-16">
             &ldquo;Your health story belongs to you.&rdquo;
           </p>
         </div>
