@@ -56,11 +56,10 @@ export default function LoginPage() {
     return () => clearTimeout(timer);
   }, [countdown]);
 
-  // Already signed in (e.g. opened /auth/login with a valid session) — leave login page
+  // Already signed in — redirect off login (never block the page UI on this; role fallback avoids infinite spinner)
   useEffect(() => {
     if (status !== "authenticated" || !session?.user) return;
-    const role = (session.user as { role?: string }).role;
-    if (!role) return;
+    const role = (session.user as { role?: string }).role ?? "patient";
     router.replace(dashboardForRole(role));
   }, [status, session, router]);
 
@@ -224,29 +223,6 @@ export default function LoginPage() {
     }
   };
 
-  const sessionPending =
-    status === "loading" || status === "authenticated";
-
-  if (sessionPending) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          minHeight: "100vh",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundColor: "#FDF8F5",
-        }}
-      >
-        <Loader2
-          className="animate-spin text-[#C2185B]"
-          style={{ width: "2rem", height: "2rem" }}
-          aria-label="Loading"
-        />
-      </div>
-    );
-  }
-
   return (
     <div style={{ display: "flex", minHeight: "100vh" }}>
       {/* Left decorative panel */}
@@ -307,7 +283,6 @@ export default function LoginPage() {
                 </p>
               </div>
             </div>
-            //
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
                 <Heart className="w-5 h-5 text-black" strokeWidth={2} />
