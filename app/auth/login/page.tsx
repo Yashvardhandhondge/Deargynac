@@ -41,6 +41,7 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [countdown, setCountdown] = useState(0);
   const otpRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const otpVerifyInFlight = useRef(false);
 
   const {
     register,
@@ -161,6 +162,8 @@ export default function LoginPage() {
       setError("Please enter the full 6-digit OTP");
       return;
     }
+    if (otpVerifyInFlight.current) return;
+    otpVerifyInFlight.current = true;
     setLoading(true);
     setError("");
     try {
@@ -192,6 +195,7 @@ export default function LoginPage() {
       setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
+      otpVerifyInFlight.current = false;
     }
   }, [otp, phone, router]);
 

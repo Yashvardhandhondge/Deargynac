@@ -3,11 +3,18 @@ import { OTP } from "@/models/OTP";
 import { User } from "@/models/User";
 import bcrypt from "bcryptjs";
 
+function normalizePhone(raw: unknown): string {
+  const s = raw == null ? "" : String(raw);
+  return s.replace(/^\+91/, "").replace(/\s/g, "");
+}
+
 export async function POST(req: Request) {
   try {
-    const { phone, otp } = await req.json();
+    const body = await req.json();
+    const phone = normalizePhone(body.phone);
+    const otp = body.otp != null ? String(body.otp).trim() : "";
 
-    if (!phone || !otp) {
+    if (!phone || !/^\d{10}$/.test(phone) || !otp) {
       return Response.json(
         { success: false, message: "Phone and OTP are required" },
         { status: 400 }
@@ -16,7 +23,9 @@ export async function POST(req: Request) {
 
     await connectDB();
 
-    const otpDoc = await OTP.findOne({ phone, verified: false });
+    const otpDoc = await OTP.findOne({ phone, verified: false }).sort({
+      createdAt: -1,
+    });
 
     if (!otpDoc) {
       return Response.json(
