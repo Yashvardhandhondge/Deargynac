@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
@@ -23,8 +23,15 @@ interface PhoneForm {
   phone: string;
 }
 
+function dashboardForRole(role: string) {
+  if (role === "doctor") return "/doctor";
+  if (role === "admin") return "/admin";
+  return "/patient";
+}
+
 export default function LoginPage() {
   const router = useRouter();
+  const { data: session, status } = useSession();
   const isMobile = useIsMobile();
   const [step, setStep] = useState<AuthStep>("PHONE_INPUT");
   const [phone, setPhone] = useState("");
@@ -48,6 +55,14 @@ export default function LoginPage() {
     const timer = setTimeout(() => setCountdown((c) => c - 1), 1000);
     return () => clearTimeout(timer);
   }, [countdown]);
+
+  // Already signed in (e.g. opened /auth/login with a valid session) — leave login page
+  useEffect(() => {
+    if (status !== "authenticated" || !session?.user) return;
+    const role = (session.user as { role?: string }).role;
+    if (!role) return;
+    router.replace(dashboardForRole(role));
+  }, [status, session, router]);
 
   // Send OTP
   const handleSendOTP = async (data: PhoneForm) => {
@@ -98,7 +113,8 @@ export default function LoginPage() {
         setError("Login failed. Please try again.");
         return;
       }
-      router.push("/patient");
+      router.refresh();
+      router.replace("/patient");
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {
@@ -171,9 +187,8 @@ export default function LoginPage() {
         setError("Login failed. Please try again.");
         return;
       }
-      if (json.role === "doctor") router.push("/doctor");
-      else if (json.role === "admin") router.push("/admin");
-      else router.push("/patient");
+      router.refresh();
+      router.replace(dashboardForRole(json.role));
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {
@@ -208,6 +223,29 @@ export default function LoginPage() {
       setError("Failed to resend OTP");
     }
   };
+
+  const sessionPending =
+    status === "loading" || status === "authenticated";
+
+  if (sessionPending) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          minHeight: "100vh",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#FDF8F5",
+        }}
+      >
+        <Loader2
+          className="animate-spin text-[#C2185B]"
+          style={{ width: "2rem", height: "2rem" }}
+          aria-label="Loading"
+        />
+      </div>
+    );
+  }
 
   return (
     <div style={{ display: "flex", minHeight: "100vh" }}>
