@@ -307,6 +307,7 @@ export default function LoginPage() {
                 </p>
               </div>
             </div>
+            //
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center shrink-0">
                 <Heart className="w-5 h-5 text-black" strokeWidth={2} />
