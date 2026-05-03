@@ -42,6 +42,8 @@ export default function LoginPage() {
   const [countdown, setCountdown] = useState(0);
   const otpRefs = useRef<(HTMLInputElement | null)[]>([]);
   const otpVerifyInFlight = useRef(false);
+  /** Prevents auto-submit effect from firing twice for the same phone+OTP (e.g. Strict Mode / effect re-runs). */
+  const otpAutoSubmitKeyRef = useRef<string | null>(null);
 
   const {
     register,
@@ -109,12 +111,12 @@ export default function LoginPage() {
         isAnonymous: "true",
         redirect: false,
       });
-      if (result?.error) {
+      if (result?.error || result?.ok === false) {
         setError("Login failed. Please try again.");
         return;
       }
-      router.refresh();
-      router.replace("/patient");
+      window.location.assign("/patient");
+      return;
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {
@@ -174,6 +176,7 @@ export default function LoginPage() {
       });
       const json = await res.json();
       if (!res.ok || !json.success) {
+        otpAutoSubmitKeyRef.current = null;
         setError(json.message || "Invalid OTP");
         setOtp(["", "", "", "", "", ""]);
         otpRefs.current[0]?.focus();
@@ -185,13 +188,16 @@ export default function LoginPage() {
         isAnonymous: "false",
         redirect: false,
       });
-      if (result?.error) {
+      if (result?.error || result?.ok === false) {
+        otpAutoSubmitKeyRef.current = null;
         setError("Login failed. Please try again.");
         return;
       }
-      router.refresh();
-      router.replace(dashboardForRole(json.role));
+      // Full navigation so the auth cookie is applied (router.replace alone often stalls on Vercel/App Router).
+      window.location.assign(dashboardForRole(json.role));
+      return;
     } catch {
+      otpAutoSubmitKeyRef.current = null;
       setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
@@ -199,16 +205,19 @@ export default function LoginPage() {
     }
   }, [otp, phone, router]);
 
-  // Auto-submit when all 6 digits entered
+  // Auto-submit when all 6 digits entered (once per distinct phone+OTP)
   useEffect(() => {
-    if (otp.every((d) => d !== "") && step === "OTP_INPUT") {
-      handleVerifyOTP();
-    }
-  }, [otp, step, handleVerifyOTP]);
+    if (!otp.every((d) => d !== "") || step !== "OTP_INPUT") return;
+    const key = `${phone}:${otp.join("")}`;
+    if (otpAutoSubmitKeyRef.current === key) return;
+    otpAutoSubmitKeyRef.current = key;
+    void handleVerifyOTP();
+  }, [otp, step, phone, handleVerifyOTP]);
 
   // Resend OTP
   const handleResend = async () => {
     setError("");
+    otpAutoSubmitKeyRef.current = null;
     setOtp(["", "", "", "", "", ""]);
     try {
       const res = await fetch("/api/auth/otp/send", {
@@ -551,6 +560,7 @@ export default function LoginPage() {
 
               <button
                 onClick={() => {
+                  otpAutoSubmitKeyRef.current = null;
                   setStep("PHONE_INPUT");
                   setOtp(["", "", "", "", "", ""]);
                   setError("");
