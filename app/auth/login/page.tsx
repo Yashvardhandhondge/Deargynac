@@ -305,28 +305,30 @@ export default function LoginPage() {
           padding: "1.5rem",
         }}
       >
-        {/* Dev mode test credentials banner */}
-        {process.env.NODE_ENV === "development" && step === "PHONE_INPUT" && (
+        {/* Test accounts: shown on phone step in all environments (incl. Vercel) for now; remove or gate behind env when going public. */}
+        {step === "PHONE_INPUT" && (
           <div
             style={{
               width: "100%",
               maxWidth: "28rem",
+              boxSizing: "border-box",
               backgroundColor: "#FFF9E6",
               border: "1px solid #F59E0B",
               borderRadius: "0.75rem",
-              padding: "1rem",
+              padding: isMobile ? "0.75rem" : "1rem",
               marginBottom: "1rem",
             }}
           >
             <div
               style={{
-                fontSize: "0.75rem",
+                fontSize: isMobile ? "0.7rem" : "0.75rem",
                 fontWeight: 700,
                 color: "#92400E",
                 marginBottom: "0.5rem",
                 display: "flex",
                 alignItems: "center",
                 gap: "0.5rem",
+                flexWrap: "wrap",
               }}
             >
               🧪 Dev Mode — Test Accounts (OTP: 123456)
@@ -341,19 +343,31 @@ export default function LoginPage() {
                 <button
                   key={account.phone}
                   type="button"
-                  onClick={() => setValue("phone", account.phone)}
+                  onClick={() =>
+                    setValue("phone", account.phone, {
+                      shouldValidate: true,
+                      shouldDirty: true,
+                      shouldTouch: true,
+                    })
+                  }
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    padding: "0.375rem 0.5rem",
+                    flexWrap: "wrap",
+                    gap: "0.25rem",
+                    rowGap: "0.25rem",
+                    padding: "0.5rem 0.5rem",
                     borderRadius: "0.375rem",
                     border: "1px solid #FCD34D",
                     backgroundColor: "white",
                     cursor: "pointer",
-                    fontSize: "0.75rem",
+                    fontSize: isMobile ? "0.7rem" : "0.75rem",
                     color: "#1A0A12",
                     textAlign: "left",
+                    width: "100%",
+                    minHeight: "44px",
+                    WebkitTapHighlightColor: "transparent",
                   }}
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.backgroundColor = "#FFFBEB")
@@ -362,8 +376,16 @@ export default function LoginPage() {
                     (e.currentTarget.style.backgroundColor = "white")
                   }
                 >
-                  <span style={{ fontWeight: 600 }}>{account.label}</span>
-                  <span style={{ color: "#6B7280", fontFamily: "monospace" }}>
+                  <span style={{ fontWeight: 600, flex: "1 1 auto", minWidth: 0 }}>
+                    {account.label}
+                  </span>
+                  <span
+                    style={{
+                      color: "#6B7280",
+                      fontFamily: "monospace",
+                      flexShrink: 0,
+                    }}
+                  >
                     {account.phone}
                   </span>
                 </button>
@@ -371,13 +393,13 @@ export default function LoginPage() {
             </div>
             <div
               style={{
-                fontSize: "0.7rem",
+                fontSize: isMobile ? "0.65rem" : "0.7rem",
                 color: "#92400E",
                 marginTop: "0.5rem",
                 fontStyle: "italic",
               }}
             >
-              Click any account to auto-fill phone. OTP is always 123456.
+              Tap or click any account to auto-fill phone. OTP is always 123456.
             </div>
           </div>
         )}
