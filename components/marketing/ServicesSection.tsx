@@ -72,7 +72,7 @@ const row1: ServiceCard[] = [
     iconColor: "#D97706",
     title: "Diagnostics Integration",
     description:
-      "Radiology, pathology, and ultrasound reports reviewed by in-house specialists with Dr. Kshitija Borkar\u2019s radiology expertise.",
+      "Radiology, pathology, and ultrasound reports reviewed by in-house specialists with Dr. Kshitija Kadam\u2019s radiology expertise.",
     bullets: [
       "Home sample collection",
       "Digital report review",

@@ -123,7 +123,7 @@
   --popover: #2D0A1E;
   --popover-foreground: #FDF8F5;
   --primary: #E05490;
-  --primary-foreground: #1A0A12;
+  --primary-foreground: #FFFFFF;
   --secondary: #3D1028;
   --secondary-foreground: #FDF8F5;
   --muted: #3D1028;
@@ -191,10 +191,6 @@ h1, h2, h3, h4, h5, h6 {
 .login-brand-panel h5,
 .login-brand-panel h6 {
   color: #ffffff;
-}
-
-p, span, li, a, label, input, button, textarea, select {
-  color: inherit;
 }
 
 /* =====================
@@ -289,5 +285,9 @@ p, span, li, a, label, input, button, textarea, select {
   }
   body {
     @apply bg-background text-foreground;
+  }
+  /* In @layer base so utility classes (e.g. text-white) can override */
+  p, span, li, a, label, input, button, textarea, select {
+    color: inherit;
   }
 }

@@ -37,14 +37,14 @@ const doctors: DoctorCard[] = [
     specialty: "Obstetrics & Gynecology",
     bio: "Specialist in reproductive health, prenatal care, PCOS, and minimally invasive gynecological procedures with over 12 years of clinical experience.",
     stats: [
-      { value: "12+", label: "Years Exp" },
+      { value: "9+", label: "Years Exp" },
       { value: "5000+", label: "Patients" },
       { value: "4.9\u2605", label: "Rating" },
     ],
     tags: ["PCOS", "Pregnancy", "Fertility"],
   },
   {
-    name: "Dr. Kshitija Borkar",
+    name: "Dr. Kshitija Kadam",
     roleBadge: "Radiologist",
     roleBg: "bg-purple-100",
     roleColor: "text-purple-700",
@@ -54,7 +54,7 @@ const doctors: DoctorCard[] = [
     specialty: "Diagnostic Radiology & Imaging",
     bio: "Expert in gynecological ultrasound, diagnostic imaging, and radiology interpretation \u2014 bridging the gap between diagnostics and clinical care.",
     stats: [
-      { value: "10+", label: "Years Exp" },
+      { value: "15+", label: "Years Exp" },
       { value: "8000+", label: "Reports" },
       { value: "4.8\u2605", label: "Rating" },
     ],
@@ -72,7 +72,7 @@ const doctors: DoctorCard[] = [
     specialty: "General & Laparoscopic Surgery",
     bio: "Experienced in complex surgical interventions, laparoscopic procedures, and providing expert second opinions for surgical decisions in women\u2019s health.",
     stats: [
-      { value: "15+", label: "Years Exp" },
+      { value: "20+", label: "Years Exp" },
       { value: "3000+", label: "Surgeries" },
       { value: "4.9\u2605", label: "Rating" },
     ],
