@@ -113,6 +113,7 @@ export default function BookConsultation() {
       const json = await res.json();
       if (json.success) {
         setFormData((p) => ({ ...p, consultationId: json.consultationId }));
+        router.refresh();
         setCurrentStep(6);
       }
     } catch {

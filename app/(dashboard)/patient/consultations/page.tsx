@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Loader2, MessageCircle } from 'lucide-react';
 
 interface ConsultationItem {
@@ -40,6 +40,7 @@ const filters = ['All', 'Active', 'Pending', 'Completed'];
 
 export default function MyConsultations() {
   const router = useRouter();
+  const pathname = usePathname();
   const [consultations, setConsultations] = useState<ConsultationItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('All');
@@ -50,7 +51,7 @@ export default function MyConsultations() {
       .then(d => { if (d.success) setConsultations(d.consultations || []); })
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, []);
+  }, [pathname]);
 
   const filtered = filter === 'All'
     ? consultations

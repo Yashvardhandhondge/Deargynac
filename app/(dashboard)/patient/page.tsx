@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FileText, Clock, CalendarDays, Loader2 } from "lucide-react";
 
 interface ConsultationItem {
@@ -46,6 +46,7 @@ function timeAgo(date: string) {
 export default function PatientDashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const pathname = usePathname();
   const [consultations, setConsultations] = useState<ConsultationItem[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -70,7 +71,7 @@ export default function PatientDashboard() {
       }
     }
     fetchConsultations();
-  }, [status]);
+  }, [status, pathname]);
 
   const activeConsultations = consultations.filter(
     (c) => c.status === "active" || c.status === "pending"

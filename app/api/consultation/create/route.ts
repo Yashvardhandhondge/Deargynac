@@ -42,8 +42,15 @@ export const POST = auth(async (req) => {
       success: true,
       consultationId: consultation._id.toString(),
     });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Create consultation error:", error);
+    const name = error && typeof error === "object" && "name" in error ? (error as { name: string }).name : "";
+    if (name === "ValidationError" && error && typeof error === "object" && "message" in error) {
+      return Response.json(
+        { success: false, message: String((error as { message: string }).message) },
+        { status: 400 }
+      );
+    }
     return Response.json(
       { success: false, message: "Failed to create consultation" },
       { status: 500 }

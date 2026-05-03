@@ -21,6 +21,7 @@ export interface IConsultation extends Document {
     | "discharge"
     | "pain"
     | "pregnancy"
+    | "diagnostics"
     | "other";
   intakeForm?: Record<string, unknown>;
   messages: IMessage[];
@@ -73,6 +74,7 @@ const ConsultationSchema = new Schema<IConsultation>(
         "discharge",
         "pain",
         "pregnancy",
+        "diagnostics",
         "other",
       ],
     },
