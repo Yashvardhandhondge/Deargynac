@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import { Toaster } from "sonner";
 import Providers from "@/components/shared/Providers";
+import { auth } from "@/lib/auth";
 import "./globals.css";
 
 const playfairDisplay = Playfair_Display({
@@ -27,15 +28,16 @@ export const metadata: Metadata = {
   description: "Deargynac - Healthcare Platform",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
   return (
     <html lang="en" className={`${playfairDisplay.variable} ${inter.variable}`}>
       <body>
-        <Providers>
+        <Providers session={session}>
           {children}
           <Toaster />
         </Providers>

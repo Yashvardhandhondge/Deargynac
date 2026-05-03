@@ -60,7 +60,7 @@ export async function POST(req: Request) {
       );
     }
 
-    await OTP.updateOne({ _id: otpDoc._id }, { verified: true });
+    await OTP.deleteOne({ _id: otpDoc._id });
 
     let user = await User.findOne({ phone });
     if (!user) {

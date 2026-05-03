@@ -36,6 +36,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.isAnonymous = (user as any).isAnonymous;
         token.phone = (user as any).phone;
         token.userId = (user as any).id;
+        token.id = (user as any).id;
       }
       return token;
     },
@@ -45,14 +46,28 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         (session.user as any).isAnonymous = token.isAnonymous;
         (session.user as any).phone = token.phone;
         (session.user as any).userId = token.userId;
-        (session.user as any).id = token.userId;
+        (session.user as any).id = token.userId ?? token.id;
       }
       return session;
+    },
+    async redirect({ url, baseUrl }) {
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      try {
+        if (new URL(url).origin === baseUrl) return url;
+      } catch {
+        /* ignore */
+      }
+      return baseUrl;
     },
   },
   pages: {
     signIn: "/auth/login",
+    error: "/auth/login",
   },
-  session: { strategy: "jwt" },
+  session: {
+    strategy: "jwt",
+    maxAge: 30 * 24 * 60 * 60,
+  },
   secret: process.env.NEXTAUTH_SECRET,
+  trustHost: true,
 });

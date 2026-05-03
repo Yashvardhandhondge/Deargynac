@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import {
@@ -30,9 +29,14 @@ function dashboardForRole(role: string) {
 }
 
 export default function LoginPage() {
-  const router = useRouter();
   const { data: session, status } = useSession();
   const isMobile = useIsMobile();
+  const [authLogLines, setAuthLogLines] = useState<string[]>([]);
+  const pushAuthLog = useCallback((msg: string) => {
+    const line = `${new Date().toISOString()} ${msg}`;
+    console.log(`[DearGynac auth] ${msg}`);
+    setAuthLogLines((prev) => [...prev.slice(-19), line]);
+  }, []);
   const [step, setStep] = useState<AuthStep>("PHONE_INPUT");
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -59,12 +63,18 @@ export default function LoginPage() {
     return () => clearTimeout(timer);
   }, [countdown]);
 
-  // Already signed in — redirect off login (never block the page UI on this; role fallback avoids infinite spinner)
+  useEffect(() => {
+    pushAuthLog(`useSession status=${status}`);
+  }, [status, pushAuthLog]);
+
+  // Already signed in — hard redirect so middleware sees the session cookie on next request
   useEffect(() => {
     if (status !== "authenticated" || !session?.user) return;
     const role = (session.user as { role?: string }).role ?? "patient";
-    router.replace(dashboardForRole(role));
-  }, [status, session, router]);
+    const dest = dashboardForRole(role);
+    pushAuthLog(`useSession: authenticated role=${role} → ${dest} (hard navigation)`);
+    window.location.href = dest;
+  }, [status, session, pushAuthLog]);
 
   // Send OTP
   const handleSendOTP = async (data: PhoneForm) => {
@@ -81,6 +91,7 @@ export default function LoginPage() {
         setError(json.message || "Failed to send OTP");
         return;
       }
+      pushAuthLog(`OTP send OK phone=${data.phone}`);
       setPhone(data.phone);
       setStep("OTP_INPUT");
       setCountdown(30);
@@ -110,12 +121,20 @@ export default function LoginPage() {
         role: json.role,
         isAnonymous: "true",
         redirect: false,
+        callbackUrl: "/patient",
       });
+      console.log("signIn result (anonymous):", result);
+      pushAuthLog(
+        `anonymous signIn: ok=${result?.ok} error=${result?.error ?? "none"}`
+      );
       if (result?.error || result?.ok === false) {
-        setError("Login failed. Please try again.");
+        setError(
+          "Authentication failed: " + (result.error ?? "unknown")
+        );
         return;
       }
-      window.location.assign("/patient");
+      pushAuthLog("anonymous → window.location.href=/patient");
+      window.location.href = "/patient";
       return;
     } catch {
       setError("Something went wrong. Please try again.");
@@ -169,6 +188,7 @@ export default function LoginPage() {
     setLoading(true);
     setError("");
     try {
+      pushAuthLog(`verify start phone=${phone} otpLen=${otpValue.length}`);
       const res = await fetch("/api/auth/otp/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -177,33 +197,55 @@ export default function LoginPage() {
       const json = await res.json();
       if (!res.ok || !json.success) {
         otpAutoSubmitKeyRef.current = null;
+        pushAuthLog(`verify API fail: ${json.message ?? res.status}`);
         setError(json.message || "Invalid OTP");
         setOtp(["", "", "", "", "", ""]);
         otpRefs.current[0]?.focus();
         return;
       }
+      const role = String(json.role ?? "patient");
+      const destination =
+        role === "doctor"
+          ? "/doctor"
+          : role === "admin"
+            ? "/admin"
+            : "/patient";
+      pushAuthLog(
+        `verify API OK userId=${json.userId} role=${role} → ${destination}`
+      );
+
       const result = await signIn("credentials", {
         userId: json.userId,
         role: json.role,
         isAnonymous: "false",
         redirect: false,
+        callbackUrl: destination,
       });
+      console.log("signIn result:", result);
+      pushAuthLog(
+        `signIn: ok=${result?.ok} error=${result?.error ?? "none"} status=${result?.status}`
+      );
+
       if (result?.error || result?.ok === false) {
         otpAutoSubmitKeyRef.current = null;
-        setError("Login failed. Please try again.");
+        setError(
+          "Authentication failed: " + (result.error ?? "unknown")
+        );
         return;
       }
-      // Full navigation so the auth cookie is applied (router.replace alone often stalls on Vercel/App Router).
-      window.location.assign(dashboardForRole(json.role));
+
+      pushAuthLog(`hard redirect → window.location.href=${destination}`);
+      window.location.href = destination;
       return;
-    } catch {
+    } catch (e) {
       otpAutoSubmitKeyRef.current = null;
+      pushAuthLog(`verify exception: ${e instanceof Error ? e.message : String(e)}`);
       setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
       otpVerifyInFlight.current = false;
     }
-  }, [otp, phone, router]);
+  }, [otp, phone, pushAuthLog]);
 
   // Auto-submit when all 6 digits entered (once per distinct phone+OTP)
   useEffect(() => {
@@ -641,6 +683,44 @@ export default function LoginPage() {
                 )}
               </div>
             </>
+          )}
+        </div>
+
+        <div
+          style={{
+            width: "100%",
+            maxWidth: "28rem",
+            marginTop: "0.75rem",
+            padding: "0.75rem",
+            background: "#1A0A12",
+            color: "#e5e5e5",
+            borderRadius: "0.5rem",
+            fontSize: "0.65rem",
+            fontFamily: "ui-monospace, monospace",
+            maxHeight: "160px",
+            overflowY: "auto",
+          }}
+        >
+          <div
+            style={{
+              fontWeight: 700,
+              marginBottom: "0.35rem",
+              color: "#f472b6",
+            }}
+          >
+            Auth debug — copy this panel if login fails
+          </div>
+          {authLogLines.length === 0 ? (
+            <span style={{ opacity: 0.7 }}>
+              Steps log here (Send OTP → Verify). Console: filter{" "}
+              <code style={{ color: "#93c5fd" }}>[DearGynac auth]</code>
+            </span>
+          ) : (
+            authLogLines.map((line, i) => (
+              <div key={i} style={{ wordBreak: "break-all" }}>
+                {line}
+              </div>
+            ))
           )}
         </div>
       </div>
