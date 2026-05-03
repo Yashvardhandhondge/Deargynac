@@ -41,6 +41,10 @@ const conditionLabels: Record<string, string> = {
   pain: "Pelvic Pain",
   pregnancy: "Pregnancy Care",
   diagnostics: "Diagnostics Review",
+  fertility: "Fertility & Conception",
+  hormone: "Hormone & Cycle Health",
+  ayurvedic: "Ayurvedic / Integrative",
+  mental: "Mental & Sexual Wellness",
   other: "Other Concern",
 };
 
@@ -80,7 +84,7 @@ export default function RecordsPage() {
         style={{
           fontSize: "1.5rem",
           fontWeight: 700,
-          color: "#1A0A12",
+          color: "#3D3438",
           fontFamily: '"Playfair Display", Georgia, serif',
           marginBottom: "1.5rem",
         }}
@@ -94,7 +98,7 @@ export default function RecordsPage() {
           onClick={() => setTab("prescriptions")}
           className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
             tab === "prescriptions"
-              ? "bg-[#C2185B] text-white"
+              ? "bg-[#D97894] text-white"
               : "bg-gray-100 text-gray-600 hover:bg-gray-200"
           }`}
         >
@@ -105,7 +109,7 @@ export default function RecordsPage() {
           onClick={() => setTab("reports")}
           className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
             tab === "reports"
-              ? "bg-[#C2185B] text-white"
+              ? "bg-[#D97894] text-white"
               : "bg-gray-100 text-gray-600 hover:bg-gray-200"
           }`}
         >
@@ -158,7 +162,7 @@ export default function RecordsPage() {
                       <p className="text-xs font-medium text-gray-400 uppercase tracking-wide">
                         Issued {formatDate(rx.issuedAt)}
                       </p>
-                      <p className="font-semibold text-[#1A0A12] mt-1">
+                      <p className="font-semibold text-[#3D3438] mt-1">
                         {doc?.name ? (
                           <>
                             {doc.name.startsWith("Dr.") ? "" : "Dr. "}
@@ -174,7 +178,7 @@ export default function RecordsPage() {
                         </p>
                       )}
                     </div>
-                    <span className="inline-flex items-center rounded-full bg-rose-50 text-[#C2185B] text-xs font-medium px-3 py-1">
+                    <span className="inline-flex items-center rounded-full bg-rose-50 text-[#D97894] text-xs font-medium px-3 py-1">
                       {conditionLabel}
                     </span>
                   </div>
@@ -188,9 +192,9 @@ export default function RecordsPage() {
                       {rx.medicines.map((m, idx) => (
                         <li
                           key={`${rx._id}-m-${idx}`}
-                          className="text-sm border-l-2 border-[#C2185B]/40 pl-3"
+                          className="text-sm border-l-2 border-[#D97894]/40 pl-3"
                         >
-                          <span className="font-medium text-[#1A0A12]">
+                          <span className="font-medium text-[#3D3438]">
                             {m.name}
                           </span>
                           <span className="text-gray-600">

@@ -47,8 +47,8 @@ export default function AdminDoctorsPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-[#1A0A12] font-serif">Doctor Management</h2>
-        <button onClick={() => setDialogOpen(true)} className="flex items-center gap-2 bg-[#C2185B] text-white rounded-full px-5 py-2.5 text-sm font-semibold hover:bg-[#880E4F] transition-colors">
+        <h2 className="text-2xl font-bold text-[#3D3438] font-serif">Doctor Management</h2>
+        <button onClick={() => setDialogOpen(true)} className="flex items-center gap-2 bg-[#D97894] text-white rounded-full px-5 py-2.5 text-sm font-semibold hover:bg-[#C45F7E] transition-colors">
           <Plus className="w-4 h-4" /> Add New Doctor
         </button>
       </div>
@@ -64,8 +64,8 @@ export default function AdminDoctorsPage() {
             <tbody>{doctors.map((doc) => (
               <tr key={doc._id} className="border-b border-gray-50 hover:bg-gray-50/50">
                 <td className="px-6 py-4"><div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-[#C2185B] flex items-center justify-center text-white text-xs font-semibold">{doc.name.split(" ").map((w) => w[0]).join("").slice(0,2)}</div>
-                  <span className="font-medium text-[#1A0A12]">{doc.name}</span>
+                  <div className="w-8 h-8 rounded-full bg-[#D97894] flex items-center justify-center text-white text-xs font-semibold">{doc.name.split(" ").map((w) => w[0]).join("").slice(0,2)}</div>
+                  <span className="font-medium text-[#3D3438]">{doc.name}</span>
                 </div></td>
                 <td className="px-4 py-4"><span className={`text-xs px-2 py-0.5 rounded-full font-medium ${specColors[doc.specialty || ""] || "bg-gray-100 text-gray-700"}`}>{doc.specialty || "—"}</span></td>
                 <td className="px-4 py-4 text-gray-500 font-mono text-xs">{doc.mrnNumber || "—"}</td>
@@ -89,24 +89,24 @@ export default function AdminDoctorsPage() {
           <div className="absolute inset-0 bg-black/30" onClick={() => setDialogOpen(false)} />
           <div className="relative bg-white rounded-2xl p-6 w-full max-w-lg mx-4 shadow-xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-lg text-[#1A0A12] font-serif">Add New Doctor</h3>
+              <h3 className="font-bold text-lg text-[#3D3438] font-serif">Add New Doctor</h3>
               <button onClick={() => setDialogOpen(false)} className="p-1 text-gray-400 hover:text-gray-600"><XIcon className="w-5 h-5" /></button>
             </div>
             <div className="space-y-3">
               {[{ l: "Full Name *", k: "name", t: "text", p: "Dr. Jane Doe" }, { l: "Email *", k: "email", t: "email", p: "doctor@deargynac.com" }, { l: "Phone *", k: "phone", t: "tel", p: "9876543210" }, { l: "MRN Number *", k: "mrnNumber", t: "text", p: "MH-XXXXX" }, { l: "Years of Experience", k: "experience", t: "number", p: "10" }].map((f) => (
                 <div key={f.k}><label className="block text-sm font-medium text-gray-700 mb-1">{f.l}</label>
                   <input type={f.t} placeholder={f.p} value={(form as any)[f.k]} onChange={(e) => setForm((p) => ({ ...p, [f.k]: e.target.value }))}
-                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#C2185B] focus:border-[#C2185B] outline-none" /></div>
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#D97894] focus:border-[#D97894] outline-none" /></div>
               ))}
               <div><label className="block text-sm font-medium text-gray-700 mb-1">Specialty</label>
-                <select value={form.specialty} onChange={(e) => setForm((p) => ({ ...p, specialty: e.target.value }))} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-[#C2185B] outline-none">
+                <select value={form.specialty} onChange={(e) => setForm((p) => ({ ...p, specialty: e.target.value }))} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-[#D97894] outline-none">
                   <option value="gynecologist">Gynecologist</option><option value="radiologist">Radiologist</option><option value="surgeon">General Surgeon</option>
                 </select></div>
               <div><label className="block text-sm font-medium text-gray-700 mb-1">Bio</label>
-                <textarea value={form.bio} onChange={(e) => setForm((p) => ({ ...p, bio: e.target.value }))} rows={3} placeholder="Brief professional bio..." className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#C2185B] outline-none resize-none" /></div>
+                <textarea value={form.bio} onChange={(e) => setForm((p) => ({ ...p, bio: e.target.value }))} rows={3} placeholder="Brief professional bio..." className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-[#D97894] outline-none resize-none" /></div>
             </div>
             <p className="text-xs text-gray-400 mt-3">Default password: DearGynac@123 — doctor must change on first login.</p>
-            <button onClick={handleAdd} disabled={submitting} className="w-full bg-[#C2185B] text-white rounded-full py-3 font-semibold mt-4 hover:bg-[#880E4F] transition-colors disabled:opacity-50 flex items-center justify-center gap-2">
+            <button onClick={handleAdd} disabled={submitting} className="w-full bg-[#D97894] text-white rounded-full py-3 font-semibold mt-4 hover:bg-[#C45F7E] transition-colors disabled:opacity-50 flex items-center justify-center gap-2">
               {submitting ? <><Loader2 className="w-4 h-4 animate-spin" /> Adding...</> : "Add Doctor"}
             </button>
           </div>

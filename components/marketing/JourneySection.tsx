@@ -70,7 +70,7 @@ export default function JourneySection() {
               fontWeight: 600,
               textTransform: "uppercase",
               letterSpacing: "0.1em",
-              color: "#C2185B",
+              color: "#D97894",
               border: "1px solid rgba(194, 24, 91, 0.3)",
               backgroundColor: "rgba(194, 24, 91, 0.05)",
             }}
@@ -82,7 +82,7 @@ export default function JourneySection() {
             style={{
               fontSize: "clamp(1.75rem, 5vw, 3rem)",
               fontWeight: 700,
-              color: "#1A0A12",
+              color: "#3D3438",
               fontFamily: '"Playfair Display", Georgia, serif',
               marginTop: "1rem",
             }}
@@ -117,13 +117,13 @@ export default function JourneySection() {
                       justifyContent: "center",
                     }}
                   >
-                    <Icon style={{ width: "1.75rem", height: "1.75rem", color: "#C2185B" }} />
+                    <Icon style={{ width: "1.75rem", height: "1.75rem", color: "#D97894" }} />
                   </div>
                   <h3
                     style={{
                       fontSize: "1rem",
                       fontWeight: 700,
-                      color: "#1A0A12",
+                      color: "#3D3438",
                       marginTop: "1rem",
                       fontFamily: '"Playfair Display", Georgia, serif',
                     }}
@@ -150,7 +150,7 @@ export default function JourneySection() {
             href="/patient/book"
             style={{
               display: isMobile ? "block" : "inline-block",
-              backgroundColor: "#C2185B",
+              backgroundColor: "#D97894",
               color: "white",
               borderRadius: "9999px",
               padding: "1rem 2.5rem",

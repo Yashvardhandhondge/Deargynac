@@ -22,6 +22,10 @@ const conditionLabels: Record<string, string> = {
   pain: "Pelvic Pain",
   pregnancy: "Pregnancy Care",
   diagnostics: "Diagnostics Review",
+  fertility: "Fertility & Conception",
+  hormone: "Hormone & Cycle Health",
+  ayurvedic: "Ayurvedic / Integrative",
+  mental: "Mental & Sexual Wellness",
   other: "Other Concern",
 };
 
@@ -90,7 +94,7 @@ export default function PatientDashboard() {
       {/* Top row */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Welcome card */}
-        <div className="lg:col-span-2 bg-gradient-to-r from-[#C2185B] to-[#880E4F] rounded-2xl p-8 text-white">
+        <div className="lg:col-span-2 bg-gradient-to-r from-[#E8B4C8] to-[#D97894] rounded-2xl p-8 text-white shadow-sm">
           <h2 className="text-2xl font-bold font-serif">
             Good morning, {userName}!
           </h2>
@@ -118,10 +122,10 @@ export default function PatientDashboard() {
           <div className="space-y-5">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center">
-                <FileText className="w-5 h-5 text-[#C2185B]" />
+                <FileText className="w-5 h-5 text-[#D97894]" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-[#C2185B]">
+                <div className="text-2xl font-bold text-[#D97894]">
                   {consultations.length}
                 </div>
                 <div className="text-xs text-gray-400 uppercase">
@@ -134,7 +138,7 @@ export default function PatientDashboard() {
                 <Clock className="w-5 h-5 text-green-600" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-[#C2185B]">
+                <div className="text-2xl font-bold text-[#D97894]">
                   {activeConsultations.length}
                 </div>
                 <div className="text-xs text-gray-400 uppercase">
@@ -147,7 +151,7 @@ export default function PatientDashboard() {
                 <CalendarDays className="w-5 h-5 text-purple-600" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-[#C2185B]">
+                <div className="text-2xl font-bold text-[#D97894]">
                   {thisMonth.length}
                 </div>
                 <div className="text-xs text-gray-400 uppercase">
@@ -163,7 +167,7 @@ export default function PatientDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
         {/* Active consultations */}
         <div className="bg-white rounded-2xl p-6 border border-gray-100">
-          <h3 className="font-semibold text-[#1A0A12] font-serif mb-4">
+          <h3 className="font-semibold text-[#3D3438] font-serif mb-4">
             Active Consultations
           </h3>
           {loading ? (
@@ -180,7 +184,7 @@ export default function PatientDashboard() {
               <p className="text-gray-400 text-sm">No active consultations</p>
               <button
                 onClick={() => router.push("/patient/book")}
-                className="mt-3 text-sm text-[#C2185B] font-semibold hover:text-[#880E4F] transition-colors"
+                className="mt-3 text-sm text-[#D97894] font-semibold hover:text-[#C45F7E] transition-colors"
               >
                 Book your first consultation &rarr;
               </button>
@@ -195,7 +199,7 @@ export default function PatientDashboard() {
                   <div className="flex items-center gap-3 min-w-0">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-semibold text-[#1A0A12]">
+                        <span className="text-sm font-semibold text-[#3D3438]">
                           {conditionLabels[c.condition] || c.condition}
                         </span>
                         <span
@@ -216,7 +220,7 @@ export default function PatientDashboard() {
                     onClick={() =>
                       router.push(`/patient/consultation/${c._id}`)
                     }
-                    className="text-xs text-[#C2185B] font-semibold hover:text-[#880E4F] shrink-0"
+                    className="text-xs text-[#D97894] font-semibold hover:text-[#C45F7E] shrink-0"
                   >
                     View
                   </button>
@@ -225,7 +229,7 @@ export default function PatientDashboard() {
               {activeConsultations.length > 0 && (
                 <button
                   onClick={() => router.push("/patient/consultations")}
-                  className="w-full text-center text-sm text-[#C2185B] font-semibold hover:text-[#880E4F] py-2 transition-colors"
+                  className="w-full text-center text-sm text-[#D97894] font-semibold hover:text-[#C45F7E] py-2 transition-colors"
                 >
                   View All Consultations →
                 </button>
@@ -236,7 +240,7 @@ export default function PatientDashboard() {
 
         {/* Recent activity */}
         <div className="bg-white rounded-2xl p-6 border border-gray-100">
-          <h3 className="font-semibold text-[#1A0A12] font-serif mb-4">
+          <h3 className="font-semibold text-[#3D3438] font-serif mb-4">
             Recent Activity
           </h3>
           {loading ? (
@@ -260,7 +264,7 @@ export default function PatientDashboard() {
                   className="flex items-center justify-between p-3 rounded-xl bg-gray-50"
                 >
                   <div>
-                    <span className="text-sm font-medium text-[#1A0A12]">
+                    <span className="text-sm font-medium text-[#3D3438]">
                       {conditionLabels[c.condition] || c.condition}
                     </span>
                     <p className="text-xs text-gray-400 mt-0.5">

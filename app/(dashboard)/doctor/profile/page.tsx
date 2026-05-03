@@ -29,7 +29,7 @@ export default function DoctorProfile() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1A0A12', fontFamily: '"Playfair Display", Georgia, serif', marginBottom: '1.5rem' }}>
+      <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#3D3438', fontFamily: '"Playfair Display", Georgia, serif', marginBottom: '1.5rem' }}>
         My Profile
       </h2>
 
@@ -38,7 +38,7 @@ export default function DoctorProfile() {
         <div className="w-20 h-20 rounded-full bg-purple-600 flex items-center justify-center text-white text-2xl font-bold mx-auto">
           {initial}
         </div>
-        <h3 className="text-lg font-bold text-[#1A0A12] mt-4">{name}</h3>
+        <h3 className="text-lg font-bold text-[#3D3438] mt-4">{name}</h3>
         <span className="text-xs bg-purple-100 text-purple-700 px-3 py-1 rounded-full font-medium mt-2 inline-block">
           Doctor
         </span>
@@ -47,25 +47,25 @@ export default function DoctorProfile() {
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4 mb-6">
         <div className="bg-white rounded-2xl p-4 border border-gray-100 text-center">
-          <Users className="w-5 h-5 text-[#C2185B] mx-auto mb-1" />
-          <div className="text-xl font-bold text-[#1A0A12]">{stats.totalConsultations}</div>
+          <Users className="w-5 h-5 text-[#D97894] mx-auto mb-1" />
+          <div className="text-xl font-bold text-[#3D3438]">{stats.totalConsultations}</div>
           <div className="text-xs text-gray-400">Consultations</div>
         </div>
         <div className="bg-white rounded-2xl p-4 border border-gray-100 text-center">
           <FileText className="w-5 h-5 text-blue-600 mx-auto mb-1" />
-          <div className="text-xl font-bold text-[#1A0A12]">{stats.prescriptions}</div>
+          <div className="text-xl font-bold text-[#3D3438]">{stats.prescriptions}</div>
           <div className="text-xs text-gray-400">Prescriptions</div>
         </div>
         <div className="bg-white rounded-2xl p-4 border border-gray-100 text-center">
           <Star className="w-5 h-5 text-amber-500 mx-auto mb-1" />
-          <div className="text-xl font-bold text-[#1A0A12]">{stats.avgRating}</div>
+          <div className="text-xl font-bold text-[#3D3438]">{stats.avgRating}</div>
           <div className="text-xs text-gray-400">Avg Rating</div>
         </div>
       </div>
 
       {/* Info */}
       <div className="bg-white rounded-2xl p-6 border border-gray-100">
-        <h3 className="font-semibold text-[#1A0A12] mb-4">Profile Information</h3>
+        <h3 className="font-semibold text-[#3D3438] mb-4">Profile Information</h3>
         <p className="text-sm text-gray-400">
           Your profile is managed by the platform admin. Contact admin to update your details.
         </p>

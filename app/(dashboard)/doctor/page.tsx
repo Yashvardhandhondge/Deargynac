@@ -36,6 +36,10 @@ const conditionLabels: Record<string, string> = {
   pain: "Pelvic Pain",
   pregnancy: "Pregnancy Care",
   diagnostics: "Diagnostics Review",
+  fertility: "Fertility & Conception",
+  hormone: "Hormone & Cycle Health",
+  ayurvedic: "Ayurvedic / Integrative",
+  mental: "Mental & Sexual Wellness",
   other: "Other Concern",
 };
 
@@ -43,10 +47,14 @@ const conditionColors: Record<string, string> = {
   pcos: "bg-rose-100 text-rose-700",
   periods: "bg-purple-100 text-purple-700",
   uti: "bg-red-100 text-red-700",
-  discharge: "bg-teal-100 text-teal-700",
+  discharge: "bg-blue-100 text-blue-700",
   pain: "bg-amber-100 text-amber-700",
   pregnancy: "bg-pink-100 text-pink-700",
-  diagnostics: "bg-blue-100 text-blue-700",
+  diagnostics: "bg-amber-100 text-amber-800",
+  fertility: "bg-cyan-100 text-cyan-800",
+  hormone: "bg-violet-100 text-violet-800",
+  ayurvedic: "bg-emerald-100 text-emerald-800",
+  mental: "bg-fuchsia-100 text-fuchsia-800",
   other: "bg-gray-100 text-gray-700",
 };
 
@@ -86,7 +94,7 @@ export default function DoctorDashboard() {
           label: "Today's Cases",
           value: stats.todayCases,
           icon: ClipboardList,
-          color: "text-[#C2185B]",
+          color: "text-[#D97894]",
           bg: "bg-rose-50",
         },
         {
@@ -145,9 +153,9 @@ export default function DoctorDashboard() {
         <div className="lg:col-span-2 bg-white rounded-2xl p-6 border border-gray-100">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <h3 className="font-semibold text-[#1A0A12] font-serif">Active Cases</h3>
+              <h3 className="font-semibold text-[#3D3438] font-serif">Active Cases</h3>
               {cases.length > 0 && (
-                <span className="bg-[#C2185B] text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                <span className="bg-[#D97894] text-white text-xs font-bold px-2 py-0.5 rounded-full">
                   {cases.length}
                 </span>
               )}
@@ -186,7 +194,7 @@ export default function DoctorDashboard() {
                         >
                           {conditionLabels[c.condition] || c.condition}
                         </span>
-                        <span className="text-sm font-semibold text-[#1A0A12]">
+                        <span className="text-sm font-semibold text-[#3D3438]">
                           {patientName}
                         </span>
                         {isBreach && (
@@ -210,7 +218,7 @@ export default function DoctorDashboard() {
                       </span>
                       <button
                         onClick={() => router.push(`/doctor/consultation/${c._id}`)}
-                        className="text-xs bg-[#C2185B] text-white px-3 py-1.5 rounded-full font-semibold hover:bg-[#880E4F] transition-colors"
+                        className="text-xs bg-[#D97894] text-white px-3 py-1.5 rounded-full font-semibold hover:bg-[#C45F7E] transition-colors"
                       >
                         Respond &rarr;
                       </button>
@@ -224,15 +232,15 @@ export default function DoctorDashboard() {
 
         {/* Quick stats sidebar */}
         <div className="bg-white rounded-2xl p-6 border border-gray-100">
-          <h3 className="font-semibold text-[#1A0A12] font-serif mb-4">Today&apos;s Summary</h3>
+          <h3 className="font-semibold text-[#3D3438] font-serif mb-4">Today&apos;s Summary</h3>
           <div className="space-y-4">
             <div className="flex justify-between text-sm">
               <span className="text-gray-500">Consultations responded</span>
-              <span className="font-bold text-[#1A0A12]">{stats?.completedThisWeek || 0}</span>
+              <span className="font-bold text-[#3D3438]">{stats?.completedThisWeek || 0}</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-gray-500">Prescriptions issued</span>
-              <span className="font-bold text-[#1A0A12]">—</span>
+              <span className="font-bold text-[#3D3438]">—</span>
             </div>
             <div className="flex justify-between text-sm">
               <span className="text-gray-500">Avg satisfaction</span>

@@ -15,6 +15,7 @@ import {
   X,
   Bell,
 } from "lucide-react";
+import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 
 const navItems = [
   { icon: LayoutDashboard, href: "/doctor", label: "Overview" },
@@ -42,8 +43,8 @@ function SidebarContent({
     <>
       <div className="px-6 py-5 border-b border-gray-100">
         <Link href="/" className="flex items-baseline">
-          <span className="font-serif font-bold text-xl text-[#1A0A12]">Dear</span>
-          <span className="font-serif italic text-xl text-[#C2185B]">Gynac</span>
+          <span className="font-serif font-bold text-xl text-[#3D3438]">Dear</span>
+          <span className="font-serif italic text-xl text-[#D97894]">Gynac</span>
           <span className="text-[#D4A017] font-bold text-2xl leading-none">.</span>
         </Link>
       </div>
@@ -68,7 +69,7 @@ function SidebarContent({
               <Icon className="w-5 h-5" />
               <span className="flex-1">{item.label}</span>
               {item.showBadge && pendingCount > 0 && (
-                <span className="bg-[#C2185B] text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                <span className="bg-[#D97894] text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
                   {pendingCount}
                 </span>
               )}
@@ -83,7 +84,7 @@ function SidebarContent({
             {initial}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-[#1A0A12] truncate">{userName}</p>
+            <p className="text-sm font-semibold text-[#3D3438] truncate">{userName}</p>
             <p className="text-xs text-purple-500">Doctor</p>
           </div>
           <button
@@ -131,14 +132,14 @@ export default function DoctorDashboardLayout({ children }: { children: React.Re
 
   if (status === 'loading') {
     return (
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', backgroundColor: '#FDF8F5' }}>
-        <div style={{ width: '3rem', height: '3rem', border: '4px solid #FDE8F0', borderTop: '4px solid #C2185B', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', backgroundColor: '#FFF7F9' }}>
+        <div style={{ width: '3rem', height: '3rem', border: '4px solid #FDE8F0', borderTop: '4px solid #D97894', borderRadius: '50%', animation: 'spin 1s linear infinite' }} />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#FDF8F5]">
+    <div className="min-h-screen bg-[#FFF7F9]">
       <aside className="hidden lg:flex lg:flex-col fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-gray-100 z-30">
         <SidebarContent pathname={pathname} session={session} pendingCount={pendingCount} />
       </aside>
@@ -148,8 +149,8 @@ export default function DoctorDashboardLayout({ children }: { children: React.Re
           <Menu className="w-5 h-5" />
         </button>
         <Link href="/" className="flex items-baseline">
-          <span className="font-serif font-bold text-lg text-[#1A0A12]">Dear</span>
-          <span className="font-serif italic text-lg text-[#C2185B]">Gynac</span>
+          <span className="font-serif font-bold text-lg text-[#3D3438]">Dear</span>
+          <span className="font-serif italic text-lg text-[#D97894]">Gynac</span>
           <span className="text-[#D4A017] font-bold text-xl leading-none">.</span>
         </Link>
         <button
@@ -181,8 +182,9 @@ export default function DoctorDashboardLayout({ children }: { children: React.Re
 
       <div className="lg:ml-64">
         <header className="hidden lg:flex h-16 bg-white border-b border-gray-100 items-center justify-between px-8">
-          <h1 className="text-lg font-semibold text-[#1A0A12] font-serif">{getPageTitle(pathname)}</h1>
-          <div className="flex items-center gap-4">
+          <h1 className="text-lg font-semibold text-[#3D3438] font-serif">{getPageTitle(pathname)}</h1>
+          <div className="flex items-center gap-3">
+            <LanguageSwitcher />
             <button className="p-2 text-gray-400 hover:text-gray-600 relative">
               <Bell className="w-5 h-5" />
               {pendingCount > 0 && (

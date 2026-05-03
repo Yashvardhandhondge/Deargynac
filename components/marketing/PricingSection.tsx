@@ -28,7 +28,7 @@ const plans: PricingCard[] = [
   {
     icon: MessageSquare,
     iconBg: "bg-rose-100",
-    iconColor: "text-[#C2185B]",
+    iconColor: "text-[#D97894]",
     name: "Quick Consult",
     price: "\u20B9149",
     period: "/session",
@@ -46,7 +46,7 @@ const plans: PricingCard[] = [
   {
     icon: HeartPulse,
     iconBg: "bg-rose-100",
-    iconColor: "text-[#C2185B]",
+    iconColor: "text-[#D97894]",
     name: "Complete Care",
     price: "\u20B9499",
     period: "/month",
@@ -100,7 +100,7 @@ export default function PricingSection() {
               fontWeight: 600,
               textTransform: "uppercase",
               letterSpacing: "0.1em",
-              color: "#C2185B",
+              color: "#D97894",
               border: "1px solid rgba(194, 24, 91, 0.3)",
               backgroundColor: "rgba(194, 24, 91, 0.05)",
             }}
@@ -112,7 +112,7 @@ export default function PricingSection() {
             style={{
               fontSize: "clamp(1.75rem, 5vw, 3rem)",
               fontWeight: 700,
-              color: "#1A0A12",
+              color: "#3D3438",
               fontFamily: '"Playfair Display", Georgia, serif',
               marginTop: "1rem",
             }}
@@ -141,7 +141,7 @@ export default function PricingSection() {
                   minWidth: 0,
                   width: "100%",
                   border: plan.popular
-                    ? "2px solid #C2185B"
+                    ? "2px solid #D97894"
                     : "1px solid #e5e7eb",
                 }}
               >
@@ -153,7 +153,7 @@ export default function PricingSection() {
                       top: "-1rem",
                       left: "50%",
                       transform: "translateX(-50%)",
-                      backgroundColor: "#C2185B",
+                      backgroundColor: "#D97894",
                       color: "white",
                       fontSize: "0.75rem",
                       fontWeight: 700,
@@ -172,13 +172,13 @@ export default function PricingSection() {
                 </div>
 
                 {/* Name */}
-                <h3 style={{ fontSize: "1.25rem", fontWeight: 700, color: "#1A0A12", marginTop: "1rem", fontFamily: '"Playfair Display", Georgia, serif' }}>
+                <h3 style={{ fontSize: "1.25rem", fontWeight: 700, color: "#3D3438", marginTop: "1rem", fontFamily: '"Playfair Display", Georgia, serif' }}>
                   {plan.name}
                 </h3>
 
                 {/* Price */}
                 <div style={{ marginTop: "0.75rem", display: "flex", alignItems: "baseline", gap: "0.25rem" }}>
-                  <span style={{ fontSize: "3rem", fontWeight: 700, color: "#1A0A12", fontFamily: '"Playfair Display", Georgia, serif' }}>
+                  <span style={{ fontSize: "3rem", fontWeight: 700, color: "#3D3438", fontFamily: '"Playfair Display", Georgia, serif' }}>
                     {plan.price}
                   </span>
                   <span style={{ fontSize: "1rem", color: "#9CA3AF" }}>{plan.period}</span>
@@ -224,9 +224,9 @@ export default function PricingSection() {
                     padding: "0.75rem 1.5rem",
                     fontWeight: 600,
                     textDecoration: "none",
-                    backgroundColor: plan.filled ? "#C2185B" : "transparent",
-                    color: plan.filled ? "white" : "#C2185B",
-                    border: plan.filled ? "none" : "2px solid #C2185B",
+                    backgroundColor: plan.filled ? "#D97894" : "transparent",
+                    color: plan.filled ? "white" : "#D97894",
+                    border: plan.filled ? "none" : "2px solid #D97894",
                   }}
                 >
                   {plan.cta}

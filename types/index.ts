@@ -37,6 +37,11 @@ export type ConditionType =
   | "discharge"
   | "pain"
   | "pregnancy"
+  | "fertility"
+  | "diagnostics"
+  | "hormone"
+  | "ayurvedic"
+  | "mental"
   | "other";
 
 // ── Interfaces ──

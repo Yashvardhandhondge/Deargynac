@@ -10,6 +10,8 @@ import {
   Clock,
   Loader2,
 } from "lucide-react";
+import { useLang } from "@/context/LanguageContext";
+import { t, translations, type Language, type TranslationKey } from "@/lib/translations";
 
 interface Message {
   senderId: string;
@@ -35,17 +37,6 @@ interface ConsultationData {
   messages: Message[];
 }
 
-const conditionLabels: Record<string, string> = {
-  pcos: "PCOS / Hormones",
-  periods: "Period Problems",
-  uti: "UTI / Infections",
-  discharge: "Unusual Discharge",
-  pain: "Pelvic Pain",
-  pregnancy: "Pregnancy Care",
-  diagnostics: "Diagnostics Review",
-  other: "Other Concern",
-};
-
 const statusColors: Record<string, string> = {
   pending: "bg-amber-100 text-amber-700",
   active: "bg-green-100 text-green-700",
@@ -68,9 +59,18 @@ function formatDate(date: string) {
   });
 }
 
+function conditionLabel(lang: Language, condition?: string): string {
+  if (!condition) return "";
+  if (condition in translations.en) {
+    return t(lang, condition as TranslationKey);
+  }
+  return condition;
+}
+
 export default function ConsultationPage() {
   const { id } = useParams<{ id: string }>();
   const { data: session } = useSession();
+  const { lang } = useLang();
   const userId = (session?.user as any)?.userId || (session?.user as any)?.id;
 
   const [consultation, setConsultation] = useState<ConsultationData | null>(
@@ -171,7 +171,8 @@ export default function ConsultationPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="w-8 h-8 text-[#C2185B] animate-spin" />
+        <Loader2 className="w-8 h-8 text-[#D97894] animate-spin" />
+        <span className="sr-only">{t(lang, "loading")}</span>
       </div>
     );
   }
@@ -199,11 +200,11 @@ export default function ConsultationPage() {
         {/* Doctor info */}
         <div className="bg-white rounded-2xl p-6 border border-gray-100">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-[#C2185B] flex items-center justify-center text-white font-semibold">
+            <div className="w-12 h-12 rounded-full bg-[#D97894] flex items-center justify-center text-white font-semibold">
               {doctorInitials}
             </div>
             <div>
-              <h3 className="font-bold text-[#1A0A12]">
+              <h3 className="font-bold text-[#3D3438]">
                 {doctor?.name || "Assigning..."}
               </h3>
               <span className="text-sm text-gray-500">
@@ -223,14 +224,13 @@ export default function ConsultationPage() {
           <div className="border-t border-gray-100 mt-4 pt-4 space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="text-gray-500">Condition</span>
-              <span className="font-medium text-[#1A0A12]">
-                {conditionLabels[consultation.condition] ||
-                  consultation.condition}
+              <span className="font-medium text-[#3D3438]">
+                {conditionLabel(lang, consultation.condition)}
               </span>
             </div>
             <div className="flex justify-between">
               <span className="text-gray-500">Started</span>
-              <span className="font-medium text-[#1A0A12]">
+              <span className="font-medium text-[#3D3438]">
                 {formatDate(consultation.createdAt)}
               </span>
             </div>
@@ -263,7 +263,7 @@ export default function ConsultationPage() {
                       <span className="text-gray-500 capitalize">
                         {key.replace(/([A-Z])/g, " $1")}:
                       </span>{" "}
-                      <span className="text-[#1A0A12]">
+                      <span className="text-[#3D3438]">
                         {Array.isArray(val) ? val.join(", ") : String(val)}
                       </span>
                     </div>
@@ -284,7 +284,7 @@ export default function ConsultationPage() {
                 <div
                   className={`w-3 h-3 rounded-full ${
                     consultation.status === "active"
-                      ? "bg-[#C2185B] animate-pulse"
+                      ? "bg-[#D97894] animate-pulse"
                       : consultation.status === "completed"
                       ? "bg-green-500"
                       : "bg-gray-300"
@@ -322,7 +322,9 @@ export default function ConsultationPage() {
         <div className="bg-white rounded-2xl border border-gray-100 flex flex-col h-[600px]">
           {/* Header */}
           <div className="p-4 border-b border-gray-100 flex items-center justify-between">
-            <h3 className="font-bold text-[#1A0A12]">Consultation Chat</h3>
+            <h3 className="font-bold text-[#3D3438]">
+              {t(lang, "consultationChat")}
+            </h3>
             <span
               className={`text-xs px-2 py-0.5 rounded-full font-medium ${
                 statusColors[consultation.status] || "bg-gray-100 text-gray-600"
@@ -339,8 +341,7 @@ export default function ConsultationPage() {
               <div className="mx-4 mt-4 bg-amber-50 border border-amber-200 rounded-xl p-3 flex items-center gap-2">
                 <Clock className="w-4 h-4 text-amber-600 shrink-0" />
                 <p className="text-sm text-amber-700">
-                  Waiting for doctor to review your case. Average response: 12
-                  minutes.
+                  {t(lang, "waitingForDoctor")}
                 </p>
               </div>
             )}
@@ -362,7 +363,7 @@ export default function ConsultationPage() {
                   <div
                     className={`max-w-[75%] px-4 py-3 text-sm ${
                       isPatient
-                        ? "bg-[#C2185B] text-white rounded-2xl rounded-tr-sm"
+                        ? "bg-[#D97894] text-white rounded-2xl rounded-tr-sm"
                         : "bg-white border shadow-sm rounded-2xl rounded-tl-sm text-gray-800"
                     }`}
                   >
@@ -394,13 +395,15 @@ export default function ConsultationPage() {
                   onChange={(e) => setNewMessage(e.target.value)}
                   onKeyDown={handleKeyDown}
                   rows={2}
-                  placeholder="Type your message..."
-                  className="flex-1 border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#C2185B] focus:border-[#C2185B] outline-none resize-none"
+                  placeholder={t(lang, "typeMessage")}
+                  className="flex-1 border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#D97894] focus:border-[#D97894] outline-none resize-none"
                 />
                 <button
+                  type="button"
+                  title={t(lang, "sendMessage")}
                   onClick={handleSend}
                   disabled={!newMessage.trim() || sending}
-                  className="w-10 h-10 rounded-full bg-[#C2185B] text-white flex items-center justify-center hover:bg-[#880E4F] disabled:opacity-50 disabled:cursor-not-allowed transition-colors shrink-0"
+                  className="w-10 h-10 rounded-full bg-[#D97894] text-white flex items-center justify-center hover:bg-[#C45F7E] disabled:opacity-50 disabled:cursor-not-allowed transition-colors shrink-0"
                 >
                   <ArrowUp className="w-5 h-5" />
                 </button>

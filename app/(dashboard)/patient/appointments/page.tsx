@@ -16,7 +16,9 @@ interface AppointmentItem {
 const conditionLabels: Record<string, string> = {
   pcos: 'PCOS / Hormones', periods: 'Period Problems', uti: 'UTI / Infections',
   discharge: 'Unusual Discharge', pain: 'Pelvic Pain', pregnancy: 'Pregnancy Care',
-  diagnostics: 'Diagnostics Review', other: 'Other Concern',
+  diagnostics: 'Diagnostics Review', fertility: 'Fertility & Conception',
+  hormone: 'Hormone & Cycle Health', ayurvedic: 'Ayurvedic / Integrative',
+  mental: 'Mental & Sexual Wellness', other: 'Other Concern',
 };
 
 export default function AppointmentsPage() {
@@ -40,13 +42,13 @@ export default function AppointmentsPage() {
 
   return (
     <div className="max-w-3xl mx-auto">
-      <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1A0A12', fontFamily: '"Playfair Display", Georgia, serif', marginBottom: '1.5rem' }}>
+      <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#3D3438', fontFamily: '"Playfair Display", Georgia, serif', marginBottom: '1.5rem' }}>
         My Appointments
       </h2>
 
       {loading ? (
         <div className="flex justify-center py-20">
-          <Loader2 className="w-8 h-8 text-[#C2185B] animate-spin" />
+          <Loader2 className="w-8 h-8 text-[#D97894] animate-spin" />
         </div>
       ) : appointments.length === 0 ? (
         <div className="text-center py-20">
@@ -55,7 +57,7 @@ export default function AppointmentsPage() {
           <p className="text-gray-400 text-sm mt-1">Book a consultation to get started</p>
           <button
             onClick={() => router.push('/patient/book')}
-            className="mt-6 bg-[#C2185B] text-white rounded-full px-6 py-3 font-semibold hover:bg-[#880E4F] transition-colors"
+            className="mt-6 bg-[#D97894] text-white rounded-full px-6 py-3 font-semibold hover:bg-[#C45F7E] transition-colors"
           >
             Book a Consultation
           </button>
@@ -70,7 +72,7 @@ export default function AppointmentsPage() {
             >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-semibold text-[#1A0A12]">
+                  <p className="text-sm font-semibold text-[#3D3438]">
                     {conditionLabels[a.condition] || a.condition}
                   </p>
                   <p className="text-xs text-gray-400 mt-0.5">

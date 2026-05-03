@@ -106,7 +106,7 @@ export default function SchedulePage() {
   return (
     <div className="max-w-2xl mx-auto">
       <div className="bg-white rounded-2xl p-8 border border-gray-100">
-        <h2 className="text-2xl font-bold text-[#1A0A12] font-serif mb-6">
+        <h2 className="text-2xl font-bold text-[#3D3438] font-serif mb-6">
           My Availability Schedule
         </h2>
 
@@ -120,7 +120,7 @@ export default function SchedulePage() {
                   slot.enabled ? "border-purple-200 bg-purple-50/30" : "border-gray-200 bg-gray-50"
                 }`}
               >
-                <span className="w-24 text-sm font-medium text-[#1A0A12]">{day}</span>
+                <span className="w-24 text-sm font-medium text-[#3D3438]">{day}</span>
 
                 {/* Toggle switch */}
                 <button
@@ -169,7 +169,7 @@ export default function SchedulePage() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="w-full bg-[#C2185B] text-white rounded-full py-3 font-semibold mt-8 hover:bg-[#880E4F] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+          className="w-full bg-[#D97894] text-white rounded-full py-3 font-semibold mt-8 hover:bg-[#C45F7E] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
         >
           {saving ? (
             <><Loader2 className="w-4 h-4 animate-spin" /> Saving...</>

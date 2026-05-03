@@ -36,13 +36,13 @@ const integrations = [
 export default function AdminSettings() {
   return (
     <div className="max-w-3xl mx-auto">
-      <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1A0A12', fontFamily: '"Playfair Display", Georgia, serif', marginBottom: '1.5rem' }}>
+      <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#3D3438', fontFamily: '"Playfair Display", Georgia, serif', marginBottom: '1.5rem' }}>
         Platform Settings
       </h2>
 
       {/* Environment info */}
       <div className="bg-white rounded-2xl p-6 border border-gray-100 mb-6">
-        <h3 className="font-semibold text-[#1A0A12] mb-4">Environment</h3>
+        <h3 className="font-semibold text-[#3D3438] mb-4">Environment</h3>
         <div className="space-y-2 text-sm">
           <div className="flex justify-between">
             <span className="text-gray-500">Mode</span>
@@ -50,7 +50,7 @@ export default function AdminSettings() {
           </div>
           <div className="flex justify-between">
             <span className="text-gray-500">Next.js</span>
-            <span className="font-medium text-[#1A0A12]">v16.2.3</span>
+            <span className="font-medium text-[#3D3438]">v16.2.3</span>
           </div>
           <div className="flex justify-between">
             <span className="text-gray-500">Database</span>
@@ -58,13 +58,13 @@ export default function AdminSettings() {
           </div>
           <div className="flex justify-between">
             <span className="text-gray-500">Auth</span>
-            <span className="font-medium text-[#1A0A12]">NextAuth.js (OTP)</span>
+            <span className="font-medium text-[#3D3438]">NextAuth.js (OTP)</span>
           </div>
         </div>
       </div>
 
       {/* Integrations */}
-      <h3 className="font-semibold text-[#1A0A12] mb-4">Integrations</h3>
+      <h3 className="font-semibold text-[#3D3438] mb-4">Integrations</h3>
       <div className="space-y-4">
         {integrations.map(item => {
           const Icon = item.icon;
@@ -75,7 +75,7 @@ export default function AdminSettings() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h4 className="font-semibold text-[#1A0A12] text-sm">{item.title}</h4>
+                  <h4 className="font-semibold text-[#3D3438] text-sm">{item.title}</h4>
                   <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${item.statusColor}`}>
                     {item.status}
                   </span>

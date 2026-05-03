@@ -284,7 +284,7 @@ export default function LoginPage() {
       <div
         style={{
           width: "50%",
-          background: "linear-gradient(135deg, #880E4F 0%, #C2185B 100%)",
+          background: "linear-gradient(135deg, #E8B4C8 0%, #D97894 55%, #C45F7E 100%)",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
@@ -370,7 +370,7 @@ export default function LoginPage() {
           alignItems: "center",
           justifyContent: "center",
           minHeight: "100vh",
-          backgroundColor: "#FDF8F5",
+          backgroundColor: "#FFF7F9",
           padding: "1.5rem",
         }}
       >
@@ -488,14 +488,14 @@ export default function LoginPage() {
               {/* Back link */}
               <Link
                 href="/"
-                className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-[#C2185B] transition-colors mb-6"
+                className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-[#D97894] transition-colors mb-6"
               >
                 <ChevronLeft className="w-4 h-4" />
                 Back to Home
               </Link>
 
               {/* Title */}
-              <h1 className="font-serif font-bold text-2xl text-[#1A0A12]">
+              <h1 className="font-serif font-bold text-2xl text-[#3D3438]">
                 Welcome to DearGynac
               </h1>
               <p className="text-gray-500 text-sm mt-2">
@@ -511,7 +511,7 @@ export default function LoginPage() {
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">
                     Phone Number
                   </label>
-                  <div className="flex border border-gray-300 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-[#C2185B] focus-within:border-[#C2185B]">
+                  <div className="flex border border-gray-300 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-[#D97894] focus-within:border-[#D97894]">
                     <span className="bg-gray-50 px-4 flex items-center text-gray-600 font-medium text-sm border-r border-gray-300">
                       +91
                     </span>
@@ -539,7 +539,7 @@ export default function LoginPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-[#C2185B] text-white rounded-full py-3 font-semibold hover:bg-[#880E4F] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full bg-[#D97894] text-white rounded-full py-3 font-semibold hover:bg-[#C45F7E] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <>
@@ -569,7 +569,7 @@ export default function LoginPage() {
               <button
                 onClick={handleAnonymous}
                 disabled={anonLoading}
-                className="w-full border-2 border-[#C2185B] text-[#C2185B] rounded-full py-3 font-semibold hover:bg-rose-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full border-2 border-[#D97894] text-[#D97894] rounded-full py-3 font-semibold hover:bg-rose-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {anonLoading ? (
                   <>
@@ -607,12 +607,12 @@ export default function LoginPage() {
                   setOtp(["", "", "", "", "", ""]);
                   setError("");
                 }}
-                className="text-sm text-[#C2185B] hover:text-[#880E4F] transition-colors mb-6"
+                className="text-sm text-[#D97894] hover:text-[#C45F7E] transition-colors mb-6"
               >
                 Change number
               </button>
 
-              <h2 className="font-serif font-bold text-xl text-[#1A0A12]">
+              <h2 className="font-serif font-bold text-xl text-[#3D3438]">
                 Enter Verification Code
               </h2>
               <p className="text-gray-500 text-sm mt-1 mb-6">
@@ -638,8 +638,8 @@ export default function LoginPage() {
                     onKeyDown={(e) => handleOtpKeyDown(i, e)}
                     className={`${isMobile ? 'w-10 h-10' : 'w-12 h-12'} text-center text-xl font-bold border-2 rounded-lg outline-none transition ${
                       digit
-                        ? "border-[#C2185B] bg-rose-50"
-                        : "border-gray-300 focus:border-[#C2185B]"
+                        ? "border-[#D97894] bg-rose-50"
+                        : "border-gray-300 focus:border-[#D97894]"
                     } ${error ? "animate-shake" : ""}`}
                   />
                 ))}
@@ -654,7 +654,7 @@ export default function LoginPage() {
               <button
                 onClick={handleVerifyOTP}
                 disabled={loading}
-                className="w-full bg-[#C2185B] text-white rounded-full py-3 font-semibold hover:bg-[#880E4F] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full bg-[#D97894] text-white rounded-full py-3 font-semibold hover:bg-[#C45F7E] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {loading ? (
                   <>
@@ -676,7 +676,7 @@ export default function LoginPage() {
                 ) : (
                   <button
                     onClick={handleResend}
-                    className="text-sm text-[#C2185B] hover:text-[#880E4F] font-medium transition-colors"
+                    className="text-sm text-[#D97894] hover:text-[#C45F7E] font-medium transition-colors"
                   >
                     Resend OTP
                   </button>

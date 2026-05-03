@@ -30,10 +30,10 @@ const doctors: DoctorCard[] = [
     name: "Dr. Snehal Pansare",
     roleBadge: "Gynecologist",
     roleBg: "bg-rose-100",
-    roleColor: "text-[#C2185B]",
+    roleColor: "text-[#D97894]",
     icon: UserRound,
     iconBg: "bg-rose-50",
-    iconColor: "text-[#C2185B]",
+    iconColor: "text-[#D97894]",
     specialty: "Obstetrics & Gynecology",
     bio: "Specialist in reproductive health, prenatal care, PCOS, and minimally invasive gynecological procedures with over 12 years of clinical experience.",
     stats: [
@@ -103,7 +103,7 @@ export default function DoctorsSection() {
   const isTablet = useIsTablet();
 
   return (
-    <section id="team" style={{ backgroundColor: "#FDF8F5", padding: "6rem 0" }}>
+    <section id="team" style={{ backgroundColor: "#FFF7F9", padding: "6rem 0" }}>
       <div style={{ maxWidth: "80rem", marginLeft: "auto", marginRight: "auto", padding: "0 1rem" }}>
         {/* Header */}
         <div style={{ textAlign: "center" }}>
@@ -117,7 +117,7 @@ export default function DoctorsSection() {
               fontWeight: 600,
               textTransform: "uppercase",
               letterSpacing: "0.1em",
-              color: "#C2185B",
+              color: "#D97894",
               border: "1px solid rgba(194, 24, 91, 0.3)",
               backgroundColor: "rgba(194, 24, 91, 0.05)",
             }}
@@ -129,7 +129,7 @@ export default function DoctorsSection() {
             style={{
               fontSize: "clamp(1.75rem, 5vw, 3rem)",
               fontWeight: 700,
-              color: "#1A0A12",
+              color: "#3D3438",
               fontFamily: '"Playfair Display", Georgia, serif',
               marginTop: "1rem",
             }}
@@ -158,7 +158,7 @@ export default function DoctorsSection() {
                   position: "relative",
                   minWidth: 0,
                   border: doc.featured
-                    ? "2px solid #C2185B"
+                    ? "2px solid #D97894"
                     : "1px solid #f3f4f6",
                 }}
               >
@@ -169,7 +169,7 @@ export default function DoctorsSection() {
                       position: "absolute",
                       top: "-0.75rem",
                       right: "1rem",
-                      backgroundColor: "#C2185B",
+                      backgroundColor: "#D97894",
                       color: "white",
                       fontSize: "0.75rem",
                       fontWeight: 700,
@@ -192,7 +192,7 @@ export default function DoctorsSection() {
                 </div>
 
                 {/* Name & specialty */}
-                <h3 style={{ fontSize: "1.125rem", fontWeight: 700, color: "#1A0A12", marginTop: "1rem", fontFamily: '"Playfair Display", Georgia, serif' }}>
+                <h3 style={{ fontSize: "1.125rem", fontWeight: 700, color: "#3D3438", marginTop: "1rem", fontFamily: '"Playfair Display", Georgia, serif' }}>
                   {doc.name}
                 </h3>
                 <p style={{ fontSize: "0.875rem", color: "#9CA3AF" }}>{doc.specialty}</p>
@@ -225,7 +225,7 @@ export default function DoctorsSection() {
                   <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginTop: "1rem", flexWrap: "wrap" }}>
                     {doc.stats.map((s, i) => (
                       <div key={i} style={{ textAlign: "center" }}>
-                        <div style={{ fontSize: "1.125rem", fontWeight: 700, color: "#1A0A12" }}>
+                        <div style={{ fontSize: "1.125rem", fontWeight: 700, color: "#3D3438" }}>
                           {s.value}
                         </div>
                         <div style={{ fontSize: "0.75rem", color: "#9CA3AF" }}>{s.label}</div>
@@ -262,8 +262,8 @@ export default function DoctorsSection() {
             href="#"
             style={{
               display: "inline-block",
-              border: "2px solid #C2185B",
-              color: "#C2185B",
+              border: "2px solid #D97894",
+              color: "#D97894",
               borderRadius: "9999px",
               padding: "1rem 2.5rem",
               fontWeight: 600,

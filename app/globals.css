@@ -48,16 +48,16 @@
 }
 
 @theme {
-  --color-rose-50: #FDE8F0;
-  --color-rose-100: #FAC8DB;
-  --color-rose-200: #F4A7C3;
-  --color-rose-300: #EC7FAA;
-  --color-rose-400: #E05490;
-  --color-rose-500: #C2185B;
-  --color-rose-600: #A0114A;
-  --color-rose-700: #880E4F;
-  --color-rose-800: #6B0B3D;
-  --color-rose-900: #4A0526;
+  --color-rose-50: #FFF5F8;
+  --color-rose-100: #FFE8F0;
+  --color-rose-200: #F9D0E0;
+  --color-rose-300: #F0B8CC;
+  --color-rose-400: #E896B0;
+  --color-rose-500: #D97894;
+  --color-rose-600: #C45F7E;
+  --color-rose-700: #A84D6A;
+  --color-rose-800: #8A3F56;
+  --color-rose-900: #5C2A3A;
 
   --color-gold-50: #FBF3DC;
   --color-gold-100: #F5E4A8;
@@ -66,53 +66,53 @@
   --color-gold-400: #B8860B;
   --color-gold-500: #A67C00;
 
-  --color-ivory-50: #FEFCFA;
-  --color-ivory-100: #FDF8F5;
-  --color-ivory-200: #F5EDE8;
-  --color-ivory-300: #EDE0D8;
+  --color-ivory-50: #FFFBFC;
+  --color-ivory-100: #FFF7F9;
+  --color-ivory-200: #FCEEF2;
+  --color-ivory-300: #F0D6E0;
 
-  --color-plum-900: #1A0A12;
-  --color-plum-800: #2D0A1E;
-  --color-plum-700: #3D1028;
+  --color-plum-900: #3D3438;
+  --color-plum-800: #4A4146;
+  --color-plum-700: #5C5156;
 
   --font-serif: "Playfair Display", Georgia, serif;
 }
 
 :root {
-  --background: #FDF8F5;
-  --foreground: #1A0A12;
-  --primary: #C2185B;
+  --background: #FFF7F9;
+  --foreground: #3D3438;
+  --primary: #D97894;
   --primary-foreground: #FFFFFF;
-  --primary-dark: #880E4F;
+  --primary-dark: #C45F7E;
   --gold: #D4A017;
   --card: #FFFFFF;
-  --card-foreground: #1A0A12;
+  --card-foreground: #3D3438;
   --popover: #FFFFFF;
-  --popover-foreground: #1A0A12;
-  --secondary: #F5EDE8;
-  --secondary-foreground: #1A0A12;
-  --muted: #F5EDE8;
-  --muted-foreground: #6B6B6B;
-  --accent: #F5EDE8;
-  --accent-foreground: #1A0A12;
+  --popover-foreground: #3D3438;
+  --secondary: #FCEEF2;
+  --secondary-foreground: #3D3438;
+  --muted: #FCEEF2;
+  --muted-foreground: #7A6E72;
+  --accent: #FCEEF2;
+  --accent-foreground: #3D3438;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #EDE0D8;
-  --input: #EDE0D8;
-  --ring: #C2185B;
+  --border: #F0D6E0;
+  --input: #F0D6E0;
+  --ring: #D97894;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
   --radius: 0.625rem;
-  --sidebar: #FDF8F5;
-  --sidebar-foreground: #1A0A12;
-  --sidebar-primary: #C2185B;
+  --sidebar: #FFF7F9;
+  --sidebar-foreground: #3D3438;
+  --sidebar-primary: #D97894;
   --sidebar-primary-foreground: #FFFFFF;
-  --sidebar-accent: #F5EDE8;
-  --sidebar-accent-foreground: #1A0A12;
-  --sidebar-border: #EDE0D8;
-  --sidebar-ring: #C2185B;
+  --sidebar-accent: #FCEEF2;
+  --sidebar-accent-foreground: #3D3438;
+  --sidebar-border: #F0D6E0;
+  --sidebar-ring: #D97894;
 }
 
 .dark {
@@ -131,22 +131,22 @@
   --accent: #3D1028;
   --accent-foreground: #FDF8F5;
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
+  --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 15%);
-  --ring: #E05490;
+  --ring: #E896B0;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
-  --sidebar: #2D0A1E;
-  --sidebar-foreground: #FDF8F5;
-  --sidebar-primary: #E05490;
-  --sidebar-primary-foreground: #FDF8F5;
-  --sidebar-accent: #3D1028;
-  --sidebar-accent-foreground: #FDF8F5;
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: #E05490;
+  --sidebar: #453E42;
+  --sidebar-foreground: #FFF7F9;
+  --sidebar-primary: #E896B0;
+  --sidebar-primary-foreground: #FFF7F9;
+  --sidebar-accent: #524A4F;
+  --sidebar-accent-foreground: #FFF7F9;
+  --sidebar-border: oklch(1 0 0 / 12%);
+  --sidebar-ring: #E896B0;
 }
 
 /* =====================
@@ -170,8 +170,8 @@ body {
   overflow-x: hidden;
   width: 100%;
   max-width: 100vw;
-  background-color: #FDF8F5;
-  color: #1A0A12;
+  background-color: #FFF7F9;
+  color: #3D3438;
   font-family: "Inter", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -179,7 +179,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "Playfair Display", Georgia, serif;
-  color: #1A0A12;
+  color: #3D3438;
 }
 
 /* Login brand panel: unlayered heading/body colors must not override layered utilities */
@@ -202,10 +202,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Row must size to duplicated content so translateX(-50%) == one full cycle (not 50% of viewport). */
-/* Explicit color: unlayered `span { color: inherit }` overrides layered Tailwind utilities. */
+/* Force readable dark text on the light pink bar (global `span { color: inherit }` + layers otherwise yield wrong color). */
 .ticker-animate {
   animation: ticker 30s linear infinite;
-  color: #ffffff;
+  color: #171717 !important;
   display: inline-flex;
   flex-wrap: nowrap;
   white-space: nowrap;
@@ -213,8 +213,12 @@ h1, h2, h3, h4, h5, h6 {
   min-width: max-content;
 }
 
+.ticker-animate span:not(.ticker-sep) {
+  color: #171717 !important;
+}
+
 .ticker-animate span.ticker-sep {
-  color: #d4a017;
+  color: #a16207 !important;
 }
 
 .ticker-animate > * {

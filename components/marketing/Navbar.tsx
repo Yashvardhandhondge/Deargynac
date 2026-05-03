@@ -4,11 +4,13 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
+import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
+
 const navLinks = [
-  { label: "Home", href: "#" },
-  { label: "Our Care", href: "#care" },
-  { label: "Our Team", href: "#team" },
-  { label: "About Platform", href: "#about" },
+  { label: "Home", href: "/" },
+  { label: "Our Care", href: "/services" },
+  { label: "Our Team", href: "/#team" },
+  { label: "About Platform", href: "/#about" },
 ];
 
 export default function Navbar() {
@@ -33,10 +35,10 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-baseline shrink-0">
-            <span className="font-serif font-bold text-xl text-[#1A0A12]">
+            <span className="font-serif font-bold text-xl text-[#3D3438]">
               Dear
             </span>
-            <span className="font-serif italic text-xl text-[#C2185B]">
+            <span className="font-serif italic text-xl text-[#D97894]">
               Gynac
             </span>
             <span className="text-[#D4A017] font-bold text-2xl leading-none">
@@ -50,24 +52,25 @@ export default function Navbar() {
               <a
                 key={link.label}
                 href={link.href}
-                className="text-sm font-medium text-gray-700 hover:text-[#C2185B] transition-colors"
+                className="text-sm font-medium text-gray-700 hover:text-[#D97894] transition-colors"
               >
                 {link.label}
               </a>
             ))}
-            <a
-              href="#book"
-              className="text-sm font-medium text-[#C2185B] hover:text-[#880E4F] transition-colors"
-            >
-              Book Consultation
-            </a>
-          </div>
-
-          {/* Desktop CTA */}
-          <div className="hidden md:block">
             <Link
               href="/patient/book"
-              className="inline-block bg-[#C2185B] text-white rounded-full px-6 py-2 text-sm font-semibold hover:bg-[#880E4F] hover:-translate-y-[1px] hover:shadow-lg transition-all"
+              className="text-sm font-medium text-[#D97894] hover:text-[#C45F7E] transition-colors"
+            >
+              Book Consultation
+            </Link>
+          </div>
+
+          {/* Language + Desktop CTA */}
+          <div className="hidden md:flex items-center gap-3">
+            <LanguageSwitcher />
+            <Link
+              href="/patient/book"
+              className="inline-block bg-[#D97894] text-white rounded-full px-6 py-2 text-sm font-semibold hover:bg-[#C45F7E] hover:-translate-y-[1px] hover:shadow-lg transition-all"
             >
               Consult Now
             </Link>
@@ -75,7 +78,7 @@ export default function Navbar() {
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden p-2 text-gray-700 hover:text-[#C2185B] transition-colors"
+            className="md:hidden p-2 text-gray-700 hover:text-[#D97894] transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
           >
@@ -95,23 +98,26 @@ export default function Navbar() {
             <a
               key={link.label}
               href={link.href}
-              className="block py-3 px-6 text-sm font-medium text-gray-700 hover:text-[#C2185B] hover:bg-gray-50 border-b border-gray-50 transition-colors"
+              className="block py-3 px-6 text-sm font-medium text-gray-700 hover:text-[#D97894] hover:bg-gray-50 border-b border-gray-50 transition-colors"
               onClick={() => setMobileOpen(false)}
             >
               {link.label}
             </a>
           ))}
-          <a
-            href="#book"
-            className="block py-3 px-6 text-sm font-medium text-[#C2185B] hover:bg-rose-50 border-b border-gray-50 transition-colors"
+          <Link
+            href="/patient/book"
+            className="block py-3 px-6 text-sm font-medium text-[#D97894] hover:bg-rose-50 border-b border-gray-50 transition-colors"
             onClick={() => setMobileOpen(false)}
           >
             Book Consultation
-          </a>
-          <div className="p-4">
+          </Link>
+          <div className="p-4 space-y-3">
+            <div className="flex justify-center">
+              <LanguageSwitcher />
+            </div>
             <Link
               href="/patient/book"
-              className="block text-center bg-[#C2185B] text-white rounded-full px-6 py-3 text-sm font-semibold hover:bg-[#880E4F] transition-colors"
+              className="block text-center bg-[#D97894] text-white rounded-full px-6 py-3 text-sm font-semibold hover:bg-[#C45F7E] transition-colors"
               onClick={() => setMobileOpen(false)}
             >
               Consult Now

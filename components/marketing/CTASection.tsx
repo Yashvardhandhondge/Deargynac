@@ -3,22 +3,25 @@
 import Link from "next/link";
 import { useIsMobile } from "@/hooks/useWindowSize";
 
+const ink = "#3D3438";
+const pink = "#D97894";
+
 export default function CTASection() {
   const isMobile = useIsMobile();
   return (
     <section
       style={{
         padding: isMobile ? "3rem 1.5rem" : "5rem 1rem",
-        background: "linear-gradient(to right, #880E4F, #C2185B, #9C27B0)",
+        background: "linear-gradient(135deg, #FFF5F8 0%, #FFE8F0 45%, #F8D0E0 100%)",
         overflow: "hidden",
       }}
     >
       <div style={{ maxWidth: "56rem", marginLeft: "auto", marginRight: "auto", textAlign: "center" }}>
-        <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "3rem", marginBottom: "1rem" }}>&hearts;</div>
+        <div style={{ color: "rgba(217, 120, 148, 0.45)", fontSize: "3rem", marginBottom: "1rem" }}>&hearts;</div>
 
         <h2
           style={{
-            color: "white",
+            color: ink,
             fontSize: "clamp(1.75rem, 6vw, 3rem)",
             fontWeight: 700,
             fontFamily: '"Playfair Display", Georgia, serif',
@@ -28,7 +31,7 @@ export default function CTASection() {
         </h2>
         <h2
           style={{
-            color: "white",
+            color: ink,
             fontStyle: "italic",
             fontSize: "clamp(1.75rem, 6vw, 3rem)",
             fontWeight: 700,
@@ -39,23 +42,43 @@ export default function CTASection() {
           And Neither Should You.
         </h2>
 
-        <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "1.125rem", marginTop: "1.5rem", maxWidth: "42rem", marginLeft: "auto", marginRight: "auto" }}>
+        <p
+          style={{
+            color: "rgba(61, 52, 56, 0.82)",
+            fontSize: "1.125rem",
+            marginTop: "1.5rem",
+            maxWidth: "42rem",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+        >
           Join thousands of women across India who are taking charge of their
           health — privately, confidently, and on their own terms.
         </p>
 
-        <div style={{ marginTop: "2.5rem", display: "flex", flexDirection: isMobile ? "column" : "row", gap: "1rem", justifyContent: "center", flexWrap: "wrap", alignItems: "center" }}>
+        <div
+          style={{
+            marginTop: "2.5rem",
+            display: "flex",
+            flexDirection: isMobile ? "column" : "row",
+            gap: "1rem",
+            justifyContent: "center",
+            flexWrap: "wrap",
+            alignItems: "center",
+          }}
+        >
           <Link
             href="/patient/book"
             style={{
-              backgroundColor: "white",
-              color: "#C2185B",
+              backgroundColor: pink,
+              color: "#ffffff",
               fontWeight: 600,
               borderRadius: "9999px",
               padding: "1rem 2rem",
               textDecoration: "none",
               width: isMobile ? "100%" : "auto",
               textAlign: "center",
+              boxShadow: "0 4px 14px rgba(217, 120, 148, 0.35)",
             }}
           >
             Book Anonymous Consultation
@@ -63,8 +86,9 @@ export default function CTASection() {
           <a
             href="#care"
             style={{
-              border: "2px solid white",
-              color: "white",
+              border: `2px solid ${pink}`,
+              color: pink,
+              backgroundColor: "rgba(255, 255, 255, 0.75)",
               borderRadius: "9999px",
               padding: "1rem 2rem",
               fontWeight: 600,
@@ -77,7 +101,7 @@ export default function CTASection() {
           </a>
         </div>
 
-        <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.875rem", marginTop: "1.5rem" }}>
+        <p style={{ color: "rgba(61, 52, 56, 0.55)", fontSize: "0.875rem", marginTop: "1.5rem" }}>
           No credit card required &middot; Free first health assessment
         </p>
       </div>

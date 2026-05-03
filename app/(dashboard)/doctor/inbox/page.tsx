@@ -18,13 +18,18 @@ interface ConsultationItem {
 const conditionLabels: Record<string, string> = {
   pcos: 'PCOS / Hormones', periods: 'Period Problems', uti: 'UTI / Infections',
   discharge: 'Unusual Discharge', pain: 'Pelvic Pain', pregnancy: 'Pregnancy Care',
-  diagnostics: 'Diagnostics Review', other: 'Other Concern',
+  diagnostics: 'Diagnostics Review', fertility: 'Fertility & Conception',
+  hormone: 'Hormone & Cycle Health', ayurvedic: 'Ayurvedic / Integrative',
+  mental: 'Mental & Sexual Wellness', other: 'Other Concern',
 };
 
 const conditionColors: Record<string, string> = {
   pcos: 'bg-rose-100 text-rose-700', periods: 'bg-purple-100 text-purple-700',
   uti: 'bg-red-100 text-red-700', pregnancy: 'bg-pink-100 text-pink-700',
-  other: 'bg-gray-100 text-gray-700',
+  discharge: 'bg-blue-100 text-blue-700', pain: 'bg-red-100 text-red-800',
+  diagnostics: 'bg-amber-100 text-amber-800', fertility: 'bg-cyan-100 text-cyan-800',
+  hormone: 'bg-violet-100 text-violet-800', ayurvedic: 'bg-emerald-100 text-emerald-800',
+  mental: 'bg-fuchsia-100 text-fuchsia-800', other: 'bg-gray-100 text-gray-700',
 };
 
 const statusColors: Record<string, string> = {
@@ -83,11 +88,11 @@ export default function DoctorInbox() {
   return (
     <div className="max-w-3xl mx-auto">
       <div className="flex items-center gap-3 mb-6">
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#1A0A12', fontFamily: '"Playfair Display", Georgia, serif' }}>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#3D3438', fontFamily: '"Playfair Display", Georgia, serif' }}>
           Case Inbox
         </h2>
         {pendingCount > 0 && (
-          <span className="bg-[#C2185B] text-white text-xs font-bold px-2.5 py-1 rounded-full">
+          <span className="bg-[#D97894] text-white text-xs font-bold px-2.5 py-1 rounded-full">
             {pendingCount}
           </span>
         )}
@@ -147,7 +152,7 @@ export default function DoctorInbox() {
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <p className="text-sm font-semibold text-[#1A0A12]">{patientName}</p>
+                  <p className="text-sm font-semibold text-[#3D3438]">{patientName}</p>
                   {c.patientId?.isAnonymous && (
                     <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">Anonymous</span>
                   )}
@@ -167,7 +172,7 @@ export default function DoctorInbox() {
                   </span>
                   <button
                     onClick={() => router.push(`/doctor/consultation/${c._id}`)}
-                    className="bg-[#C2185B] text-white rounded-full px-4 py-1.5 text-xs font-semibold hover:bg-[#880E4F] transition-colors"
+                    className="bg-[#D97894] text-white rounded-full px-4 py-1.5 text-xs font-semibold hover:bg-[#C45F7E] transition-colors"
                   >
                     Respond to Case →
                   </button>

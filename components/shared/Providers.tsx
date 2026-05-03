@@ -2,6 +2,7 @@
 
 import type { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
+import { LanguageProvider } from "@/context/LanguageContext";
 
 export default function Providers({
   children,
@@ -16,7 +17,7 @@ export default function Providers({
       refetchInterval={0}
       refetchOnWindowFocus={false}
     >
-      {children}
+      <LanguageProvider>{children}</LanguageProvider>
     </SessionProvider>
   );
 }

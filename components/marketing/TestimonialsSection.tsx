@@ -32,7 +32,7 @@ const testimonials = [
 export default function TestimonialsSection() {
   const isMobile = useIsMobile();
   return (
-    <section style={{ backgroundColor: "#FDF8F5", padding: "6rem 0" }}>
+    <section style={{ backgroundColor: "#FFF7F9", padding: "6rem 0" }}>
       <div style={{ maxWidth: "80rem", marginLeft: "auto", marginRight: "auto", padding: "0 1rem" }}>
         {/* Header */}
         <div style={{ textAlign: "center" }}>
@@ -46,7 +46,7 @@ export default function TestimonialsSection() {
               fontWeight: 600,
               textTransform: "uppercase",
               letterSpacing: "0.1em",
-              color: "#C2185B",
+              color: "#D97894",
               border: "1px solid rgba(194, 24, 91, 0.3)",
               backgroundColor: "rgba(194, 24, 91, 0.05)",
             }}
@@ -58,7 +58,7 @@ export default function TestimonialsSection() {
             style={{
               fontSize: "clamp(1.75rem, 5vw, 3rem)",
               fontWeight: 700,
-              color: "#1A0A12",
+              color: "#3D3438",
               fontFamily: '"Playfair Display", Georgia, serif',
               marginTop: "1rem",
             }}
@@ -111,7 +111,7 @@ export default function TestimonialsSection() {
                   {t.initial}
                 </div>
                 <div>
-                  <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "#1A0A12" }}>
+                  <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "#3D3438" }}>
                     {t.name}
                   </div>
                   <div style={{ fontSize: "0.875rem", color: "#9CA3AF" }}>{t.city}</div>
@@ -124,7 +124,7 @@ export default function TestimonialsSection() {
         {/* Bottom rating */}
         <div style={{ textAlign: "center", marginTop: "4rem" }}>
           <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center", gap: "0.25rem" }}>
-            <span style={{ fontSize: "3.75rem", fontWeight: 700, color: "#1A0A12", fontFamily: '"Playfair Display", Georgia, serif' }}>
+            <span style={{ fontSize: "3.75rem", fontWeight: 700, color: "#3D3438", fontFamily: '"Playfair Display", Georgia, serif' }}>
               4.9
             </span>
             <span style={{ fontSize: "1.5rem", color: "#9CA3AF" }}>/5</span>

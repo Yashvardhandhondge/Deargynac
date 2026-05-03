@@ -12,9 +12,35 @@ interface ConsultationRow {
   doctorId?: { name: string };
 }
 
-const conditionColors: Record<string, string> = { pcos: "bg-rose-100 text-rose-700", periods: "bg-purple-100 text-purple-700", uti: "bg-red-100 text-red-700", pregnancy: "bg-pink-100 text-pink-700", other: "bg-gray-100 text-gray-700" };
+const conditionColors: Record<string, string> = {
+  pcos: "bg-rose-100 text-rose-700",
+  periods: "bg-purple-100 text-purple-700",
+  uti: "bg-red-100 text-red-700",
+  discharge: "bg-blue-100 text-blue-700",
+  pain: "bg-red-100 text-red-800",
+  pregnancy: "bg-pink-100 text-pink-700",
+  diagnostics: "bg-amber-100 text-amber-800",
+  fertility: "bg-cyan-100 text-cyan-800",
+  hormone: "bg-violet-100 text-violet-800",
+  ayurvedic: "bg-emerald-100 text-emerald-800",
+  mental: "bg-fuchsia-100 text-fuchsia-800",
+  other: "bg-gray-100 text-gray-700",
+};
 const statusColors: Record<string, string> = { pending: "bg-amber-100 text-amber-700", active: "bg-blue-100 text-blue-700", completed: "bg-green-100 text-green-700", cancelled: "bg-red-100 text-red-700", escalated: "bg-red-100 text-red-700" };
-const conditionLabels: Record<string, string> = { pcos: "PCOS", periods: "Periods", uti: "UTI", discharge: "Discharge", pain: "Pain", pregnancy: "Pregnancy", diagnostics: "Diagnostics", other: "Other" };
+const conditionLabels: Record<string, string> = {
+  pcos: "PCOS",
+  periods: "Periods",
+  uti: "UTI",
+  discharge: "Discharge",
+  pain: "Pain",
+  pregnancy: "Pregnancy",
+  diagnostics: "Diagnostics",
+  fertility: "Fertility",
+  hormone: "Hormone",
+  ayurvedic: "Ayurvedic",
+  mental: "Mental",
+  other: "Other",
+};
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -42,7 +68,7 @@ export default function AdminDashboard() {
   useEffect(() => { if (sessionStatus === 'authenticated') fetchData(); }, [sessionStatus]);
 
   const statCards = stats ? [
-    { label: "Total Users", value: stats.totalUsers, icon: Users, color: "text-[#C2185B]", bg: "bg-rose-50" },
+    { label: "Total Users", value: stats.totalUsers, icon: Users, color: "text-[#D97894]", bg: "bg-rose-50" },
     { label: "Total Consultations", value: stats.totalConsultations, icon: ClipboardList, color: "text-blue-600", bg: "bg-blue-50" },
     { label: "Active Right Now", value: stats.activeNow, icon: Activity, color: "text-green-600", bg: "bg-green-50" },
     { label: "SLA Breaches Today", value: stats.slaBreachesToday, icon: AlertTriangle, color: "text-amber-600", bg: stats.slaBreachesToday > 0 ? "bg-red-50" : "bg-amber-50" },
@@ -65,8 +91,8 @@ export default function AdminDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
         <div className="lg:col-span-2 bg-white rounded-2xl p-6 border border-gray-100">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-[#1A0A12] font-serif">Recent Consultations</h3>
-            <button onClick={() => router.push("/admin/consultations")} className="text-sm text-[#C2185B] font-semibold hover:text-[#880E4F]">View All &rarr;</button>
+            <h3 className="font-semibold text-[#3D3438] font-serif">Recent Consultations</h3>
+            <button onClick={() => router.push("/admin/consultations")} className="text-sm text-[#D97894] font-semibold hover:text-[#C45F7E]">View All &rarr;</button>
           </div>
           {loading ? <div className="space-y-3">{[1,2,3].map((i) => <div key={i} className="h-12 bg-gray-50 rounded animate-pulse" />)}</div> :
           <div className="overflow-x-auto">
@@ -79,7 +105,7 @@ export default function AdminDashboard() {
                 const pName = c.patientId?.isAnonymous ? c.patientId.alias : c.patientId?.name || "—";
                 return (
                   <tr key={c._id} className="border-b border-gray-50 hover:bg-gray-50/50">
-                    <td className="py-2.5 font-medium text-[#1A0A12] max-w-[120px] truncate">{pName}</td>
+                    <td className="py-2.5 font-medium text-[#3D3438] max-w-[120px] truncate">{pName}</td>
                     <td className="py-2.5 text-gray-500">{c.doctorId?.name || <span className="text-gray-300">Unassigned</span>}</td>
                     <td className="py-2.5"><span className={`text-xs px-2 py-0.5 rounded-full font-medium ${conditionColors[c.condition] || "bg-gray-100 text-gray-700"}`}>{conditionLabels[c.condition] || c.condition}</span></td>
                     <td className="py-2.5"><span className={`text-xs px-2 py-0.5 rounded-full font-medium ${statusColors[c.status] || "bg-gray-100 text-gray-600"}`}>{c.status}</span></td>
@@ -93,7 +119,7 @@ export default function AdminDashboard() {
 
         <div className="bg-white rounded-2xl p-6 border border-gray-100">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-[#1A0A12] font-serif">System Health</h3>
+            <h3 className="font-semibold text-[#3D3438] font-serif">System Health</h3>
             <button onClick={fetchData} className="p-1.5 text-gray-400 hover:text-gray-600"><RefreshCw className="w-4 h-4" /></button>
           </div>
           <div className="space-y-4">
@@ -105,7 +131,7 @@ export default function AdminDashboard() {
             </div>
             <div className="flex items-center justify-between text-sm">
               <span className="text-gray-500">Active Doctors</span>
-              <span className="font-medium text-[#1A0A12]">3</span>
+              <span className="font-medium text-[#3D3438]">3</span>
             </div>
             <div className="flex items-center justify-between text-sm">
               <span className="text-gray-500">Pending SLA</span>
@@ -113,7 +139,7 @@ export default function AdminDashboard() {
             </div>
             <div className="flex items-center justify-between text-sm">
               <span className="text-gray-500">Today&apos;s Revenue</span>
-              <span className="font-medium text-[#1A0A12]">&#8377;0</span>
+              <span className="font-medium text-[#3D3438]">&#8377;0</span>
             </div>
           </div>
           <p className="text-xs text-gray-400 mt-4">Last updated: {lastUpdated}</p>

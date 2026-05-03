@@ -11,7 +11,20 @@ interface Breach {
 }
 interface Doctor { _id: string; name: string; specialty?: string }
 
-const conditionLabels: Record<string, string> = { pcos: "PCOS", periods: "Periods", uti: "UTI", discharge: "Discharge", pain: "Pain", pregnancy: "Pregnancy", diagnostics: "Diagnostics", other: "Other" };
+const conditionLabels: Record<string, string> = {
+  pcos: "PCOS",
+  periods: "Periods",
+  uti: "UTI",
+  discharge: "Discharge",
+  pain: "Pain",
+  pregnancy: "Pregnancy",
+  diagnostics: "Diagnostics",
+  fertility: "Fertility",
+  hormone: "Hormone",
+  ayurvedic: "Ayurvedic",
+  mental: "Mental",
+  other: "Other",
+};
 
 export default function SlaMonitorPage() {
   const [breaches, setBreaches] = useState<Breach[]>([]);
@@ -82,7 +95,7 @@ export default function SlaMonitorPage() {
       <div className="bg-white rounded-2xl border border-gray-100 mt-6">
         <div className="flex items-center justify-between p-6 border-b border-gray-100">
           <div className="flex items-center gap-2">
-            <h3 className="font-semibold text-[#1A0A12] font-serif">Active SLA Breaches</h3>
+            <h3 className="font-semibold text-[#3D3438] font-serif">Active SLA Breaches</h3>
             {breaches.length > 0 && <span className="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">{breaches.length}</span>}
           </div>
           <span className="text-xs text-gray-400">Refreshing in 00:{countdown.toString().padStart(2, "0")}</span>
@@ -102,7 +115,7 @@ export default function SlaMonitorPage() {
                 const pName = b.patientId?.isAnonymous ? b.patientId.alias : b.patientId?.name || "—";
                 return (
                   <tr key={b._id} className="border-b border-gray-50">
-                    <td className="px-4 py-3 font-medium text-[#1A0A12]">{pName}</td>
+                    <td className="px-4 py-3 font-medium text-[#3D3438]">{pName}</td>
                     <td className="px-4 py-3 text-gray-500">{b.doctorId?.name || "Unassigned"}</td>
                     <td className="px-4 py-3 text-xs">{conditionLabels[b.condition] || b.condition}</td>
                     <td className="px-4 py-3 text-xs text-gray-400">{new Date(b.createdAt).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })}</td>
@@ -122,14 +135,14 @@ export default function SlaMonitorPage() {
           <div className="absolute inset-0 bg-black/30" onClick={() => setReassignId(null)} />
           <div className="relative bg-white rounded-2xl p-6 w-full max-w-sm mx-4 shadow-xl">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-[#1A0A12]">Reassign Doctor</h3>
+              <h3 className="font-bold text-[#3D3438]">Reassign Doctor</h3>
               <button onClick={() => setReassignId(null)} className="p-1 text-gray-400 hover:text-gray-600"><XIcon className="w-5 h-5" /></button>
             </div>
-            <select value={selectedDoctor} onChange={(e) => setSelectedDoctor(e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm bg-white focus:ring-2 focus:ring-[#C2185B] outline-none">
+            <select value={selectedDoctor} onChange={(e) => setSelectedDoctor(e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm bg-white focus:ring-2 focus:ring-[#D97894] outline-none">
               <option value="">Select a doctor...</option>
               {doctors.map((d) => <option key={d._id} value={d._id}>{d.name} — {d.specialty}</option>)}
             </select>
-            <button onClick={handleReassign} disabled={!selectedDoctor || reassigning} className="w-full bg-[#C2185B] text-white rounded-full py-2.5 font-semibold mt-4 hover:bg-[#880E4F] disabled:opacity-50 flex items-center justify-center gap-2">
+            <button onClick={handleReassign} disabled={!selectedDoctor || reassigning} className="w-full bg-[#D97894] text-white rounded-full py-2.5 font-semibold mt-4 hover:bg-[#C45F7E] disabled:opacity-50 flex items-center justify-center gap-2">
               {reassigning ? <><Loader2 className="w-4 h-4 animate-spin" /> Reassigning...</> : "Reassign Doctor"}
             </button>
           </div>

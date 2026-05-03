@@ -49,6 +49,10 @@ const conditionLabels: Record<string, string> = {
   pain: "Pelvic Pain",
   pregnancy: "Pregnancy Care",
   diagnostics: "Diagnostics Review",
+  fertility: "Fertility & Conception",
+  hormone: "Hormone & Cycle Health",
+  ayurvedic: "Ayurvedic / Integrative",
+  mental: "Mental & Sexual Wellness",
   other: "Other Concern",
 };
 
@@ -56,7 +60,14 @@ const conditionColors: Record<string, string> = {
   pcos: "bg-rose-100 text-rose-700",
   periods: "bg-purple-100 text-purple-700",
   uti: "bg-red-100 text-red-700",
+  discharge: "bg-blue-100 text-blue-700",
+  pain: "bg-red-100 text-red-800",
   pregnancy: "bg-pink-100 text-pink-700",
+  diagnostics: "bg-amber-100 text-amber-800",
+  fertility: "bg-cyan-100 text-cyan-800",
+  hormone: "bg-violet-100 text-violet-800",
+  ayurvedic: "bg-emerald-100 text-emerald-800",
+  mental: "bg-fuchsia-100 text-fuchsia-800",
   other: "bg-gray-100 text-gray-700",
 };
 
@@ -244,7 +255,7 @@ export default function DoctorConsultationPage() {
               {patientInitial}
             </div>
             <div>
-              <p className="font-bold text-[#1A0A12] text-sm">{patientName}</p>
+              <p className="font-bold text-[#3D3438] text-sm">{patientName}</p>
               <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Patient</span>
             </div>
           </div>
@@ -262,7 +273,7 @@ export default function DoctorConsultationPage() {
             <div>
               <button
                 onClick={() => setIntakeOpen(!intakeOpen)}
-                className="flex items-center justify-between w-full text-sm font-semibold text-[#1A0A12]"
+                className="flex items-center justify-between w-full text-sm font-semibold text-[#3D3438]"
               >
                 Intake Form
                 {intakeOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
@@ -272,7 +283,7 @@ export default function DoctorConsultationPage() {
                   {Object.entries(consultation.intakeForm).map(([key, val]) => (
                     <div key={key}>
                       <span className="text-xs text-gray-400 uppercase">{key.replace(/([A-Z])/g, " $1")}</span>
-                      <p className="text-sm text-[#1A0A12] font-medium">
+                      <p className="text-sm text-[#3D3438] font-medium">
                         {Array.isArray(val) ? val.join(", ") : String(val)}
                       </p>
                     </div>
@@ -296,7 +307,7 @@ export default function DoctorConsultationPage() {
             <div className="space-y-2">
               <button
                 onClick={() => router.push(`/doctor/consultation/${id}/prescribe`)}
-                className="w-full bg-[#C2185B] text-white rounded-xl py-2.5 text-sm font-semibold hover:bg-[#880E4F] transition-colors flex items-center justify-center gap-2"
+                className="w-full bg-[#D97894] text-white rounded-xl py-2.5 text-sm font-semibold hover:bg-[#C45F7E] transition-colors flex items-center justify-center gap-2"
               >
                 <FileText className="w-4 h-4" /> Write Prescription
               </button>
@@ -322,7 +333,7 @@ export default function DoctorConsultationPage() {
         <div className="bg-white rounded-2xl border border-gray-100 flex flex-col h-[650px]">
           <div className="p-4 border-b border-gray-100 flex items-center justify-between">
             <div>
-              <h3 className="font-bold text-[#1A0A12]">Consultation Chat</h3>
+              <h3 className="font-bold text-[#3D3438]">Consultation Chat</h3>
               <p className="text-xs text-gray-400">{patientName}</p>
             </div>
             <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
@@ -348,7 +359,7 @@ export default function DoctorConsultationPage() {
                     </p>
                     <div className={`px-4 py-3 text-sm ${
                       isDoctor
-                        ? "bg-[#C2185B] text-white rounded-2xl rounded-tr-sm"
+                        ? "bg-[#D97894] text-white rounded-2xl rounded-tr-sm"
                         : "bg-gray-50 border rounded-2xl rounded-tl-sm text-gray-800"
                     }`}>
                       <p className="whitespace-pre-wrap">{msg.content}</p>
@@ -375,12 +386,12 @@ export default function DoctorConsultationPage() {
                     onKeyDown={handleKeyDown}
                     rows={3}
                     placeholder="Type your medical response... (Ctrl+Enter to send)"
-                    className="flex-1 border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#C2185B] focus:border-[#C2185B] outline-none resize-none"
+                    className="flex-1 border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#D97894] focus:border-[#D97894] outline-none resize-none"
                   />
                   <button
                     onClick={handleSend}
                     disabled={!newMessage.trim() || sending}
-                    className="w-10 h-10 rounded-full bg-[#C2185B] text-white flex items-center justify-center hover:bg-[#880E4F] disabled:opacity-50 transition-colors shrink-0"
+                    className="w-10 h-10 rounded-full bg-[#D97894] text-white flex items-center justify-center hover:bg-[#C45F7E] disabled:opacity-50 transition-colors shrink-0"
                   >
                     <ArrowUp className="w-5 h-5" />
                   </button>
@@ -390,7 +401,7 @@ export default function DoctorConsultationPage() {
                     <button
                       key={qr}
                       onClick={() => setNewMessage((prev) => prev ? prev + "\n" + qr : qr)}
-                      className="text-xs px-3 py-1 rounded-full border border-gray-200 text-gray-500 hover:border-[#C2185B] hover:text-[#C2185B] transition-colors"
+                      className="text-xs px-3 py-1 rounded-full border border-gray-200 text-gray-500 hover:border-[#D97894] hover:text-[#D97894] transition-colors"
                     >
                       {qr}
                     </button>
@@ -405,23 +416,23 @@ export default function DoctorConsultationPage() {
       {/* RIGHT: Notes */}
       <div className="lg:col-span-3">
         <div className="bg-white rounded-2xl p-5 border border-gray-100 sticky top-6 space-y-4">
-          <h3 className="font-bold text-[#1A0A12]">Clinical Notes</h3>
+          <h3 className="font-bold text-[#3D3438]">Clinical Notes</h3>
           <textarea
             value={clinicalNotes}
             onChange={(e) => setClinicalNotes(e.target.value)}
             rows={6}
             placeholder="Add private notes (not visible to patient)..."
-            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-[#C2185B] outline-none resize-none"
+            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:ring-2 focus:ring-[#D97894] outline-none resize-none"
           />
           <button
             onClick={() => toast.success("Notes saved")}
-            className="w-full border border-[#C2185B] text-[#C2185B] rounded-xl py-2 text-sm font-semibold hover:bg-rose-50 transition-colors"
+            className="w-full border border-[#D97894] text-[#D97894] rounded-xl py-2 text-sm font-semibold hover:bg-rose-50 transition-colors"
           >
             Save Notes
           </button>
 
           <div className="border-t border-gray-100 pt-4">
-            <h4 className="text-sm font-semibold text-[#1A0A12] mb-2">Prescription Status</h4>
+            <h4 className="text-sm font-semibold text-[#3D3438] mb-2">Prescription Status</h4>
             {consultation.prescription ? (
               <div className="flex items-center gap-2 text-sm text-green-600">
                 <CheckCircle className="w-4 h-4" />
@@ -433,7 +444,7 @@ export default function DoctorConsultationPage() {
                 {!isCompleted && (
                   <button
                     onClick={() => router.push(`/doctor/consultation/${id}/prescribe`)}
-                    className="text-sm text-[#C2185B] font-semibold mt-1 hover:text-[#880E4F]"
+                    className="text-sm text-[#D97894] font-semibold mt-1 hover:text-[#C45F7E]"
                   >
                     Write Prescription &rarr;
                   </button>
@@ -443,7 +454,7 @@ export default function DoctorConsultationPage() {
           </div>
 
           <div className="border-t border-gray-100 pt-4">
-            <h4 className="text-sm font-semibold text-[#1A0A12] mb-2">Patient History</h4>
+            <h4 className="text-sm font-semibold text-[#3D3438] mb-2">Patient History</h4>
             <p className="text-sm text-gray-400">No previous consultations</p>
           </div>
         </div>

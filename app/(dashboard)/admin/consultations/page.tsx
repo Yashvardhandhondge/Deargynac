@@ -10,9 +10,22 @@ interface ConsultationRow {
 }
 
 const statuses = ["all", "pending", "active", "completed", "escalated", "cancelled"];
-const conditions = ["all", "pcos", "periods", "uti", "discharge", "pain", "pregnancy", "diagnostics", "other"];
-const conditionLabels: Record<string, string> = { pcos: "PCOS", periods: "Periods", uti: "UTI", discharge: "Discharge", pain: "Pain", pregnancy: "Pregnancy", diagnostics: "Diagnostics", other: "Other" };
-const conditionColors: Record<string, string> = { pcos: "bg-rose-100 text-rose-700", periods: "bg-purple-100 text-purple-700", uti: "bg-red-100 text-red-700", pregnancy: "bg-pink-100 text-pink-700" };
+const conditions = ["all", "pcos", "periods", "uti", "discharge", "pain", "pregnancy", "diagnostics", "fertility", "hormone", "ayurvedic", "mental", "other"];
+const conditionLabels: Record<string, string> = { pcos: "PCOS", periods: "Periods", uti: "UTI", discharge: "Discharge", pain: "Pain", pregnancy: "Pregnancy", diagnostics: "Diagnostics", fertility: "Fertility", hormone: "Hormone", ayurvedic: "Ayurvedic", mental: "Mental", other: "Other" };
+const conditionColors: Record<string, string> = {
+  pcos: "bg-rose-100 text-rose-700",
+  periods: "bg-purple-100 text-purple-700",
+  uti: "bg-red-100 text-red-700",
+  discharge: "bg-blue-100 text-blue-700",
+  pain: "bg-red-100 text-red-800",
+  pregnancy: "bg-pink-100 text-pink-700",
+  diagnostics: "bg-amber-100 text-amber-800",
+  fertility: "bg-cyan-100 text-cyan-800",
+  hormone: "bg-violet-100 text-violet-800",
+  ayurvedic: "bg-emerald-100 text-emerald-800",
+  mental: "bg-fuchsia-100 text-fuchsia-800",
+  other: "bg-gray-100 text-gray-700",
+};
 const statusColors: Record<string, string> = { pending: "bg-amber-100 text-amber-700", active: "bg-blue-100 text-blue-700", completed: "bg-green-100 text-green-700", cancelled: "bg-red-100 text-red-700", escalated: "bg-red-100 text-red-700" };
 
 export default function AdminConsultationsPage() {
@@ -51,11 +64,11 @@ export default function AdminConsultationsPage() {
         <div className="flex gap-1 flex-wrap">
           {statuses.map((s) => (
             <button key={s} onClick={() => { setStatusFilter(s); setPage(1); }}
-              className={`text-xs px-3 py-1.5 rounded-full font-medium transition-colors capitalize ${statusFilter === s ? "bg-[#C2185B] text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>{s}</button>
+              className={`text-xs px-3 py-1.5 rounded-full font-medium transition-colors capitalize ${statusFilter === s ? "bg-[#D97894] text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}>{s}</button>
           ))}
         </div>
         <select value={conditionFilter} onChange={(e) => { setConditionFilter(e.target.value); setPage(1); }}
-          className="border border-gray-300 rounded-lg px-3 py-1.5 text-sm bg-white focus:ring-2 focus:ring-[#C2185B] outline-none">
+          className="border border-gray-300 rounded-lg px-3 py-1.5 text-sm bg-white focus:ring-2 focus:ring-[#D97894] outline-none">
           {conditions.map((c) => <option key={c} value={c}>{c === "all" ? "All Conditions" : conditionLabels[c] || c}</option>)}
         </select>
         <div className="flex items-center gap-2 border border-gray-300 rounded-lg px-3 py-1.5">
@@ -63,7 +76,7 @@ export default function AdminConsultationsPage() {
           <input value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); }} placeholder="Search patient..." className="text-sm outline-none bg-transparent w-40" />
         </div>
         {(statusFilter !== "all" || conditionFilter !== "all" || search) && (
-          <button onClick={() => { setStatusFilter("all"); setConditionFilter("all"); setSearch(""); setPage(1); }} className="text-xs text-[#C2185B] font-medium">Clear Filters</button>
+          <button onClick={() => { setStatusFilter("all"); setConditionFilter("all"); setSearch(""); setPage(1); }} className="text-xs text-[#D97894] font-medium">Clear Filters</button>
         )}
       </div>
 
@@ -81,7 +94,7 @@ export default function AdminConsultationsPage() {
               return (
                 <tr key={c._id} className="border-b border-gray-50 hover:bg-gray-50/50">
                   <td className="px-4 py-3 text-xs text-gray-400 font-mono">{c._id.slice(-6)}</td>
-                  <td className="px-4 py-3 font-medium text-[#1A0A12] max-w-[100px] truncate">{pName}</td>
+                  <td className="px-4 py-3 font-medium text-[#3D3438] max-w-[100px] truncate">{pName}</td>
                   <td className="px-4 py-3 text-gray-500">{c.doctorId?.name || <span className="text-gray-300">—</span>}</td>
                   <td className="px-4 py-3"><span className={`text-xs px-2 py-0.5 rounded-full font-medium ${conditionColors[c.condition] || "bg-gray-100 text-gray-700"}`}>{conditionLabels[c.condition] || c.condition}</span></td>
                   <td className="px-4 py-3"><span className={`text-xs px-2 py-0.5 rounded-full font-medium ${statusColors[c.status] || "bg-gray-100 text-gray-600"}`}>{c.status}</span></td>

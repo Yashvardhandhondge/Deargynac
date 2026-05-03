@@ -25,7 +25,7 @@ const features: PrivacyFeature[] = [
   {
     icon: Shield,
     iconBg: "#FDE8F0",
-    iconColor: "#C2185B",
+    iconColor: "#D97894",
     title: "DPDP Act 2023 Compliant",
     desc: "Full compliance with India\u2019s Digital Personal Data Protection Act. Your data is never sold or shared.",
   },
@@ -76,7 +76,7 @@ export default function PrivacySection() {
               fontWeight: 600,
               textTransform: "uppercase",
               letterSpacing: "0.1em",
-              color: "#C2185B",
+              color: "#D97894",
               border: "1px solid rgba(194, 24, 91, 0.3)",
               backgroundColor: "rgba(194, 24, 91, 0.05)",
             }}
@@ -88,14 +88,14 @@ export default function PrivacySection() {
             style={{
               fontSize: "clamp(1.75rem, 5vw, 3rem)",
               fontWeight: 700,
-              color: "#1A0A12",
+              color: "#3D3438",
               fontFamily: '"Playfair Display", Georgia, serif',
               marginTop: "1rem",
             }}
           >
             Privacy isn&apos;t just a feature.
             <br />
-            <span style={{ fontStyle: "italic", color: "#C2185B" }}>
+            <span style={{ fontStyle: "italic", color: "#D97894" }}>
               It&apos;s our foundation.
             </span>
           </h2>
@@ -131,7 +131,7 @@ export default function PrivacySection() {
                     <Icon style={{ width: "1.25rem", height: "1.25rem", color: feat.iconColor }} />
                   </div>
                   <div>
-                    <h3 style={{ fontWeight: 700, color: "#1A0A12", fontSize: "1rem" }}>
+                    <h3 style={{ fontWeight: 700, color: "#3D3438", fontSize: "1rem" }}>
                       {feat.title}
                     </h3>
                     <p style={{ fontSize: "0.875rem", color: "#4B5563", lineHeight: 1.6, marginTop: "0.25rem" }}>
@@ -158,7 +158,7 @@ export default function PrivacySection() {
                   transform: "translate(-50%, -50%)",
                   width: isMobile ? "8rem" : "12rem",
                   height: isMobile ? "8rem" : "12rem",
-                  backgroundColor: "#C2185B",
+                  backgroundColor: "#D97894",
                   borderRadius: "9999px",
                   display: "flex",
                   flexDirection: "column",
@@ -173,10 +173,10 @@ export default function PrivacySection() {
               </div>
 
               {/* Floating icons */}
-              <div style={{ position: "absolute", top: 0, right: "2rem", backgroundColor: "#880E4F", borderRadius: "9999px", padding: "0.5rem", boxShadow: "0 4px 12px rgba(0,0,0,0.15)" }}>
+              <div style={{ position: "absolute", top: 0, right: "2rem", backgroundColor: "#C45F7E", borderRadius: "9999px", padding: "0.5rem", boxShadow: "0 4px 12px rgba(0,0,0,0.15)" }}>
                 <Lock style={{ width: "1rem", height: "1rem", color: "white" }} />
               </div>
-              <div style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)", backgroundColor: "#E05490", borderRadius: "9999px", padding: "0.5rem", boxShadow: "0 4px 12px rgba(0,0,0,0.15)" }}>
+              <div style={{ position: "absolute", right: 0, top: "50%", transform: "translateY(-50%)", backgroundColor: "#E896B0", borderRadius: "9999px", padding: "0.5rem", boxShadow: "0 4px 12px rgba(0,0,0,0.15)" }}>
                 <ShieldAlert style={{ width: "1rem", height: "1rem", color: "white" }} />
               </div>
               <div style={{ position: "absolute", bottom: 0, right: "2rem", backgroundColor: "#9CA3AF", borderRadius: "9999px", padding: "0.5rem", boxShadow: "0 4px 12px rgba(0,0,0,0.15)" }}>

@@ -11,7 +11,7 @@ export default function HeroSection() {
     <section
       style={{
         minHeight: '100vh',
-        background: 'radial-gradient(ellipse at 80% 20%, rgba(194,24,91,0.07) 0%, transparent 60%), #FDF8F5',
+        background: 'radial-gradient(ellipse at 80% 20%, rgba(217,120,148,0.07) 0%, transparent 60%), #FFF7F9',
         position: 'relative',
         overflow: 'hidden',
       }}
@@ -54,18 +54,18 @@ export default function HeroSection() {
                 gap: '0.5rem',
                 padding: '0.5rem 1rem',
                 borderRadius: '9999px',
-                border: '1px solid rgba(194,24,91,0.3)',
-                backgroundColor: 'rgba(194,24,91,0.05)',
+                border: '1px solid rgba(217,120,148,0.3)',
+                backgroundColor: 'rgba(217,120,148,0.05)',
                 marginBottom: '1.5rem',
                 width: 'fit-content',
               }}
             >
-              <span style={{ color: '#C2185B', fontSize: '1rem' }}>🛡️</span>
+              <span style={{ color: '#D97894', fontSize: '1rem' }}>🛡️</span>
               <span
                 style={{
                   fontSize: '0.75rem',
                   fontWeight: '600',
-                  color: '#C2185B',
+                  color: '#D97894',
                 }}
               >
                 100% Confidential · Doctor-Led · Stigma-Free
@@ -79,7 +79,7 @@ export default function HeroSection() {
                   fontFamily: '"Playfair Display", Georgia, serif',
                   fontSize: 'clamp(2rem, 8vw, 4.5rem)',
                   fontWeight: '700',
-                  color: '#1A0A12',
+                  color: '#3D3438',
                   lineHeight: '1.1',
                   display: 'block',
                 }}
@@ -92,7 +92,7 @@ export default function HeroSection() {
                   fontSize: 'clamp(2rem, 8vw, 4.5rem)',
                   fontWeight: '700',
                   fontStyle: 'italic',
-                  color: '#C2185B',
+                  color: '#D97894',
                   lineHeight: '1.1',
                   display: 'block',
                 }}
@@ -104,7 +104,7 @@ export default function HeroSection() {
                   fontFamily: '"Playfair Display", Georgia, serif',
                   fontSize: 'clamp(2rem, 8vw, 4.5rem)',
                   fontWeight: '700',
-                  color: '#1A0A12',
+                  color: '#3D3438',
                   lineHeight: '1.1',
                   display: 'block',
                 }}
@@ -142,7 +142,7 @@ export default function HeroSection() {
               <button
                 onClick={() => router.push('/auth/login')}
                 style={{
-                  backgroundColor: '#C2185B',
+                  backgroundColor: '#D97894',
                   color: 'white',
                   borderRadius: '9999px',
                   padding: '1rem 2rem',
@@ -157,8 +157,8 @@ export default function HeroSection() {
                   transition: 'background-color 0.2s',
                   width: isMobile ? '100%' : 'auto',
                 }}
-                onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#880E4F')}
-                onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#C2185B')}
+                onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#C45F7E')}
+                onMouseLeave={e => (e.currentTarget.style.backgroundColor = '#D97894')}
               >
                 💬 Start Anonymous Consultation
               </button>
@@ -167,8 +167,8 @@ export default function HeroSection() {
                 onClick={() => router.push('/patient/book')}
                 style={{
                   backgroundColor: 'transparent',
-                  color: '#C2185B',
-                  border: '2px solid #C2185B',
+                  color: '#D97894',
+                  border: '2px solid #D97894',
                   borderRadius: '9999px',
                   padding: '1rem 2rem',
                   fontWeight: '600',
@@ -200,7 +200,7 @@ export default function HeroSection() {
                     style={{
                       fontSize: '1.75rem',
                       fontWeight: '700',
-                      color: '#C2185B',
+                      color: '#D97894',
                       fontFamily: '"Playfair Display", Georgia, serif',
                     }}
                   >
@@ -239,7 +239,7 @@ export default function HeroSection() {
                 position: 'absolute',
                 width: '360px',
                 height: '360px',
-                border: '2px solid rgba(194,24,91,0.12)',
+                border: '2px solid rgba(217,120,148,0.12)',
                 borderRadius: '50%',
               }}
             />
@@ -248,7 +248,7 @@ export default function HeroSection() {
                 position: 'absolute',
                 width: '220px',
                 height: '220px',
-                backgroundColor: 'rgba(194,24,91,0.05)',
+                backgroundColor: 'rgba(217,120,148,0.05)',
                 borderRadius: '50%',
               }}
             />
@@ -277,7 +277,7 @@ export default function HeroSection() {
                   width: '40px',
                   height: '40px',
                   borderRadius: '50%',
-                  backgroundColor: '#C2185B',
+                  backgroundColor: '#D97894',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
@@ -290,7 +290,7 @@ export default function HeroSection() {
                 SP
               </div>
               <div>
-                <div style={{ fontWeight: '600', fontSize: '0.875rem', color: '#1A0A12' }}>
+                <div style={{ fontWeight: '600', fontSize: '0.875rem', color: '#3D3438' }}>
                   Dr. Snehal Pansare
                 </div>
                 <div style={{ fontSize: '0.75rem', color: '#6B7280' }}>Gynecologist</div>
@@ -354,7 +354,7 @@ export default function HeroSection() {
                 🔒
               </div>
               <div>
-                <div style={{ fontWeight: '600', fontSize: '0.875rem', color: '#1A0A12' }}>
+                <div style={{ fontWeight: '600', fontSize: '0.875rem', color: '#3D3438' }}>
                   Anonymous Consultation
                 </div>
                 <div
@@ -416,7 +416,7 @@ export default function HeroSection() {
                 📊
               </div>
               <div>
-                <div style={{ fontWeight: '600', fontSize: '0.875rem', color: '#1A0A12' }}>
+                <div style={{ fontWeight: '600', fontSize: '0.875rem', color: '#3D3438' }}>
                   Period Tracker
                 </div>
                 <div style={{ fontSize: '0.75rem', color: '#6B7280' }}>

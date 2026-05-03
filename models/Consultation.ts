@@ -21,7 +21,11 @@ export interface IConsultation extends Document {
     | "discharge"
     | "pain"
     | "pregnancy"
+    | "fertility"
     | "diagnostics"
+    | "hormone"
+    | "ayurvedic"
+    | "mental"
     | "other";
   intakeForm?: Record<string, unknown>;
   messages: IMessage[];
@@ -74,7 +78,11 @@ const ConsultationSchema = new Schema<IConsultation>(
         "discharge",
         "pain",
         "pregnancy",
+        "fertility",
         "diagnostics",
+        "hormone",
+        "ayurvedic",
+        "mental",
         "other",
       ],
     },

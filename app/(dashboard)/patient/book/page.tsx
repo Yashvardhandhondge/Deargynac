@@ -11,6 +11,8 @@ import {
   ArrowRight,
   CheckCircle,
 } from "lucide-react";
+import { useLang } from "@/context/LanguageContext";
+import { t, type Language, type TranslationKey } from "@/lib/translations";
 
 // ── Types ──
 
@@ -33,15 +35,20 @@ interface FormData {
 
 // ── Data ──
 
-const conditions = [
-  { emoji: "\uD83C\uDF38", label: "PCOS / Hormones", value: "pcos" },
-  { emoji: "\uD83E\uDE78", label: "Period Problems", value: "periods" },
-  { emoji: "\uD83D\uDD25", label: "UTI / Infections", value: "uti" },
-  { emoji: "\uD83D\uDCA7", label: "Unusual Discharge", value: "discharge" },
-  { emoji: "\uD83D\uDE23", label: "Pelvic Pain", value: "pain" },
-  { emoji: "\uD83E\uDD31", label: "Pregnancy Care", value: "pregnancy" },
-  { emoji: "\uD83D\uDD2C", label: "Diagnostics Review", value: "diagnostics" },
-  { emoji: "\u2753", label: "Other Concern", value: "other" },
+/** Values must match Consultation.condition enum & translation keys */
+const CONDITION_OPTIONS: { emoji: string; key: TranslationKey }[] = [
+  { emoji: "🌸", key: "pcos" },
+  { emoji: "🩸", key: "periods" },
+  { emoji: "🔥", key: "uti" },
+  { emoji: "💧", key: "discharge" },
+  { emoji: "😣", key: "pain" },
+  { emoji: "🤱", key: "pregnancy" },
+  { emoji: "🍼", key: "fertility" },
+  { emoji: "🔬", key: "diagnostics" },
+  { emoji: "🔄", key: "hormone" },
+  { emoji: "🌿", key: "ayurvedic" },
+  { emoji: "🧠", key: "mental" },
+  { emoji: "❓", key: "other" },
 ];
 
 const stepLabels = [
@@ -57,6 +64,7 @@ const stepLabels = [
 
 export default function BookConsultation() {
   const router = useRouter();
+  const { lang } = useLang();
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<FormData>({
@@ -140,7 +148,7 @@ export default function BookConsultation() {
                       done
                         ? "bg-green-500 text-white"
                         : active
-                        ? "bg-[#C2185B] text-white"
+                        ? "bg-[#D97894] text-white"
                         : "bg-gray-200 text-gray-500"
                     }`}
                   >
@@ -148,7 +156,7 @@ export default function BookConsultation() {
                   </div>
                   <span
                     className={`text-xs mt-1.5 hidden sm:block ${
-                      active ? "text-[#C2185B] font-semibold" : "text-gray-400"
+                      active ? "text-[#D97894] font-semibold" : "text-gray-400"
                     }`}
                   >
                     {label}
@@ -170,28 +178,27 @@ export default function BookConsultation() {
       {/* Step 1: Choose Concern */}
       {currentStep === 1 && (
         <div>
-          <h2 className="text-2xl font-bold text-[#1A0A12] font-serif">
-            What brings you here today?
+          <h2 className="text-2xl font-bold text-[#3D3438] font-serif">
+            {t(lang, "whatBringsYou")}
           </h2>
-          <p className="text-gray-500 mt-2">
-            Select the concern that best describes your situation.
-          </p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8">
-            {conditions.map((c) => (
+          <p className="text-gray-500 mt-2">{t(lang, "selectConcern")}</p>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mt-8">
+            {CONDITION_OPTIONS.map((c) => (
               <button
-                key={c.value}
+                key={c.key}
+                type="button"
                 onClick={() =>
-                  setFormData((p) => ({ ...p, condition: c.value }))
+                  setFormData((p) => ({ ...p, condition: c.key }))
                 }
-                className={`rounded-2xl p-6 border-2 text-center transition-all ${
-                  formData.condition === c.value
-                    ? "border-[#C2185B] bg-rose-50"
+                className={`rounded-2xl p-4 sm:p-5 border-2 text-center transition-all min-h-[100px] flex flex-col items-center justify-center ${
+                  formData.condition === c.key
+                    ? "border-[#D97894] bg-rose-50"
                     : "border-gray-200 hover:border-rose-200"
                 }`}
               >
-                <div className="text-3xl mb-2">{c.emoji}</div>
-                <div className="text-sm font-semibold text-[#1A0A12]">
-                  {c.label}
+                <div className="text-2xl sm:text-3xl mb-2">{c.emoji}</div>
+                <div className="text-xs sm:text-sm font-semibold text-[#3D3438] leading-tight">
+                  {t(lang, c.key)}
                 </div>
               </button>
             ))}
@@ -200,13 +207,19 @@ export default function BookConsultation() {
       )}
 
       {/* Step 2: Symptoms / Intake */}
-      {currentStep === 2 && <IntakeStep formData={formData} setFormData={setFormData} />}
+      {currentStep === 2 && (
+        <IntakeStep
+          formData={formData}
+          setFormData={setFormData}
+          lang={lang}
+        />
+      )}
 
       {/* Step 3: Consultation Type */}
       {currentStep === 3 && (
         <div>
-          <h2 className="text-2xl font-bold text-[#1A0A12] font-serif">
-            How would you like to consult?
+          <h2 className="text-2xl font-bold text-[#3D3438] font-serif">
+            {t(lang, "chooseConsultType")}
           </h2>
           <p className="text-gray-500 mt-2">
             Choose your preferred consultation mode.
@@ -219,13 +232,13 @@ export default function BookConsultation() {
               }
               className={`rounded-2xl p-6 border-2 text-left transition-all ${
                 formData.consultationType === "async"
-                  ? "border-[#C2185B] bg-rose-50"
+                  ? "border-[#D97894] bg-rose-50"
                   : "border-gray-200 hover:border-rose-200"
               }`}
             >
-              <MessageCircle className="w-8 h-8 text-[#C2185B]" />
-              <h3 className="font-bold text-[#1A0A12] mt-3">Async Chat</h3>
-              <p className="text-[#C2185B] font-semibold text-sm mt-1">
+              <MessageCircle className="w-8 h-8 text-[#D97894]" />
+              <h3 className="font-bold text-[#3D3438] mt-3">Async Chat</h3>
+              <p className="text-[#D97894] font-semibold text-sm mt-1">
                 &#8377;149 per session
               </p>
               <p className="text-gray-500 text-sm mt-2">
@@ -265,8 +278,8 @@ export default function BookConsultation() {
       {/* Step 4: Choose Doctor */}
       {currentStep === 4 && (
         <div>
-          <h2 className="text-2xl font-bold text-[#1A0A12] font-serif">
-            Choose your specialist
+          <h2 className="text-2xl font-bold text-[#3D3438] font-serif">
+            {t(lang, "chooseDoctor")}
           </h2>
           <p className="text-gray-500 mt-2">
             Select a doctor for your consultation.
@@ -296,12 +309,12 @@ export default function BookConsultation() {
                   }
                   className={`rounded-xl p-5 border-2 text-left transition-all ${
                     formData.selectedDoctor?._id === doc._id
-                      ? "border-[#C2185B] bg-rose-50/30"
+                      ? "border-[#D97894] bg-rose-50/30"
                       : "border-gray-200 hover:border-rose-200"
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-[#C2185B] flex items-center justify-center text-white font-semibold">
+                    <div className="w-12 h-12 rounded-full bg-[#D97894] flex items-center justify-center text-white font-semibold">
                       {doc.name
                         .split(" ")
                         .map((w: string) => w[0])
@@ -309,8 +322,8 @@ export default function BookConsultation() {
                         .slice(0, 2)}
                     </div>
                     <div>
-                      <h3 className="font-bold text-[#1A0A12]">{doc.name}</h3>
-                      <span className="text-xs bg-rose-100 text-[#C2185B] px-2 py-0.5 rounded-full font-medium">
+                      <h3 className="font-bold text-[#3D3438]">{doc.name}</h3>
+                      <span className="text-xs bg-rose-100 text-[#D97894] px-2 py-0.5 rounded-full font-medium">
                         {doc.specialty || "Gynecologist"}
                       </span>
                     </div>
@@ -336,8 +349,8 @@ export default function BookConsultation() {
       {/* Step 5: Payment (Dummy) */}
       {currentStep === 5 && (
         <div>
-          <h2 className="text-2xl font-bold text-[#1A0A12] font-serif">
-            Complete your booking
+          <h2 className="text-2xl font-bold text-[#3D3438] font-serif">
+            {t(lang, "completeBooking")}
           </h2>
 
           {/* Summary */}
@@ -345,32 +358,33 @@ export default function BookConsultation() {
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
                 <span className="text-gray-600">Condition</span>
-                <span className="font-semibold text-[#1A0A12]">
-                  {conditions.find((c) => c.value === formData.condition)
-                    ?.label || formData.condition}
+                <span className="font-semibold text-[#3D3438]">
+                  {formData.condition
+                    ? t(lang, formData.condition as TranslationKey)
+                    : ""}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Doctor</span>
-                <span className="font-semibold text-[#1A0A12]">
+                <span className="font-semibold text-[#3D3438]">
                   {formData.selectedDoctor?.name}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Type</span>
-                <span className="font-semibold text-[#1A0A12]">
+                <span className="font-semibold text-[#3D3438]">
                   Async Chat
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-600">Amount</span>
-                <span className="font-semibold text-[#1A0A12]">
+                <span className="font-semibold text-[#3D3438]">
                   &#8377;149
                 </span>
               </div>
               <div className="border-t border-rose-200 pt-3 flex justify-between">
-                <span className="font-bold text-[#1A0A12]">Total</span>
-                <span className="font-bold text-[#C2185B] text-lg">
+                <span className="font-bold text-[#3D3438]">Total</span>
+                <span className="font-bold text-[#D97894] text-lg">
                   &#8377;149
                 </span>
               </div>
@@ -391,7 +405,7 @@ export default function BookConsultation() {
           <button
             onClick={handlePayment}
             disabled={isLoading}
-            className="w-full bg-[#C2185B] text-white rounded-full py-4 font-semibold text-base hover:bg-[#880E4F] transition-colors mt-6 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full bg-[#D97894] text-white rounded-full py-4 font-semibold text-base hover:bg-[#C45F7E] transition-colors mt-6 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {isLoading ? (
               <>
@@ -418,8 +432,8 @@ export default function BookConsultation() {
           <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6 animate-bounce-once">
             <CheckCircle className="w-10 h-10 text-green-500" />
           </div>
-          <h2 className="text-2xl font-bold text-[#1A0A12] font-serif">
-            Booking Confirmed!
+          <h2 className="text-2xl font-bold text-[#3D3438] font-serif">
+            {t(lang, "bookingConfirmed")}
           </h2>
           <p className="text-gray-600 mt-2">
             Your consultation has been booked successfully!
@@ -437,13 +451,13 @@ export default function BookConsultation() {
                   `/patient/consultation/${formData.consultationId}`
                 )
               }
-              className="bg-[#C2185B] text-white rounded-full px-8 py-3 font-semibold hover:bg-[#880E4F] transition-colors"
+              className="bg-[#D97894] text-white rounded-full px-8 py-3 font-semibold hover:bg-[#C45F7E] transition-colors"
             >
               View Consultation &rarr;
             </button>
             <button
               onClick={() => router.push("/patient")}
-              className="border-2 border-[#C2185B] text-[#C2185B] rounded-full px-8 py-3 font-semibold hover:bg-rose-50 transition-colors"
+              className="border-2 border-[#D97894] text-[#D97894] rounded-full px-8 py-3 font-semibold hover:bg-rose-50 transition-colors"
             >
               Back to Dashboard
             </button>
@@ -460,15 +474,15 @@ export default function BookConsultation() {
             className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back
+            {t(lang, "back")}
           </button>
           {currentStep < 5 && (
             <button
               onClick={() => setCurrentStep((s) => s + 1)}
               disabled={!canNext()}
-              className="flex items-center gap-2 bg-[#C2185B] text-white rounded-full px-6 py-2.5 text-sm font-semibold hover:bg-[#880E4F] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              className="flex items-center gap-2 bg-[#D97894] text-white rounded-full px-6 py-2.5 text-sm font-semibold hover:bg-[#C45F7E] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
-              Next
+              {t(lang, "next")}
               <ArrowRight className="w-4 h-4" />
             </button>
           )}
@@ -483,9 +497,11 @@ export default function BookConsultation() {
 function IntakeStep({
   formData,
   setFormData,
+  lang,
 }: {
   formData: FormData;
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
+  lang: Language;
 }) {
   const answers = formData.intakeAnswers;
   const update = (key: string, value: any) => {
@@ -514,7 +530,7 @@ function IntakeStep({
       <select
         value={answers[key] || ""}
         onChange={(e) => update(key, e.target.value)}
-        className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#C2185B] focus:border-[#C2185B] outline-none bg-white"
+        className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#D97894] focus:border-[#D97894] outline-none bg-white"
       >
         <option value="">Select...</option>
         {options.map((o) => (
@@ -541,7 +557,7 @@ function IntakeStep({
               onClick={() => toggleCheckbox(key, o)}
               className={`px-3 py-1.5 rounded-full text-sm border transition-colors ${
                 checked
-                  ? "bg-[#C2185B] text-white border-[#C2185B]"
+                  ? "bg-[#D97894] text-white border-[#D97894]"
                   : "border-gray-300 text-gray-600 hover:border-rose-300"
               }`}
             >
@@ -562,7 +578,7 @@ function IntakeStep({
         value={answers[key] || ""}
         onChange={(e) => update(key, e.target.value)}
         rows={3}
-        className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#C2185B] focus:border-[#C2185B] outline-none resize-none"
+        className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#D97894] focus:border-[#D97894] outline-none resize-none"
         placeholder="Type here..."
       />
     </div>
@@ -572,7 +588,7 @@ function IntakeStep({
     <div>
       <label className="block text-sm font-medium text-gray-700 mb-1.5">
         {label}:{" "}
-        <span className="text-[#C2185B] font-bold">
+        <span className="text-[#D97894] font-bold">
           {answers[key] || 5}
         </span>
         /10
@@ -583,19 +599,17 @@ function IntakeStep({
         max={10}
         value={answers[key] || 5}
         onChange={(e) => update(key, parseInt(e.target.value))}
-        className="w-full accent-[#C2185B]"
+        className="w-full accent-[#D97894]"
       />
     </div>
   );
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-[#1A0A12] font-serif">
-        Help us understand your concern
+      <h2 className="text-2xl font-bold text-[#3D3438] font-serif">
+        {t(lang, "tellUsMore")}
       </h2>
-      <p className="text-gray-500 mt-2">
-        Answer a few questions so we can route you to the right specialist.
-      </p>
+      <p className="text-gray-500 mt-2">{t(lang, "intakeHelpSub")}</p>
 
       <div className="space-y-6 mt-8">
         {formData.condition === "pcos" && (
@@ -640,7 +654,7 @@ function IntakeStep({
                 max={15}
                 value={answers.days || ""}
                 onChange={(e) => update("days", e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#C2185B] focus:border-[#C2185B] outline-none"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#D97894] focus:border-[#D97894] outline-none"
                 placeholder="e.g. 5"
               />
             </div>
@@ -669,7 +683,7 @@ function IntakeStep({
                 type="date"
                 value={answers.lmp || ""}
                 onChange={(e) => update("lmp", e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#C2185B] focus:border-[#C2185B] outline-none"
+                className="w-full border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#D97894] focus:border-[#D97894] outline-none"
               />
             </div>
             {renderTextarea("complications", "Any complications?")}

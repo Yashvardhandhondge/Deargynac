@@ -9,7 +9,7 @@ const stats = [
     source: "(NFHS-5)",
     bg: "#FDE8F0",
     border: "#FAC8DB",
-    color: "#C2185B",
+    color: "#D97894",
   },
   {
     value: "50%+",
@@ -71,7 +71,7 @@ export default function ProblemSection() {
                 fontWeight: 600,
                 textTransform: "uppercase",
                 letterSpacing: "0.1em",
-                color: "#C2185B",
+                color: "#D97894",
                 border: "1px solid rgba(194, 24, 91, 0.3)",
                 backgroundColor: "rgba(194, 24, 91, 0.05)",
               }}
@@ -85,13 +85,13 @@ export default function ProblemSection() {
                 marginTop: "1.5rem",
                 fontSize: "clamp(1.75rem, 6vw, 3rem)",
                 fontWeight: 700,
-                color: "#1A0A12",
+                color: "#3D3438",
                 lineHeight: 1.2,
                 fontFamily: '"Playfair Display", Georgia, serif',
               }}
             >
               57% of Indian Women are{" "}
-              <span style={{ fontStyle: "italic", color: "#C2185B" }}>Anaemic.</span> Most
+              <span style={{ fontStyle: "italic", color: "#D97894" }}>Anaemic.</span> Most
               Never See a Gynecologist.
             </h2>
 
@@ -100,7 +100,7 @@ export default function ProblemSection() {
               Across India, women silently endure period pain, reproductive
               health concerns, and pregnancy complications — not because care
               doesn&apos;t exist, but because accessing it feels{" "}
-              <span style={{ fontWeight: 700, color: "#1A0A12" }}>
+              <span style={{ fontWeight: 700, color: "#3D3438" }}>
                 expensive, embarrassing, and out of reach.
               </span>
             </p>
@@ -195,7 +195,7 @@ export default function ProblemSection() {
                     {quote.initial}
                   </div>
                   <div>
-                    <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "#1A0A12" }}>
+                    <div style={{ fontWeight: 600, fontSize: "0.875rem", color: "#3D3438" }}>
                       {quote.name}
                     </div>
                     <div style={{ fontSize: "0.875rem", color: "#6B7280" }}>
