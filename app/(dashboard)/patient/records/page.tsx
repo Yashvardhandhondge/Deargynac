@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import { FolderOpen, FileText, Pill } from "lucide-react";
+import { generatePrescriptionPDF } from "@/lib/generatePrescription";
 
 type PopulatedDoctor = {
   name?: string;
@@ -62,9 +64,49 @@ function formatDate(iso?: string) {
 }
 
 export default function RecordsPage() {
+  const { data: session } = useSession();
   const [tab, setTab] = useState<"prescriptions" | "reports">("prescriptions");
   const [prescriptions, setPrescriptions] = useState<PatientPrescription[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const handleDownloadPrescription = (rx: PatientPrescription) => {
+    const doc =
+      rx.doctorId && typeof rx.doctorId === "object" ? rx.doctorId : null;
+    const consult =
+      rx.consultationId && typeof rx.consultationId === "object"
+        ? rx.consultationId
+        : null;
+    const cid =
+      rx.consultationId &&
+      typeof rx.consultationId === "object" &&
+      "_id" in rx.consultationId
+        ? String((rx.consultationId as { _id: string })._id)
+        : typeof rx.consultationId === "string"
+          ? rx.consultationId
+          : rx._id;
+    const su = session?.user as { name?: string; alias?: string } | undefined;
+    const patientName = su?.name || su?.alias || "Patient";
+    const condKey = consult?.condition || "";
+    generatePrescriptionPDF({
+      consultationId: cid,
+      patientName,
+      doctorName: doc?.name || "Doctor",
+      doctorMRN: doc?.mrnNumber || "N/A",
+      specialty:
+        doc?.specialty?.replace(/_/g, " ") || "Gynecologist",
+      condition: conditionLabels[condKey] || condKey || "Consultation",
+      medicines: (rx.medicines || []).map((m) => ({
+        name: m.name,
+        dosage: m.dosage || "",
+        frequency: String(m.frequency ?? "-"),
+        duration: m.duration || "-",
+        instructions: m.instructions || "-",
+      })),
+      notes: rx.notes || "",
+      followUpDate: rx.followUpDate,
+      issuedAt: rx.issuedAt || new Date().toISOString(),
+    });
+  };
 
   useEffect(() => {
     fetch("/api/patient/prescriptions")
@@ -235,6 +277,14 @@ export default function RecordsPage() {
                         Doctor MRN: {doc.mrnNumber}
                       </p>
                     ) : null}
+
+                    <button
+                      type="button"
+                      onClick={() => handleDownloadPrescription(rx)}
+                      className="mt-4 w-full flex items-center justify-center gap-2 rounded-full bg-[#C2185B] text-white py-2.5 text-sm font-semibold hover:bg-[#a91551] transition-colors"
+                    >
+                      ⬇️ Download PDF
+                    </button>
                   </div>
                 </li>
               );

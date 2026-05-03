@@ -23,10 +23,10 @@ export default function HeroSection() {
         style={{
           maxWidth: '1280px',
           margin: '0 auto',
-          padding: isMobile ? '0 1rem' : '0 2rem',
+          padding: isMobile ? '0.75rem 1rem 0' : '1rem 2rem 0',
           minHeight: '100vh',
           display: 'flex',
-          alignItems: 'center',
+          alignItems: 'flex-start',
           position: 'relative',
           zIndex: 1,
         }}
@@ -36,10 +36,10 @@ export default function HeroSection() {
           style={{
             display: 'grid',
             gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-            gap: '3rem',
+            gap: isMobile ? '2rem' : '2.5rem',
             width: '100%',
-            paddingTop: '5rem',
-            paddingBottom: '5rem',
+            paddingTop: 0,
+            paddingBottom: isMobile ? '3rem' : '4rem',
           }}
         >
           {/* ===== LEFT COLUMN ===== */}
@@ -47,7 +47,7 @@ export default function HeroSection() {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'center',
+              justifyContent: 'flex-start',
               zIndex: 10,
             }}
           >

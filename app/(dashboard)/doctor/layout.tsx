@@ -106,6 +106,7 @@ function getPageTitle(pathname: string) {
   );
   if (item) return item.label;
   if (pathname.includes("/prescribe")) return "Issue Prescription";
+  if (pathname.includes("/doctor/patient/")) return "Patient History";
   if (pathname.includes("/consultation/")) return "Consultation";
   return "Dashboard";
 }

@@ -1,5 +1,6 @@
 import { auth } from "@/lib/auth";
 import { connectDB } from "@/lib/db";
+import { resolveRefId } from "@/lib/resolveRefId";
 import { Consultation } from "@/models/Consultation";
 
 export const GET = auth(async (req) => {
@@ -31,10 +32,9 @@ export const GET = auth(async (req) => {
     }
 
     const c = consultation as any;
-    if (
-      c.patientId.toString() !== userId &&
-      c.doctorId?.toString() !== userId
-    ) {
+    const patientRef = resolveRefId(c.patientId);
+    const doctorRef = resolveRefId(c.doctorId);
+    if (patientRef !== userId && doctorRef !== userId) {
       return Response.json(
         { success: false, message: "Unauthorized" },
         { status: 403 }
@@ -90,10 +90,9 @@ export const POST = auth(async (req) => {
     }
 
     const c = consultation as any;
-    if (
-      c.patientId.toString() !== userId &&
-      c.doctorId?.toString() !== userId
-    ) {
+    const patientRefPost = resolveRefId(c.patientId);
+    const doctorRefPost = resolveRefId(c.doctorId);
+    if (patientRefPost !== userId && doctorRefPost !== userId) {
       return Response.json(
         { success: false, message: "Unauthorized" },
         { status: 403 }

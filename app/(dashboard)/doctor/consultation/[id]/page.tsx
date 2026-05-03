@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import {
@@ -29,16 +30,29 @@ interface ConsultationData {
   createdAt: string;
   responseDeadline?: string;
   intakeForm?: Record<string, any>;
-  patientId?: any;
+  patientId?: {
+    _id: string;
+    name?: string;
+    alias?: string;
+    isAnonymous?: boolean;
+  } | string;
   doctorId?: {
     _id: string;
     name: string;
     specialty: string;
     bio: string;
     rating: number;
+    mrnNumber?: string;
   };
-  prescription?: any;
+  prescription?: unknown;
   messages: Message[];
+}
+
+interface PriorConsultation {
+  _id: string;
+  condition?: string;
+  status: string;
+  createdAt: string;
 }
 
 const conditionLabels: Record<string, string> = {
@@ -100,6 +114,9 @@ export default function DoctorConsultationPage() {
   const [slaRemaining, setSlaRemaining] = useState("");
   const [slaBreach, setSlaBreach] = useState(false);
   const [intakeOpen, setIntakeOpen] = useState(true);
+  const [priorConsultations, setPriorConsultations] = useState<
+    PriorConsultation[]
+  >([]);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const scrollToBottom = () => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -118,6 +135,30 @@ export default function DoctorConsultationPage() {
       .catch(() => {})
       .finally(() => setLoading(false));
   }, [id]);
+
+  const patientIdStr =
+    consultation?.patientId &&
+    typeof consultation.patientId === "object" &&
+    "_id" in consultation.patientId
+      ? String((consultation.patientId as { _id: string })._id)
+      : consultation?.patientId
+        ? String(consultation.patientId)
+        : null;
+
+  useEffect(() => {
+    if (!patientIdStr) return;
+    fetch(`/api/doctor/patient/${patientIdStr}/history`)
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.success && Array.isArray(d.consultations)) {
+          const others = d.consultations.filter(
+            (c: { _id: string }) => c._id !== id
+          );
+          setPriorConsultations(others.slice(0, 5));
+        }
+      })
+      .catch(() => {});
+  }, [patientIdStr, id]);
 
   // SLA countdown
   useEffect(() => {
@@ -238,9 +279,17 @@ export default function DoctorConsultationPage() {
   }
 
   const patient = consultation.patientId;
-  const patientName = patient?.isAnonymous
-    ? patient.alias || "Anonymous"
-    : patient?.name || "Patient";
+  const patientObj =
+    patient && typeof patient === "object"
+      ? (patient as {
+          isAnonymous?: boolean;
+          alias?: string;
+          name?: string;
+        })
+      : null;
+  const patientName = patientObj?.isAnonymous
+    ? patientObj.alias || "Anonymous"
+    : patientObj?.name || "Patient";
   const patientInitial = patientName.charAt(0).toUpperCase();
   const isCompleted = consultation.status === "completed" || consultation.status === "escalated";
 
@@ -454,8 +503,59 @@ export default function DoctorConsultationPage() {
           </div>
 
           <div className="border-t border-gray-100 pt-4">
-            <h4 className="text-sm font-semibold text-[#3D3438] mb-2">Patient History</h4>
-            <p className="text-sm text-gray-400">No previous consultations</p>
+            <h4 className="text-sm font-semibold text-[#3D3438] mb-2">
+              Patient History
+            </h4>
+            {priorConsultations.length === 0 ? (
+              <p className="text-sm text-gray-400">
+                No other consultations on file
+              </p>
+            ) : (
+              <ul className="space-y-2 max-h-56 overflow-y-auto">
+                {priorConsultations.map((c) => (
+                  <li
+                    key={c._id}
+                    className="text-xs border border-gray-100 rounded-lg p-2 bg-gray-50/50"
+                  >
+                    <div className="flex items-center justify-between gap-2 flex-wrap">
+                      <span
+                        className={`px-1.5 py-0.5 rounded-full font-medium text-[10px] max-w-[10rem] truncate ${conditionColors[c.condition || ""] || "bg-gray-100 text-gray-700"}`}
+                      >
+                        {conditionLabels[c.condition || ""] || c.condition}
+                      </span>
+                      <span className="text-gray-500 shrink-0">
+                        {formatDate(c.createdAt)}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between mt-1.5">
+                      <span
+                        className={`text-[10px] font-semibold capitalize ${
+                          c.status === "completed"
+                            ? "text-green-600"
+                            : "text-amber-600"
+                        }`}
+                      >
+                        {c.status}
+                      </span>
+                      <Link
+                        href={`/doctor/consultation/${c._id}`}
+                        className="text-[#D97894] font-semibold hover:underline"
+                      >
+                        ↗ View
+                      </Link>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {patientIdStr ? (
+              <Link
+                href={`/doctor/patient/${patientIdStr}`}
+                className="mt-3 block w-full text-center text-sm font-semibold text-[#D97894] border border-[#D97894] rounded-xl py-2 hover:bg-rose-50 transition-colors"
+              >
+                View Full History →
+              </Link>
+            ) : null}
           </div>
         </div>
       </div>

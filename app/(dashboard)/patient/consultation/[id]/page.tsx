@@ -12,12 +12,27 @@ import {
 } from "lucide-react";
 import { useLang } from "@/context/LanguageContext";
 import { t, translations, type Language, type TranslationKey } from "@/lib/translations";
+import { generatePrescriptionPDF } from "@/lib/generatePrescription";
 
 interface Message {
   senderId: string;
   senderRole: string;
   content: string;
   createdAt: string;
+}
+
+interface PrescriptionDoc {
+  _id: string;
+  medicines: Array<{
+    name: string;
+    dosage: string;
+    frequency?: string;
+    duration?: string;
+    instructions?: string;
+  }>;
+  notes?: string;
+  followUpDate?: string;
+  issuedAt?: string;
 }
 
 interface ConsultationData {
@@ -33,9 +48,26 @@ interface ConsultationData {
     specialty: string;
     bio: string;
     rating: number;
+    mrnNumber?: string;
   };
+  prescription?: PrescriptionDoc | string | null;
   messages: Message[];
 }
+
+const conditionDisplayEn: Record<string, string> = {
+  pcos: "PCOS / Hormones",
+  periods: "Period Problems",
+  uti: "UTI / Infections",
+  discharge: "Unusual Discharge",
+  pain: "Pelvic Pain",
+  pregnancy: "Pregnancy Care",
+  diagnostics: "Diagnostics Review",
+  fertility: "Fertility & Conception",
+  hormone: "Hormone & Cycle Health",
+  ayurvedic: "Ayurvedic / Integrative",
+  mental: "Mental & Sexual Wellness",
+  other: "Other Concern",
+};
 
 const statusColors: Record<string, string> = {
   pending: "bg-amber-100 text-amber-700",
@@ -166,6 +198,38 @@ export default function ConsultationPage() {
       e.preventDefault();
       handleSend();
     }
+  };
+
+  const prescriptionObj =
+    consultation?.prescription &&
+    typeof consultation.prescription === "object"
+      ? consultation.prescription
+      : null;
+
+  const handleDownloadPrescription = () => {
+    if (!prescriptionObj || !consultation) return;
+    const su = session?.user as { name?: string; alias?: string } | undefined;
+    const patientName = su?.name || su?.alias || "Patient";
+    generatePrescriptionPDF({
+      consultationId: consultation._id,
+      patientName,
+      doctorName: consultation.doctorId?.name || "Doctor",
+      doctorMRN: consultation.doctorId?.mrnNumber || "N/A",
+      specialty:
+        consultation.doctorId?.specialty?.replace(/_/g, " ") || "Gynecologist",
+      condition:
+        conditionDisplayEn[consultation.condition] || consultation.condition,
+      medicines: (prescriptionObj.medicines || []).map((m) => ({
+        name: m.name,
+        dosage: m.dosage || "",
+        frequency: String(m.frequency ?? "-"),
+        duration: m.duration || "-",
+        instructions: m.instructions || "-",
+      })),
+      notes: prescriptionObj.notes || "",
+      followUpDate: prescriptionObj.followUpDate,
+      issuedAt: prescriptionObj.issuedAt || new Date().toISOString(),
+    });
   };
 
   if (loading) {
@@ -314,6 +378,64 @@ export default function ConsultationPage() {
               </div>
             </div>
           </div>
+
+          {prescriptionObj && (
+            <div className="bg-white rounded-2xl p-6 border border-rose-100 shadow-sm">
+              <h3 className="font-bold text-[#3D3438] text-sm mb-3">
+                Prescription
+              </h3>
+              <ul className="space-y-2 text-sm mb-3">
+                {(prescriptionObj.medicines || []).map((m, idx) => (
+                  <li key={idx} className="border-l-2 border-[#D97894]/50 pl-2">
+                    <span className="font-semibold text-[#3D3438]">{m.name}</span>
+                    <span className="text-gray-600">
+                      {" "}
+                      · {m.dosage}
+                      {m.frequency ? ` · ${m.frequency}` : ""}
+                      {m.duration ? ` · ${m.duration}` : ""}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              {prescriptionObj.notes ? (
+                <p className="text-sm text-gray-700 whitespace-pre-wrap mb-2">
+                  <span className="font-semibold text-gray-500">Notes: </span>
+                  {prescriptionObj.notes}
+                </p>
+              ) : null}
+              {prescriptionObj.followUpDate ? (
+                <p className="text-xs text-amber-900 bg-amber-50 rounded-lg px-2 py-1.5 mb-3">
+                  Follow-up:{" "}
+                  {formatDate(prescriptionObj.followUpDate)}
+                </p>
+              ) : null}
+              <button
+                type="button"
+                onClick={handleDownloadPrescription}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  backgroundColor: "#C2185B",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "9999px",
+                  padding: "0.75rem 1.5rem",
+                  fontWeight: "600",
+                  fontSize: "0.875rem",
+                  cursor: "pointer",
+                  width: "100%",
+                  justifyContent: "center",
+                  marginTop: "0.75rem",
+                }}
+              >
+                ⬇️ Download Prescription PDF
+              </button>
+              <p className="text-xs text-gray-500 text-center mt-2">
+                Show this at any pharmacy
+              </p>
+            </div>
+          )}
         </div>
       </div>
 

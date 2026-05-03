@@ -465,25 +465,27 @@ export default function BookConsultation() {
         </div>
       )}
 
-      {/* Navigation buttons */}
+      {/* Navigation buttons — high contrast on #FFF7F9 (avoid disabled opacity washing out) */}
       {currentStep >= 1 && currentStep <= 5 && (
-        <div className="flex justify-between mt-10">
+        <div className="flex justify-between items-center gap-4 mt-10 pt-6 border-t border-rose-200/60">
           <button
+            type="button"
             onClick={() => setCurrentStep((s) => Math.max(1, s - 1))}
             disabled={currentStep === 1}
-            className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+            className="flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold text-[#3D3438] bg-white/90 border border-[#3D3438]/15 shadow-sm hover:border-[#D97894] hover:text-[#D97894] hover:shadow transition-all disabled:opacity-100 disabled:text-gray-400 disabled:bg-gray-100/80 disabled:border-gray-200 disabled:shadow-none disabled:hover:text-gray-400 disabled:hover:border-gray-200 disabled:cursor-not-allowed"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="w-4 h-4 shrink-0" aria-hidden />
             {t(lang, "back")}
           </button>
           {currentStep < 5 && (
             <button
+              type="button"
               onClick={() => setCurrentStep((s) => s + 1)}
               disabled={!canNext()}
-              className="flex items-center gap-2 bg-[#D97894] text-white rounded-full px-6 py-2.5 text-sm font-semibold hover:bg-[#C45F7E] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              className="flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold bg-[#D97894] text-white shadow-md ring-1 ring-[#C45F7E]/30 hover:bg-[#C45F7E] hover:ring-[#B8546E]/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D97894] disabled:bg-rose-200 disabled:text-rose-900 disabled:ring-rose-300/50 disabled:shadow-sm disabled:hover:bg-rose-200 disabled:cursor-not-allowed transition-all"
             >
               {t(lang, "next")}
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 shrink-0" aria-hidden />
             </button>
           )}
         </div>
