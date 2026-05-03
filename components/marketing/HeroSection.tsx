@@ -2,6 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import { useIsMobile } from '@/hooks/useWindowSize';
+import FeminineHeroIllustration from './FeminineHeroIllustration';
+import FloatingHearts from './FloatingHearts';
 
 export default function HeroSection() {
   const router = useRouter();
@@ -16,6 +18,7 @@ export default function HeroSection() {
         overflow: 'hidden',
       }}
     >
+      <FloatingHearts />
       <div
         style={{
           maxWidth: '1280px',
@@ -24,6 +27,8 @@ export default function HeroSection() {
           minHeight: '100vh',
           display: 'flex',
           alignItems: 'center',
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         {/* TWO COLUMN GRID */}
@@ -220,6 +225,19 @@ export default function HeroSection() {
                 </div>
               ))}
             </div>
+
+            {isMobile && (
+              <div
+                style={{
+                  marginTop: '2rem',
+                  maxHeight: '300px',
+                  overflow: 'hidden',
+                  width: '100%',
+                }}
+              >
+                <FeminineHeroIllustration height={280} />
+              </div>
+            )}
           </div>
 
           {/* ===== RIGHT COLUMN ===== */}
@@ -227,32 +245,33 @@ export default function HeroSection() {
             style={{
               position: 'relative',
               display: isMobile ? 'none' : 'flex',
+              flexDirection: 'column',
               alignItems: 'center',
-              justifyContent: 'center',
+              justifyContent: 'flex-start',
+              gap: '2rem',
               minHeight: '500px',
-              overflow: 'hidden',
+              overflow: 'visible',
+              width: '100%',
             }}
           >
-            {/* Decorative circles */}
             <div
               style={{
-                position: 'absolute',
-                width: '360px',
-                height: '360px',
-                border: '2px solid rgba(217,120,148,0.12)',
-                borderRadius: '50%',
+                width: '100%',
+                maxWidth: '520px',
+                flexShrink: 0,
               }}
-            />
-            <div
-              style={{
-                position: 'absolute',
-                width: '220px',
-                height: '220px',
-                backgroundColor: 'rgba(217,120,148,0.05)',
-                borderRadius: '50%',
-              }}
-            />
+            >
+              <FeminineHeroIllustration />
+            </div>
 
+            <div
+              style={{
+                position: 'relative',
+                width: '100%',
+                minHeight: '400px',
+                flex: '1 1 auto',
+              }}
+            >
             {/* Card 1 — Doctor */}
             <div
               style={{
@@ -423,6 +442,7 @@ export default function HeroSection() {
                   Next cycle in 8 days
                 </div>
               </div>
+            </div>
             </div>
           </div>
         </div>

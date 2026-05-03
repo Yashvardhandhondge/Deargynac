@@ -1,6 +1,7 @@
 import Navbar from "@/components/marketing/Navbar";
 import TickerBar from "@/components/marketing/TickerBar";
 import HeroSection from "@/components/marketing/HeroSection";
+import WaveDivider from "@/components/marketing/WaveDivider";
 import ProblemSection from "@/components/marketing/ProblemSection";
 import ServicesSection from "@/components/marketing/ServicesSection";
 import JourneySection from "@/components/marketing/JourneySection";
@@ -18,7 +19,9 @@ export default function MarketingPage() {
       <div className="pt-16">
         <TickerBar />
         <HeroSection />
+        <WaveDivider topColor="#FDF8F5" bottomColor="#FFFFFF" />
         <ProblemSection />
+        <WaveDivider topColor="#FFFFFF" bottomColor="#FDF8F5" flip />
         <ServicesSection />
         <JourneySection />
         <DoctorsSection />
