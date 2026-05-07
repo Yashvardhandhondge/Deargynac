@@ -1,11 +1,15 @@
 import { connectDB } from "@/lib/db";
 import { OTP } from "@/models/OTP";
+import { User } from "@/models/User";
 import bcrypt from "bcryptjs";
 
 export async function POST(req: Request) {
   try {
-    const { phone: rawPhone } = await req.json();
-    const phone = rawPhone?.replace(/^\+91/, "").replace(/\s/g, "");
+    const body = await req.json();
+    const phone = String(body.phone ?? "")
+      .replace(/^\+91/, "")
+      .replace(/\s/g, "");
+    const intent = body.intent === "signup" ? "signup" : "signin";
 
     if (!phone || !/^\d{10}$/.test(phone)) {
       return Response.json(
@@ -16,12 +20,20 @@ export async function POST(req: Request) {
 
     await connectDB();
 
-    const SEEDED_TEST_PHONES = [
-      '9000000000', '9000000001', '9000000002',
-      '9000000003', '9000000004', '9000000005',
-    ];
-    const isTestPhone = SEEDED_TEST_PHONES.includes(phone);
-    const otp = isTestPhone ? '123456' : Math.floor(100000 + Math.random() * 900000).toString();
+    const existing = await User.findOne({ phone }).lean();
+    if (intent === "signup" && existing) {
+      return Response.json(
+        {
+          success: false,
+          message:
+            "An account with this number already exists. Sign in instead.",
+        },
+        { status: 400 }
+      );
+    }
+
+    /** Dev placeholder until SMS OTP is wired — same code for every number. */
+    const otp = "123456";
     const otpHash = await bcrypt.hash(otp, 10);
 
     // Cleanup existing OTPs for this phone
@@ -34,7 +46,7 @@ export async function POST(req: Request) {
       attempts: 0,
     });
 
-    console.log(`OTP for ${phone}: ${otp}${isTestPhone ? ' (TEST ACCOUNT - fixed OTP)' : ''}`);
+    console.log(`OTP for ${phone}: ${otp} (fixed dev OTP)`);
 
     return Response.json({ success: true, message: "OTP sent successfully" });
   } catch (error) {

@@ -8,6 +8,16 @@ function normalizePhone(raw: unknown): string {
   return s.replace(/^\+91/, "").replace(/\s/g, "");
 }
 
+function normalizeEmail(raw: unknown): string {
+  return String(raw ?? "")
+    .trim()
+    .toLowerCase();
+}
+
+function isValidEmail(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -63,14 +73,66 @@ export async function POST(req: Request) {
     await OTP.deleteOne({ _id: otpDoc._id });
 
     let user = await User.findOne({ phone });
+
     if (!user) {
-      user = await User.create({
-        phone,
-        name: "Patient",
-        role: "patient",
-        isVerified: true,
-        isAnonymous: false,
-      });
+      const name = String(body.name ?? "").trim();
+      const email = normalizeEmail(body.email);
+      if (!name || name.length < 2) {
+        return Response.json(
+          {
+            success: false,
+            message: "Please enter your full name to finish creating your account.",
+          },
+          { status: 400 }
+        );
+      }
+      if (!email || !isValidEmail(email)) {
+        return Response.json(
+          {
+            success: false,
+            message: "Please enter a valid email address.",
+          },
+          { status: 400 }
+        );
+      }
+
+      const emailTaken = await User.findOne({ email });
+      if (emailTaken) {
+        return Response.json(
+          {
+            success: false,
+            message: "This email is already linked to another account.",
+          },
+          { status: 400 }
+        );
+      }
+
+      try {
+        user = await User.create({
+          phone,
+          name,
+          email,
+          role: "patient",
+          isVerified: true,
+          isAnonymous: false,
+        });
+      } catch (createErr: unknown) {
+        const code =
+          createErr && typeof createErr === "object" && "code" in createErr
+            ? (createErr as { code?: number }).code
+            : undefined;
+        if (code === 11000) {
+          return Response.json(
+            {
+              success: false,
+              message:
+                "This phone or email is already in use. Try signing in.",
+            },
+            { status: 400 }
+          );
+        }
+        throw createErr;
+      }
     }
 
     return Response.json({
