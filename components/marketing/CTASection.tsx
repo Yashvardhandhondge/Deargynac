@@ -84,7 +84,7 @@ export default function CTASection() {
             Book Anonymous Consultation
           </Link>
           <a
-            href="#care"
+            href="/services"
             style={{
               border: `2px solid ${pink}`,
               color: pink,
@@ -102,7 +102,7 @@ export default function CTASection() {
         </div>
 
         <p style={{ color: "rgba(61, 52, 56, 0.55)", fontSize: "0.875rem", marginTop: "1.5rem" }}>
-          No credit card required &middot; Free first health assessment
+          No credit card required &middot; Your first consultation is free when you sign in as a new patient
         </p>
       </div>
     </section>

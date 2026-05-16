@@ -31,6 +31,8 @@ export interface IConsultation extends Document {
   messages: IMessage[];
   prescription?: Types.ObjectId;
   amount?: number;
+  /** standard = full fee; first_consult_waived = new-patient complimentary first visit */
+  pricingRule?: "standard" | "first_consult_waived";
   paymentStatus: "pending" | "paid" | "refunded";
   razorpayOrderId?: string;
   razorpayPaymentId?: string;
@@ -90,6 +92,10 @@ const ConsultationSchema = new Schema<IConsultation>(
     messages: [MessageSchema],
     prescription: { type: Schema.Types.ObjectId, ref: "Prescription" },
     amount: { type: Number },
+    pricingRule: {
+      type: String,
+      enum: ["standard", "first_consult_waived"],
+    },
     paymentStatus: {
       type: String,
       enum: ["pending", "paid", "refunded"],

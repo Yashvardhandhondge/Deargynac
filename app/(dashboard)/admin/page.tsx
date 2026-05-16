@@ -8,6 +8,8 @@ import { Users, ClipboardList, Activity, AlertTriangle, RefreshCw } from "lucide
 interface Stats { totalUsers: number; totalConsultations: number; activeNow: number; slaBreachesToday: number }
 interface ConsultationRow {
   _id: string; condition: string; status: string; paymentStatus: string; createdAt: string;
+  amount?: number;
+  pricingRule?: string;
   patientId?: { name: string; alias: string; isAnonymous: boolean };
   doctorId?: { name: string };
 }
@@ -109,7 +111,7 @@ export default function AdminDashboard() {
                     <td className="py-2.5 text-gray-500">{c.doctorId?.name || <span className="text-gray-300">Unassigned</span>}</td>
                     <td className="py-2.5"><span className={`text-xs px-2 py-0.5 rounded-full font-medium ${conditionColors[c.condition] || "bg-gray-100 text-gray-700"}`}>{conditionLabels[c.condition] || c.condition}</span></td>
                     <td className="py-2.5"><span className={`text-xs px-2 py-0.5 rounded-full font-medium ${statusColors[c.status] || "bg-gray-100 text-gray-600"}`}>{c.status}</span></td>
-                    <td className="py-2.5"><span className={`text-xs font-medium ${c.paymentStatus === "paid" ? "text-green-600" : "text-amber-600"}`}>{c.paymentStatus === "paid" ? "Paid" : "Pending"}</span></td>
+                    <td className="py-2.5"><span className={`text-xs font-medium ${c.paymentStatus === "paid" ? "text-green-600" : "text-amber-600"}`}>{c.paymentStatus === "paid" ? (c.amount === 0 || c.pricingRule === "first_consult_waived" ? "Complimentary" : "Paid") : "Pending"}</span></td>
                     <td className="py-2.5 text-gray-400 text-xs">{new Date(c.createdAt).toLocaleDateString("en-IN", { day: "numeric", month: "short" })}</td>
                   </tr>);
               })}</tbody>

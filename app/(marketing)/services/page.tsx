@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Navbar from "@/components/marketing/Navbar";
-import Footer from "@/components/marketing/Footer";
+import MarketingSubPage from "@/components/marketing/MarketingSubPage";
+import MarketingPageHeader from "@/components/marketing/MarketingPageHeader";
 import { useLang } from "@/context/LanguageContext";
 import { serviceCategories, categoryTitle } from "@/lib/services";
 
@@ -10,28 +10,23 @@ export default function ServicesDirectoryPage() {
   const { lang } = useLang();
 
   return (
-    <>
-      <Navbar />
-      <div className="pt-16 min-h-screen bg-[#FFF7F9]">
-        <div className="max-w-6xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-[#3D3438]">
-              Our Services
-            </h1>
-            <p className="mt-3 text-gray-600 max-w-2xl mx-auto">
-              Book online women&apos;s health care across consultations, hormone
-              health, fertility, integrative programs, and more.
-            </p>
-            <Link
-              href="/patient/book"
-              className="inline-block mt-6 bg-[#D97894] text-white rounded-full px-8 py-3 text-sm font-semibold hover:bg-[#C45F7E] transition-colors"
-            >
-              Book a consultation
-            </Link>
-          </div>
+    <MarketingSubPage>
+      <MarketingPageHeader
+        title="Our services"
+        subtitle="Book online women&apos;s health care across consultations, hormone health, fertility, integrative programs, and more."
+      />
+      <div className="max-w-6xl mx-auto px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
+        <div className="text-center mb-10 sm:mb-12">
+          <Link
+            href="/patient/book"
+            className="inline-block bg-[#D97894] text-white rounded-full px-8 py-3 text-sm font-semibold hover:bg-[#C45F7E] transition-colors"
+          >
+            Book a consultation
+          </Link>
+        </div>
 
-          <div className="space-y-16">
-            {serviceCategories.map((cat) => (
+        <div className="space-y-16 pb-12 sm:pb-16">
+          {serviceCategories.map((cat) => (
               <section key={cat.id} id={cat.id} className="scroll-mt-24">
                 <div className="flex items-center gap-3 mb-6">
                   <div
@@ -80,11 +75,9 @@ export default function ServicesDirectoryPage() {
                   ))}
                 </div>
               </section>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
-      <Footer />
-    </>
+    </MarketingSubPage>
   );
 }

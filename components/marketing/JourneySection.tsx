@@ -164,8 +164,7 @@ export default function JourneySection() {
             Begin Your Care Journey &rarr;
           </Link>
           <p style={{ fontSize: "0.875rem", color: "#9CA3AF", marginTop: "0.75rem" }}>
-            Starting at &#8377;149 &middot; Completely Confidential &middot;
-            Cancel Anytime
+            First consultation free for new accounts &middot; then from &#8377;149 &middot; Completely confidential
           </p>
         </div>
       </div>

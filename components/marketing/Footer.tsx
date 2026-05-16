@@ -28,13 +28,13 @@ const companyLinks = [
   "Partner With Us",
 ];
 
-const supportLinks = [
-  "Help Center",
-  "Privacy Policy",
-  "Terms of Service",
-  "Grievance Redressal",
-  "DPDP Compliance",
-  "Contact Us",
+const supportLinks: { label: string; href: string }[] = [
+  { label: "Help Center", href: "#" },
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Terms of Service", href: "/terms" },
+  { label: "Grievance Redressal", href: "/privacy#grievance" },
+  { label: "DPDP Compliance", href: "/privacy" },
+  { label: "Contact Us", href: "#" },
 ];
 
 const socials = [
@@ -125,14 +125,23 @@ export default function Footer() {
               Support
             </h4>
             <ul>
-              {supportLinks.map((link) => (
-                <li key={link}>
-                  <a
-                    href="#"
-                    className="text-[#6B5F63] hover:text-[#D97894] text-sm leading-8 transition"
-                  >
-                    {link}
-                  </a>
+              {supportLinks.map((item) => (
+                <li key={item.label}>
+                  {item.href.startsWith("/") ? (
+                    <Link
+                      href={item.href}
+                      className="text-[#6B5F63] hover:text-[#D97894] text-sm leading-8 transition"
+                    >
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={item.href}
+                      className="text-[#6B5F63] hover:text-[#D97894] text-sm leading-8 transition"
+                    >
+                      {item.label}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -174,14 +183,19 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-16 pt-8 border-t border-rose-100 flex flex-col lg:flex-row justify-between gap-4 text-center lg:text-left">
           <p className="text-[#8A7E82] text-xs">
-            &copy; 2025 DearGynac. All rights reserved. | Designed with &hearts;
+            &copy; 2026 DearGynac. All rights reserved. | Designed with &hearts;
             for the women of India
           </p>
           <p className="text-[#8A7E82] text-xs max-w-2xl lg:text-right">
             DearGynac is a telemedicine platform. Consultations are conducted by
             verified Registered Medical Practitioners under NMC Telemedicine
-            Guidelines 2020. All health information is confidential and protected
-            under DPDP Act 2023.
+            Guidelines 2020. Health information is processed under India&apos;s{" "}
+            <strong className="text-[#6B5F63]">Digital Personal Data Protection Act, 2023</strong>
+            ; we do not sell personal data. Records are retained as described in our{" "}
+            <Link href="/privacy" className="text-[#D97894] font-medium hover:underline">
+              Privacy Policy
+            </Link>
+            .
           </p>
         </div>
       </div>

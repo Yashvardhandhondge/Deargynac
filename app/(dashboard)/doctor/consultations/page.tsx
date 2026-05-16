@@ -22,6 +22,7 @@ interface ConsultationRow {
   responseDeadline?: string;
   paymentStatus?: string;
   amount?: number;
+  pricingRule?: string;
   patientId?: PatientPop | string;
 }
 
@@ -147,6 +148,18 @@ function slaCell(c: ConsultationRow) {
 function paymentCell(c: ConsultationRow) {
   const paid = c.paymentStatus === "paid";
   const amt = c.amount ?? 149;
+  const waived =
+    paid &&
+    (amt === 0 ||
+      c.pricingRule === "first_consult_waived");
+  if (waived) {
+    return (
+      <span className="text-green-700 text-sm font-medium">
+        Complimentary
+        <span className="block text-xs font-normal text-green-600/90">First visit</span>
+      </span>
+    );
+  }
   if (paid) {
     return (
       <span className="text-green-700 text-sm font-medium">Paid ₹{amt}</span>

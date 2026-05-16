@@ -1,7 +1,8 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
-import { useIsMobile } from '@/hooks/useWindowSize';
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useIsMobile } from "@/hooks/useWindowSize";
 import FeminineHeroIllustration from './FeminineHeroIllustration';
 import FloatingHearts from './FloatingHearts';
 
@@ -121,17 +122,15 @@ export default function HeroSection() {
             {/* Subtext */}
             <p
               style={{
-                fontSize: '1.125rem',
-                color: '#4B5563',
-                lineHeight: '1.75',
-                maxWidth: '32rem',
-                marginBottom: '2rem',
+                fontSize: "1.0625rem",
+                color: "#4B5563",
+                lineHeight: "1.7",
+                maxWidth: "32rem",
+                marginBottom: "2rem",
               }}
             >
-              India&apos;s most trusted women&apos;s health ecosystem — where expert
-              gynecologists, radiologists, and surgeons come together to deliver
-              complete, compassionate, and confidential care to every woman
-              across India.
+              Private tele-gynecology from NMC-aligned doctors — anonymous option, clear pricing, and care
+              designed for real life in India. Details live on the pages below; book when you&apos;re ready.
             </p>
 
             {/* CTA Buttons */}
@@ -168,62 +167,33 @@ export default function HeroSection() {
                 💬 Start Anonymous Consultation
               </button>
 
-              <button
-                onClick={() => router.push('/patient/book')}
+              <Link
+                href="/services"
                 style={{
-                  backgroundColor: 'transparent',
-                  color: '#D97894',
-                  border: '2px solid #D97894',
-                  borderRadius: '9999px',
-                  padding: '1rem 2rem',
-                  fontWeight: '600',
-                  fontSize: '1rem',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '0.5rem',
-                  width: isMobile ? '100%' : 'auto',
+                  backgroundColor: "transparent",
+                  color: "#D97894",
+                  border: "2px solid #D97894",
+                  borderRadius: "9999px",
+                  padding: "1rem 2rem",
+                  fontWeight: "600",
+                  fontSize: "1rem",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "0.5rem",
+                  width: isMobile ? "100%" : "auto",
+                  textDecoration: "none",
                 }}
-                onMouseEnter={e => (e.currentTarget.style.backgroundColor = '#FDE8F0')}
-                onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'transparent')}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "#FDE8F0";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "transparent";
+                }}
               >
-                ♥ Explore Care Modules
-              </button>
-            </div>
-
-            {/* Stats */}
-            <div style={{ display: 'flex', gap: '2.5rem', flexWrap: 'wrap' }}>
-              {[
-                { number: '50K+', label: 'Women Helped' },
-                { number: '3', label: 'Expert Doctors' },
-                { number: '100%', label: 'Confidential' },
-                { number: '24/7', label: 'Care Support' },
-              ].map((stat, i) => (
-                <div key={i}>
-                  <div
-                    style={{
-                      fontSize: '1.75rem',
-                      fontWeight: '700',
-                      color: '#D97894',
-                      fontFamily: '"Playfair Display", Georgia, serif',
-                    }}
-                  >
-                    {stat.number}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: '0.7rem',
-                      color: '#9CA3AF',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.08em',
-                      marginTop: '0.15rem',
-                    }}
-                  >
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
+                Browse all services
+              </Link>
             </div>
 
             {isMobile && (

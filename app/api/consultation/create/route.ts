@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import { connectDB } from "@/lib/db";
 import { Consultation } from "@/models/Consultation";
+import { resolveNewConsultationPricing } from "@/lib/consultationPricing";
 
 export const POST = auth(async (req) => {
   const session = req.auth;
@@ -22,9 +23,11 @@ export const POST = auth(async (req) => {
   }
 
   try {
-    const { condition, intakeForm, doctorId, type, amount } = await req.json();
+    const { condition, intakeForm, doctorId, type } = await req.json();
 
     await connectDB();
+
+    const pricing = await resolveNewConsultationPricing(String(userId));
 
     const consultation = await Consultation.create({
       patientId: userId,
@@ -32,8 +35,9 @@ export const POST = auth(async (req) => {
       condition,
       intakeForm,
       type: type || "async",
-      amount: amount || 149,
-      paymentStatus: "paid",
+      amount: pricing.amount,
+      pricingRule: pricing.pricingRule,
+      paymentStatus: pricing.paymentStatus,
       status: "active",
       responseDeadline: new Date(Date.now() + 15 * 60 * 1000),
     });
@@ -41,6 +45,9 @@ export const POST = auth(async (req) => {
     return Response.json({
       success: true,
       consultationId: consultation._id.toString(),
+      amount: pricing.amount,
+      pricingRule: pricing.pricingRule,
+      standardFee: pricing.standardFee,
     });
   } catch (error: unknown) {
     console.error("Create consultation error:", error);

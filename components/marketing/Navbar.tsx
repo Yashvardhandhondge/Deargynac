@@ -8,9 +8,10 @@ import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Our Care", href: "/services" },
-  { label: "Our Team", href: "/#team" },
-  { label: "About Platform", href: "/#about" },
+  { label: "Services", href: "/services" },
+  { label: "How it works", href: "/how-it-works" },
+  { label: "Doctors", href: "/doctors" },
+  { label: "Trust", href: "/trust" },
 ];
 
 export default function Navbar() {
@@ -47,15 +48,15 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop nav links */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-6 lg:gap-8">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.label}
                 href={link.href}
                 className="text-sm font-medium text-gray-700 hover:text-[#D97894] transition-colors"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
             <Link
               href="/patient/book"
@@ -90,19 +91,19 @@ export default function Navbar() {
       {/* Mobile menu */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ${
-          mobileOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          mobileOpen ? "max-h-[min(100vh,32rem)] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <div className="bg-white border-t border-gray-100">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.label}
               href={link.href}
               className="block py-3 px-6 text-sm font-medium text-gray-700 hover:text-[#D97894] hover:bg-gray-50 border-b border-gray-50 transition-colors"
               onClick={() => setMobileOpen(false)}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
           <Link
             href="/patient/book"

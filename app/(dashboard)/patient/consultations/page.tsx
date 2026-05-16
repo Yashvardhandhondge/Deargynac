@@ -10,6 +10,8 @@ interface ConsultationItem {
   status: string;
   type: string;
   paymentStatus: string;
+  amount?: number;
+  pricingRule?: string;
   createdAt: string;
   doctorId?: { name: string; specialty: string };
 }
@@ -140,8 +142,16 @@ export default function MyConsultations() {
               <p className="text-xs text-gray-400">{c.doctorId?.specialty || 'Specialist'}</p>
               <div className="flex items-center justify-between mt-3">
                 <span className="text-xs text-[#D97894] font-semibold">View Consultation →</span>
-                <span className={`text-xs font-medium ${c.paymentStatus === 'paid' ? 'text-green-600' : 'text-amber-600'}`}>
-                  {c.paymentStatus === 'paid' ? '✓ Paid' : 'Payment Pending'}
+                <span
+                  className={`text-xs font-medium ${
+                    c.paymentStatus === "paid" ? "text-green-600" : "text-amber-600"
+                  }`}
+                >
+                  {c.paymentStatus === "paid"
+                    ? c.amount === 0 || c.pricingRule === "first_consult_waived"
+                      ? "Complimentary"
+                      : "✓ Paid"
+                    : "Payment Pending"}
                 </span>
               </div>
             </div>

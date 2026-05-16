@@ -8,6 +8,8 @@ export interface IAvailableSlot {
 
 export interface IUser extends Document {
   name: string;
+  /** Unique login id for registered (non-anonymous) accounts */
+  username?: string;
   email?: string;
   phone?: string;
   passwordHash?: string;
@@ -38,6 +40,7 @@ const AvailableSlotSchema = new Schema(
 const UserSchema = new Schema<IUser>(
   {
     name: { type: String, required: true },
+    username: { type: String, sparse: true, unique: true, lowercase: true, trim: true },
     email: { type: String, sparse: true, unique: true },
     phone: { type: String, sparse: true, unique: true },
     passwordHash: { type: String },

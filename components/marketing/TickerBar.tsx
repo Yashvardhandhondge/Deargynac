@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from "react";
 
+/** Customer-facing highlights — keep in sync with PricingSection / CTASection promises. */
 const items = [
-  "Market CAGR: 23%",
-  "57% of Indian women are anaemic",
-  "70% have never paid for an online medical service",
-  "Diagnostics Market: $28B by 2034",
-  "300M+ women aged 15–55 in India",
-  "India Women's Health market growing rapidly",
+  "First consultation FREE for new accounts — try telehealth on us",
+  "Consult anonymously — book with an alias, stay private",
+  "Then just ₹149 per async session — no surprises",
+  "Complete Care plan — start with a free trial",
+  "Promo codes & discounts apply at checkout when available",
+  "100% confidential · NMC-verified gynecologists",
 ];
 
 /** After this scroll offset, the bar switches to the “floating” glass style. */
@@ -49,7 +50,7 @@ export default function TickerBar() {
             aria-hidden
           >
             <span className="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-[#D97894]">
-              Live
+              Offers
             </span>
           </div>
         )}

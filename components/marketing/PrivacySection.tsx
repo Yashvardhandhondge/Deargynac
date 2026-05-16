@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   Shield,
   Lock,
@@ -26,15 +27,15 @@ const features: PrivacyFeature[] = [
     icon: Shield,
     iconBg: "#FDE8F0",
     iconColor: "#D97894",
-    title: "DPDP Act 2023 Compliant",
-    desc: "Full compliance with India\u2019s Digital Personal Data Protection Act. Your data is never sold or shared.",
+    title: "India: DPDP Act, 2023",
+    desc: "We process digital personal data as a data fiduciary under India\u2019s Digital Personal Data Protection Act, 2023 — including purpose limitation, reasonable security safeguards, and honouring your rights where they apply.",
   },
   {
     icon: Lock,
     iconBg: "#F3E8FF",
     iconColor: "#7C3AED",
-    title: "End-to-End Encrypted",
-    desc: "All consultations, messages, and reports are encrypted in transit and at rest using AES-256 standards.",
+    title: "No sale of your data",
+    desc: "We do not sell personal or health data to brokers or advertisers. Limited sharing only runs the service (e.g. your doctor, secure hosting) or meets a legal obligation.",
   },
   {
     icon: UserCheck,
@@ -47,22 +48,22 @@ const features: PrivacyFeature[] = [
     icon: Smartphone,
     iconBg: "#FEF3C7",
     iconColor: "#D97706",
-    title: "ABHA ID Integration",
-    desc: "Seamlessly integrate with Ayushman Bharat Digital Mission for a unified health record across India.",
+    title: "Secure by design",
+    desc: "Encryption in transit, access controls, and least-privilege practices for consultation data and health records.",
   },
 ];
 
 const badges = [
-  "\u2713 NMC Compliant",
-  "\u2713 DPDP 2023",
-  "\u2713 ABDM Ready",
-  "\u2713 ISO 27001",
+  "\u2713 DPDP Act, 2023",
+  "\u2713 No data brokerage",
+  "\u2713 NMC telemedicine alignment",
+  "\u2713 Defined retention policy",
 ];
 
 export default function PrivacySection() {
   const isMobile = useIsMobile();
   return (
-    <section id="about" style={{ backgroundColor: "white", padding: "6rem 0" }}>
+    <section id="trust" style={{ backgroundColor: "white", padding: "6rem 0" }}>
       <div style={{ maxWidth: "80rem", marginLeft: "auto", marginRight: "auto", padding: "0 1rem" }}>
         {/* Header */}
         <div style={{ textAlign: "center" }}>
@@ -101,10 +102,35 @@ export default function PrivacySection() {
           </h2>
 
           <p style={{ fontSize: "1.125rem", color: "#6B7280", marginTop: "1rem", maxWidth: "48rem", marginLeft: "auto", marginRight: "auto" }}>
-            Every interaction on DearGynac is protected by end-to-end
-            encryption, strict compliance with India&apos;s DPDP Act 2023, and
-            NMC telemedicine guidelines. Your health story belongs to you —
-            nobody else.
+            Indian law — chiefly the{" "}
+            <strong style={{ color: "#4B5563" }}>Digital Personal Data Protection Act, 2023</strong> — sets how
+            digital personal data must be collected, used, stored, and shared. DearGynac is built to follow those
+            duties: we do <strong style={{ color: "#4B5563" }}>not</strong> sell your data, we keep health
+            information only as long as clinically and legally appropriate, and we align clinical workflows with
+            NMC telemedicine expectations.
+          </p>
+          <p
+            style={{
+              fontSize: "0.9375rem",
+              color: "#6B7280",
+              marginTop: "1.25rem",
+              maxWidth: "48rem",
+              marginLeft: "auto",
+              marginRight: "auto",
+              lineHeight: 1.65,
+            }}
+          >
+            <Link href="/privacy" style={{ color: "#D97894", fontWeight: 600, textDecoration: "none" }}>
+              Privacy Policy
+            </Link>
+            <span style={{ color: "#D1D5DB", margin: "0 0.65rem" }}>|</span>
+            <Link href="/terms" style={{ color: "#D97894", fontWeight: 600, textDecoration: "none" }}>
+              Terms of Service
+            </Link>
+            <span style={{ display: "block", marginTop: "0.5rem", fontSize: "0.8125rem", color: "#9CA3AF" }}>
+              Summaries on this page are informational; the linked documents are the reference for hosting and
+              compliance checks.
+            </span>
           </p>
         </div>
 

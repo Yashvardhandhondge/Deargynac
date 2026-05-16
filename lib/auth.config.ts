@@ -1,6 +1,28 @@
 import type { NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
+function sessionUserFromDb(user: {
+  _id: { toString(): string };
+  name?: string;
+  alias?: string;
+  email?: string;
+  username?: string;
+  role?: string;
+  isAnonymous?: boolean;
+  phone?: string;
+}) {
+  const id = user._id.toString();
+  return {
+    id,
+    name: user.name || user.alias || "User",
+    email: user.email || "",
+    role: user.role ?? "patient",
+    isAnonymous: Boolean(user.isAnonymous),
+    phone: user.phone,
+    username: user.username,
+  };
+}
+
 /**
  * Edge-safe: no top-level Mongoose/Node DB imports — those run only inside `authorize`
  * (Node route handlers), not when middleware bundles this file.
@@ -8,49 +30,69 @@ import CredentialsProvider from "next-auth/providers/credentials";
 export const authConfig: NextAuthConfig = {
   providers: [
     CredentialsProvider({
-      name: "OTP",
+      name: "Credentials",
       credentials: {
-        phone: { label: "Phone", type: "text" },
+        username: { label: "Username", type: "text" },
+        password: { label: "Password", type: "password" },
         userId: { label: "User ID", type: "text" },
         role: { label: "Role", type: "text" },
         isAnonymous: { label: "Anonymous", type: "text" },
       },
       async authorize(credentials) {
-        if (!credentials?.userId) return null;
         const { connectDB } = await import("@/lib/db");
         const { User } = await import("@/models/User");
+        const { normalizeUsername, verifyPassword } = await import(
+          "@/lib/authCredentials"
+        );
+
         await connectDB();
-        const user = await User.findById(credentials.userId).lean();
-        if (!user) return null;
-        return {
-          id: (user as any)._id.toString(),
-          name: (user as any).name || (user as any).alias || "Anonymous",
-          email: (user as any).email || "",
-          role: (user as any).role,
-          isAnonymous: (user as any).isAnonymous,
-          phone: (user as any).phone,
-        };
+
+        if (credentials?.username && credentials?.password) {
+          const username = normalizeUsername(String(credentials.username));
+          const user = await User.findOne({ username }).lean();
+          if (!user) return null;
+          if (user.isActive === false) return null;
+          const ok = await verifyPassword(
+            String(credentials.password),
+            user.passwordHash
+          );
+          if (!ok) return null;
+          return sessionUserFromDb(user);
+        }
+
+        if (credentials?.userId) {
+          const user = await User.findById(credentials.userId).lean();
+          if (!user) return null;
+          return sessionUserFromDb(user);
+        }
+
+        return null;
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = (user as any).role;
-        token.isAnonymous = (user as any).isAnonymous;
-        token.phone = (user as any).phone;
-        token.userId = (user as any).id;
-        token.id = (user as any).id;
+        token.role = (user as { role?: string }).role;
+        token.isAnonymous = (user as { isAnonymous?: boolean }).isAnonymous;
+        token.phone = (user as { phone?: string }).phone;
+        token.username = (user as { username?: string }).username;
+        token.userId = (user as { id?: string }).id;
+        token.id = (user as { id?: string }).id;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        (session.user as any).role = token.role;
-        (session.user as any).isAnonymous = token.isAnonymous;
-        (session.user as any).phone = token.phone;
-        (session.user as any).userId = token.userId;
-        (session.user as any).id = token.userId ?? token.id;
+        (session.user as { role?: string }).role = token.role as string;
+        (session.user as { isAnonymous?: boolean }).isAnonymous =
+          token.isAnonymous as boolean;
+        (session.user as { phone?: string }).phone = token.phone as string;
+        (session.user as { username?: string }).username = token.username as string;
+        (session.user as { userId?: string }).userId =
+          (token.userId as string) ?? (token.id as string);
+        (session.user as { id?: string }).id =
+          (token.userId as string) ?? (token.id as string);
       }
       return session;
     },

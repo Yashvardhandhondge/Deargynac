@@ -1,6 +1,7 @@
 import { connectDB } from "@/lib/db";
 import { User } from "@/models/User";
 import { Consultation } from "@/models/Consultation";
+import { hashPassword } from "@/lib/authCredentials";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -23,20 +24,26 @@ export async function GET(request: Request) {
       });
     }
 
+    const devPasswordHash = await hashPassword("DearGynac1");
+
     // ── Create Users ──
     const users = await User.create([
       {
         name: "Admin User",
+        username: "admin",
         email: "admin@deargynac.com",
         phone: "9000000000",
+        passwordHash: devPasswordHash,
         role: "admin",
         isVerified: true,
         isActive: true,
       },
       {
         name: "Dr. Snehal Pansare",
+        username: "drsnehal",
         email: "snehal@deargynac.com",
         phone: "9000000001",
+        passwordHash: devPasswordHash,
         role: "doctor",
         specialty: "gynecologist",
         experience: 12,
@@ -48,8 +55,10 @@ export async function GET(request: Request) {
       },
       {
         name: "Dr. Kshitija Kadam",
+        username: "drkshitija",
         email: "kshitija@deargynac.com",
         phone: "9000000002",
+        passwordHash: devPasswordHash,
         role: "radiologist",
         specialty: "radiologist",
         experience: 15,
@@ -61,8 +70,10 @@ export async function GET(request: Request) {
       },
       {
         name: "Dr. Praveen Borkar",
+        username: "drpraveen",
         email: "praveen@deargynac.com",
         phone: "9000000003",
+        passwordHash: devPasswordHash,
         role: "doctor",
         specialty: "surgeon",
         experience: "20",
@@ -74,7 +85,9 @@ export async function GET(request: Request) {
       },
       {
         name: "Priya Sharma",
+        username: "priya",
         phone: "9000000004",
+        passwordHash: devPasswordHash,
         role: "patient",
         isVerified: true,
         isActive: true,
@@ -106,6 +119,7 @@ export async function GET(request: Request) {
       status: "active",
       type: "async",
       amount: 149,
+      pricingRule: "standard",
       paymentStatus: "paid",
       intakeForm: {
         duration: "3-12 months",
@@ -132,6 +146,7 @@ export async function GET(request: Request) {
       status: "pending",
       type: "async",
       amount: 149,
+      pricingRule: "standard",
       paymentStatus: "paid",
       intakeForm: {
         pattern: "Painful",
@@ -146,10 +161,8 @@ export async function GET(request: Request) {
     // ── Log Testing Guide ──
     console.log("\n");
     console.log("=== DEARGYNAC SEED COMPLETE ===");
-    console.log("All test accounts use OTP: 123456");
-    console.log(`Admin:     9000000000 | Doctor 1:  9000000001`);
-    console.log(`Doctor 2:  9000000002 | Doctor 3:  9000000003`);
-    console.log(`Patient 1: 9000000004 | Patient 2: 9000000005`);
+    console.log("Test password for registered accounts: DearGynac1");
+    console.log("Usernames: admin, drsnehal, drkshitija, drpraveen, priya");
     console.log(`Consultation 1 (PCOS/active):     ${consultation1._id}`);
     console.log(`Consultation 2 (Periods/breached): ${consultation2._id}`);
     console.log("===============================\n");
@@ -159,14 +172,13 @@ export async function GET(request: Request) {
       message: "Database seeded successfully",
       created: { admins: 1, doctors: 3, patients: 2, consultations: 2 },
       testCredentials: {
-        note: "All test accounts use OTP: 123456",
+        note: "Registered accounts: password DearGynac1. Anonymous seed user has no login.",
         accounts: [
-          { role: "admin", name: "Admin User", phone: "9000000000", otp: "123456", url: "/admin" },
-          { role: "doctor", name: "Dr. Snehal Pansare", phone: "9000000001", otp: "123456", url: "/doctor" },
-          { role: "doctor", name: "Dr. Kshitija Borkar", phone: "9000000002", otp: "123456", url: "/doctor" },
-          { role: "doctor", name: "Dr. Praveen Borkar", phone: "9000000003", otp: "123456", url: "/doctor" },
-          { role: "patient", name: "Priya Sharma", phone: "9000000004", otp: "123456", url: "/patient" },
-          { role: "patient", name: "AnonymousUser1", phone: "9000000005", otp: "123456", url: "/patient" },
+          { role: "admin", name: "Admin User", username: "admin", password: "DearGynac1", url: "/admin" },
+          { role: "doctor", name: "Dr. Snehal Pansare", username: "drsnehal", password: "DearGynac1", url: "/doctor" },
+          { role: "doctor", name: "Dr. Kshitija Borkar", username: "drkshitija", password: "DearGynac1", url: "/doctor" },
+          { role: "doctor", name: "Dr. Praveen Borkar", username: "drpraveen", password: "DearGynac1", url: "/doctor" },
+          { role: "patient", name: "Priya Sharma", username: "priya", password: "DearGynac1", url: "/patient" },
         ],
       },
       consultations: [

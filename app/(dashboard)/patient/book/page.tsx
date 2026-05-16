@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useLang } from "@/context/LanguageContext";
 import { t, type Language, type TranslationKey } from "@/lib/translations";
+import { STANDARD_ASYNC_CONSULT_FEE_INR } from "@/lib/consultationPricingConstants";
 
 // ── Types ──
 
@@ -31,6 +32,8 @@ interface FormData {
   consultationType: string;
   selectedDoctor: Doctor | null;
   consultationId: string;
+  /** Set after successful POST /api/consultation/create */
+  bookingPricingRule?: "standard" | "first_consult_waived";
 }
 
 // ── Data ──
@@ -56,9 +59,18 @@ const stepLabels = [
   "Symptoms",
   "Consultation Type",
   "Choose Doctor",
-  "Payment",
+  "Review",
   "Confirmed",
 ];
+
+type PricePreview =
+  | { status: "loading" }
+  | {
+      status: "ready";
+      isFirstConsultFree: boolean;
+      standardFee: number;
+      amount: number;
+    };
 
 // ── Component ──
 
@@ -76,6 +88,49 @@ export default function BookConsultation() {
   });
   const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [doctorsLoading, setDoctorsLoading] = useState(false);
+  const [pricePreview, setPricePreview] = useState<PricePreview>({ status: "loading" });
+  const [bookingError, setBookingError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/consultation/pricing")
+      .then((r) => r.json())
+      .then((j) => {
+        if (cancelled) return;
+        if (j.success) {
+          setPricePreview({
+            status: "ready",
+            isFirstConsultFree: Boolean(j.isFirstConsultFree),
+            standardFee:
+              typeof j.standardFee === "number"
+                ? j.standardFee
+                : STANDARD_ASYNC_CONSULT_FEE_INR,
+            amount:
+              typeof j.amount === "number" ? j.amount : STANDARD_ASYNC_CONSULT_FEE_INR,
+          });
+        } else {
+          setPricePreview({
+            status: "ready",
+            isFirstConsultFree: false,
+            standardFee: STANDARD_ASYNC_CONSULT_FEE_INR,
+            amount: STANDARD_ASYNC_CONSULT_FEE_INR,
+          });
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setPricePreview({
+            status: "ready",
+            isFirstConsultFree: false,
+            standardFee: STANDARD_ASYNC_CONSULT_FEE_INR,
+            amount: STANDARD_ASYNC_CONSULT_FEE_INR,
+          });
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // Fetch doctors when reaching step 4
   useEffect(() => {
@@ -104,8 +159,18 @@ export default function BookConsultation() {
     }
   };
 
+  const firstConsultFree =
+    pricePreview.status === "ready" && pricePreview.isFirstConsultFree;
+  const standardFee =
+    pricePreview.status === "ready"
+      ? pricePreview.standardFee
+      : STANDARD_ASYNC_CONSULT_FEE_INR;
+  const dueNow =
+    pricePreview.status === "ready" ? pricePreview.amount : STANDARD_ASYNC_CONSULT_FEE_INR;
+
   const handlePayment = async () => {
     setIsLoading(true);
+    setBookingError(null);
     try {
       const res = await fetch("/api/consultation/create", {
         method: "POST",
@@ -115,17 +180,31 @@ export default function BookConsultation() {
           intakeForm: formData.intakeAnswers,
           doctorId: formData.selectedDoctor?._id,
           type: formData.consultationType,
-          amount: 149,
         }),
       });
       const json = await res.json();
       if (json.success) {
-        setFormData((p) => ({ ...p, consultationId: json.consultationId }));
+        setFormData((p) => ({
+          ...p,
+          consultationId: json.consultationId,
+          bookingPricingRule: json.pricingRule,
+        }));
+        setPricePreview({
+          status: "ready",
+          isFirstConsultFree: json.pricingRule === "first_consult_waived",
+          standardFee:
+            typeof json.standardFee === "number"
+              ? json.standardFee
+              : STANDARD_ASYNC_CONSULT_FEE_INR,
+          amount: typeof json.amount === "number" ? json.amount : STANDARD_ASYNC_CONSULT_FEE_INR,
+        });
         router.refresh();
         setCurrentStep(6);
+      } else {
+        setBookingError(json.message || "Could not complete booking. Please try again.");
       }
     } catch {
-      // error silently
+      setBookingError("Network error. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -238,9 +317,20 @@ export default function BookConsultation() {
             >
               <MessageCircle className="w-8 h-8 text-[#D97894]" />
               <h3 className="font-bold text-[#3D3438] mt-3">Async Chat</h3>
-              <p className="text-[#D97894] font-semibold text-sm mt-1">
-                &#8377;149 per session
-              </p>
+              {pricePreview.status === "loading" ? (
+                <p className="text-gray-400 font-medium text-sm mt-1">Checking your offer…</p>
+              ) : firstConsultFree ? (
+                <p className="text-[#D97894] font-semibold text-sm mt-1">
+                  <span className="text-gray-400 line-through font-normal mr-2">
+                    &#8377;{standardFee}
+                  </span>
+                  FREE — first consultation on us
+                </p>
+              ) : (
+                <p className="text-[#D97894] font-semibold text-sm mt-1">
+                  &#8377;{standardFee} per session
+                </p>
+              )}
               <p className="text-gray-500 text-sm mt-2">
                 Written response within 15 minutes
               </p>
@@ -346,12 +436,18 @@ export default function BookConsultation() {
         </div>
       )}
 
-      {/* Step 5: Payment (Dummy) */}
+      {/* Step 5: Review & confirm */}
       {currentStep === 5 && (
         <div>
           <h2 className="text-2xl font-bold text-[#3D3438] font-serif">
-            {t(lang, "completeBooking")}
+            {firstConsultFree ? "Confirm your booking" : t(lang, "completeBooking")}
           </h2>
+          {firstConsultFree && (
+            <p className="text-sm text-[#D97894] font-medium mt-2">
+              Your first DearGynac consultation is complimentary — experience private telehealth
+              with no payment today.
+            </p>
+          )}
 
           {/* Summary */}
           <div className="bg-rose-50 rounded-xl p-6 border border-rose-100 mt-6">
@@ -376,31 +472,61 @@ export default function BookConsultation() {
                   Async Chat
                 </span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Amount</span>
-                <span className="font-semibold text-[#3D3438]">
-                  &#8377;149
-                </span>
+              <div className="flex justify-between items-baseline">
+                <span className="text-gray-600">Session fee</span>
+                <div className="text-right">
+                  {firstConsultFree ? (
+                    <>
+                      <span className="text-gray-400 line-through text-sm mr-2">
+                        &#8377;{standardFee}
+                      </span>
+                      <span className="font-bold text-green-700 text-lg">FREE</span>
+                    </>
+                  ) : (
+                    <span className="font-semibold text-[#3D3438]">
+                      &#8377;{dueNow}
+                    </span>
+                  )}
+                </div>
               </div>
-              <div className="border-t border-rose-200 pt-3 flex justify-between">
-                <span className="font-bold text-[#3D3438]">Total</span>
+              <div className="border-t border-rose-200 pt-3 flex justify-between items-baseline">
+                <span className="font-bold text-[#3D3438]">Total due today</span>
                 <span className="font-bold text-[#D97894] text-lg">
-                  &#8377;149
+                  {firstConsultFree ? (
+                    <span className="text-green-700">&#8377;0</span>
+                  ) : (
+                    <span>&#8377;{dueNow}</span>
+                  )}
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Dummy payment banner */}
-          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mt-6">
-            <p className="font-semibold text-amber-800 text-sm">
-              Payment Gateway Coming Soon
+          {firstConsultFree ? (
+            <div className="bg-green-50 border border-green-200 rounded-xl p-4 mt-6">
+              <p className="font-semibold text-green-900 text-sm">No payment required</p>
+              <p className="text-sm text-green-800 mt-1">
+                When we enable online payments, follow-up consultations will be billed at the
+                standard session rate unless a promo applies.
+              </p>
+            </div>
+          ) : (
+            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mt-6">
+              <p className="font-semibold text-amber-800 text-sm">
+                Payment Gateway Coming Soon
+              </p>
+              <p className="text-sm text-amber-700 mt-1">
+                We are integrating Razorpay. For now, click below to simulate a
+                successful payment and proceed with your consultation booking.
+              </p>
+            </div>
+          )}
+
+          {bookingError && (
+            <p className="text-sm text-red-600 mt-4" role="alert">
+              {bookingError}
             </p>
-            <p className="text-sm text-amber-700 mt-1">
-              We are integrating Razorpay. For now, click below to simulate a
-              successful payment and proceed with your consultation booking.
-            </p>
-          </div>
+          )}
 
           <button
             onClick={handlePayment}
@@ -412,6 +538,11 @@ export default function BookConsultation() {
                 <Loader2 className="w-5 h-5 animate-spin" />
                 Processing...
               </>
+            ) : firstConsultFree ? (
+              <>
+                <Check className="w-5 h-5" />
+                Confirm booking
+              </>
             ) : (
               <>
                 <Check className="w-5 h-5" />
@@ -421,7 +552,9 @@ export default function BookConsultation() {
           </button>
 
           <p className="text-center text-xs text-gray-400 mt-3">
-            Real payment integration coming soon. No charges applied.
+            {firstConsultFree
+              ? "First session complimentary for new accounts — one per patient."
+              : "Real payment integration coming soon. No charges applied in this demo."}
           </p>
         </div>
       )}
@@ -438,6 +571,12 @@ export default function BookConsultation() {
           <p className="text-gray-600 mt-2">
             Your consultation has been booked successfully!
           </p>
+          {formData.bookingPricingRule === "first_consult_waived" && (
+            <p className="text-sm text-green-800 bg-green-50 border border-green-100 rounded-lg px-4 py-3 mt-4 max-w-md mx-auto">
+              This first session was complimentary. Thank you for trying DearGynac — we hope
+              telehealth gives you the confidence to keep prioritising your health.
+            </p>
+          )}
           <div className="bg-gray-100 rounded-lg px-4 py-2 inline-block mt-4 font-mono text-sm text-gray-600">
             ID: {formData.consultationId}
           </div>

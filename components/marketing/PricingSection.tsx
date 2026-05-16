@@ -185,6 +185,20 @@ export default function PricingSection() {
                 </div>
 
                 <p style={{ fontSize: "0.875rem", color: "#6B7280", marginTop: "0.25rem" }}>{plan.tagline}</p>
+                {plan.name === "Quick Consult" && (
+                  <p
+                    style={{
+                      fontSize: "0.8125rem",
+                      color: "#D97894",
+                      marginTop: "0.5rem",
+                      fontWeight: 600,
+                      lineHeight: 1.45,
+                    }}
+                  >
+                    New to DearGynac? Your first async consultation is free — try our telehealth experience
+                    on us, then pay per session.
+                  </p>
+                )}
 
                 {/* Features */}
                 <ul style={{ marginTop: "1.5rem", listStyle: "none", padding: 0 }}>

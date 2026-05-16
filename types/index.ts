@@ -55,6 +55,7 @@ export interface IAvailableSlot {
 export interface IUser {
   _id: Types.ObjectId;
   name: string;
+  username?: string;
   email?: string;
   phone?: string;
   passwordHash?: string;
@@ -105,6 +106,7 @@ export interface IConsultation {
   messages: IMessage[];
   prescription?: Types.ObjectId;
   amount?: number;
+  pricingRule?: "standard" | "first_consult_waived";
   paymentStatus: PaymentStatus;
   razorpayOrderId?: string;
   razorpayPaymentId?: string;

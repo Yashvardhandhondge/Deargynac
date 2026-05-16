@@ -1,0 +1,125 @@
+  const switchMode = (mode: AuthMode) => {
+    setAuthMode(mode);
+    setError("");
+    setPassword("");
+    setConfirmPassword("");
+    setShowPassword(false);
+    if (mode === "signin") setName("");
+  };
+
+  const handleSignIn = async (e: FormEvent) => {
+    e.preventDefault();
+    setError("");
+    const u = username.trim().toLowerCase();
+    if (u.length < 3) {
+      setError("Enter your username.");
+      return;
+    }
+    if (!password) {
+      setError("Enter your password.");
+      return;
+    }
+    setLoading(true);
+    try {
+      const result = await signIn("credentials", {
+        username: u,
+        password,
+        redirect: false,
+      });
+      if (result?.error || result?.ok === false) {
+        setError("Invalid username or password.");
+        return;
+      }
+      window.location.reload();
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSignUp = async (e: FormEvent) => {
+    e.preventDefault();
+    setError("");
+    const u = username.trim().toLowerCase();
+    const n = name.trim();
+    if (u.length < 3) {
+      setError("Choose a username (at least 3 characters).");
+      return;
+    }
+    if (n.length < 2) {
+      setError("Enter your name.");
+      return;
+    }
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: u, name: n, password }),
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        setError(json.message || "Could not create account.");
+        return;
+      }
+      const result = await signIn("credentials", {
+        username: u,
+        password,
+        redirect: false,
+      });
+      if (result?.error || result?.ok === false) {
+        setError("Account created but sign-in failed. Try signing in.");
+        setAuthMode("signin");
+        return;
+      }
+      window.location.href = postAuthDestination("patient", callbackUrl);
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAnonymousConfirm = async () => {
+    setShowAnonModal(false);
+    setAnonLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/auth/anonymous", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        setError(json.message || "Failed to create anonymous profile");
+        return;
+      }
+      const result = await signIn("credentials", {
+        userId: json.userId,
+        role: json.role,
+        isAnonymous: "true",
+        redirect: false,
+      });
+      if (result?.error || result?.ok === false) {
+        setError("Authentication failed. Please try again.");
+        return;
+      }
+      window.location.href = postAuthDestination("patient", callbackUrl);
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setAnonLoading(false);
+    }
+  };
+
+  const inputClass =
+    "w-full rounded-xl border border-rose-100 px-4 py-3.5 text-sm outline-none focus:ring-2 focus:ring-[#D97894]/30 focus:border-[#D97894] bg-white shadow-sm";

@@ -2,13 +2,7 @@ import Navbar from "@/components/marketing/Navbar";
 import TickerBar from "@/components/marketing/TickerBar";
 import HeroSection from "@/components/marketing/HeroSection";
 import WaveDivider from "@/components/marketing/WaveDivider";
-import ProblemSection from "@/components/marketing/ProblemSection";
-import ServicesSection from "@/components/marketing/ServicesSection";
-import JourneySection from "@/components/marketing/JourneySection";
-import DoctorsSection from "@/components/marketing/DoctorsSection";
-import PricingSection from "@/components/marketing/PricingSection";
-import TestimonialsSection from "@/components/marketing/TestimonialsSection";
-import PrivacySection from "@/components/marketing/PrivacySection";
+import HomeExploreSection from "@/components/marketing/HomeExploreSection";
 import CTASection from "@/components/marketing/CTASection";
 import Footer from "@/components/marketing/Footer";
 
@@ -20,14 +14,7 @@ export default function MarketingPage() {
         <TickerBar />
         <HeroSection />
         <WaveDivider topColor="#FDF8F5" bottomColor="#FFFFFF" />
-        <ProblemSection />
-        <WaveDivider topColor="#FFFFFF" bottomColor="#FDF8F5" flip />
-        <ServicesSection />
-        <JourneySection />
-        <DoctorsSection />
-        <PricingSection />
-        <TestimonialsSection />
-        <PrivacySection />
+        <HomeExploreSection />
         <CTASection />
         <Footer />
       </div>
