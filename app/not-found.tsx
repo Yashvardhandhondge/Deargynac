@@ -1,13 +1,13 @@
 import Link from "next/link";
 
+import BrandLogo from "@/components/shared/BrandLogo";
+
 export default function NotFound() {
   return (
     <div className="min-h-screen bg-[#FFF7F9] flex flex-col items-center justify-center px-4 text-center">
-      <Link href="/" className="flex items-baseline mb-8">
-        <span className="font-serif font-bold text-2xl text-[#3D3438]">Dear</span>
-        <span className="font-serif italic text-2xl text-[#D97894]">Gynac</span>
-        <span className="text-[#D4A017] font-bold text-3xl leading-none">.</span>
-      </Link>
+      <div className="mb-8">
+        <BrandLogo height={48} />
+      </div>
 
       <h1 className="text-8xl lg:text-9xl font-bold text-[#D97894] font-serif opacity-20">
         404

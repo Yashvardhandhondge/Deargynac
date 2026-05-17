@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import MarketingSubPage from "@/components/marketing/MarketingSubPage";
-import MarketingPageHeader from "@/components/marketing/MarketingPageHeader";
 import PrivacySection from "@/components/marketing/PrivacySection";
 
 export const metadata: Metadata = {
@@ -12,10 +11,6 @@ export const metadata: Metadata = {
 export default function TrustPage() {
   return (
     <MarketingSubPage bgClassName="bg-white">
-      <MarketingPageHeader
-        title="Privacy & trust"
-        subtitle="High-level commitments and links to our Privacy Policy and Terms of Service."
-      />
       <PrivacySection />
     </MarketingSubPage>
   );

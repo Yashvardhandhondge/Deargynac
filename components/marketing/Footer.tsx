@@ -1,4 +1,6 @@
 import Link from "next/link";
+
+import BrandLogo from "@/components/shared/BrandLogo";
 import {
   Camera,
   ThumbsUp,
@@ -52,17 +54,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
           {/* Col 1 — Brand */}
           <div className="sm:col-span-2 lg:col-span-1 min-w-0">
-            <Link href="/" className="flex items-baseline">
-              <span className="font-serif font-bold text-xl text-[#3D3438]">
-                Dear
-              </span>
-              <span className="font-serif italic text-xl text-[#D97894]">
-                Gynac
-              </span>
-              <span className="text-[#D4A017] font-bold text-2xl leading-none">
-                .
-              </span>
-            </Link>
+            <BrandLogo height={44} />
             <p className="text-[#6B5F63] text-sm mt-4 max-w-xs leading-relaxed">
               Your trusted women&apos;s health partner — safe, private, and
               expert-led.

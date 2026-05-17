@@ -3,6 +3,8 @@
 import { useState, useEffect, Suspense, type FormEvent } from "react";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
+
+import BrandLogo from "@/components/shared/BrandLogo";
 import { useSearchParams } from "next/navigation";
 import {
   ChevronLeft,
@@ -284,16 +286,11 @@ function LoginPageInner() {
           }}
         />
         <div className="login-brand-panel max-w-md text-center relative z-[1]">
-          <div className="flex items-baseline justify-center mb-8">
-            <span className="font-serif font-bold text-3xl text-white">
-              Dear
-            </span>
-            <span className="font-serif italic text-3xl text-rose-100">
-              Gynac
-            </span>
-            <span className="text-[#F5E4A8] font-bold text-4xl leading-none">
-              .
-            </span>
+          <div className="flex justify-center mb-8">
+            <BrandLogo
+              height={52}
+              className="rounded-xl bg-white/95 px-4 py-2"
+            />
           </div>
 
           <p className="text-white/90 text-lg mb-10 leading-relaxed">

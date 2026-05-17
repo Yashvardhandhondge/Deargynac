@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import MarketingSubPage from "@/components/marketing/MarketingSubPage";
-import MarketingPageHeader from "@/components/marketing/MarketingPageHeader";
 import { useLang } from "@/context/LanguageContext";
 import { serviceCategories, categoryTitle } from "@/lib/services";
 
@@ -11,11 +10,7 @@ export default function ServicesDirectoryPage() {
 
   return (
     <MarketingSubPage>
-      <MarketingPageHeader
-        title="Our services"
-        subtitle="Book online women&apos;s health care across consultations, hormone health, fertility, integrative programs, and more."
-      />
-      <div className="max-w-6xl mx-auto px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 pt-4 pb-8 sm:px-6 sm:pt-5 sm:pb-10 lg:px-8">
         <div className="text-center mb-10 sm:mb-12">
           <Link
             href="/patient/book"

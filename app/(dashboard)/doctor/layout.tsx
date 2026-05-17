@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
+import BrandLogo from "@/components/shared/BrandLogo";
 import {
   LayoutDashboard,
   Inbox,
@@ -42,11 +43,7 @@ function SidebarContent({
   return (
     <>
       <div className="px-6 py-5 border-b border-gray-100">
-        <Link href="/" className="flex items-baseline">
-          <span className="font-serif font-bold text-xl text-[#3D3438]">Dear</span>
-          <span className="font-serif italic text-xl text-[#D97894]">Gynac</span>
-          <span className="text-[#D4A017] font-bold text-2xl leading-none">.</span>
-        </Link>
+        <BrandLogo height={36} />
       </div>
 
       <nav className="flex-1 mt-6 px-3 space-y-1">
@@ -149,11 +146,7 @@ export default function DoctorDashboardLayout({ children }: { children: React.Re
         <button onClick={() => setMobileOpen(true)} className="p-2 text-gray-600 hover:text-purple-600">
           <Menu className="w-5 h-5" />
         </button>
-        <Link href="/" className="flex items-baseline">
-          <span className="font-serif font-bold text-lg text-[#3D3438]">Dear</span>
-          <span className="font-serif italic text-lg text-[#D97894]">Gynac</span>
-          <span className="text-[#D4A017] font-bold text-xl leading-none">.</span>
-        </Link>
+        <BrandLogo height={32} />
         <button
           onClick={() => router.push("/doctor/profile")}
           className="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white text-xs font-semibold"

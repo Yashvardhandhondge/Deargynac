@@ -6,6 +6,8 @@ import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { Plus, X as XIcon, Loader2 } from "lucide-react";
 
+import BrandLogo from "@/components/shared/BrandLogo";
+
 interface Medicine {
   name: string;
   dosage: string;
@@ -283,10 +285,8 @@ export default function PrescribePage() {
       <div className="bg-[#FFF7F9] border border-rose-100 rounded-2xl p-6 mt-6">
         <h3 className="font-bold text-[#3D3438] mb-4">Prescription Preview</h3>
         <div className="bg-white rounded-xl p-6 text-sm space-y-3 border border-gray-100">
-          <div className="flex items-baseline border-b border-gray-100 pb-3">
-            <span className="font-serif font-bold text-lg text-[#3D3438]">Dear</span>
-            <span className="font-serif italic text-lg text-[#D97894]">Gynac</span>
-            <span className="text-[#D4A017] font-bold text-xl">.</span>
+          <div className="border-b border-gray-100 pb-3">
+            <BrandLogo href={null} height={28} />
           </div>
           <div className="grid grid-cols-2 gap-2 text-xs text-gray-500">
             <div>Patient: <span className="text-[#3D3438] font-medium">{patientName}</span></div>

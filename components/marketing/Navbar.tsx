@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
+import BrandLogo from "@/components/shared/BrandLogo";
 import LanguageSwitcher from "@/components/shared/LanguageSwitcher";
 
 const navLinks = [
@@ -34,18 +35,7 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-baseline shrink-0">
-            <span className="font-serif font-bold text-xl text-[#3D3438]">
-              Dear
-            </span>
-            <span className="font-serif italic text-xl text-[#D97894]">
-              Gynac
-            </span>
-            <span className="text-[#D4A017] font-bold text-2xl leading-none">
-              .
-            </span>
-          </Link>
+          <BrandLogo priority height={40} />
 
           {/* Desktop nav links */}
           <div className="hidden md:flex items-center gap-6 lg:gap-8">

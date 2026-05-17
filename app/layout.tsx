@@ -24,8 +24,12 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Deargynac",
-  description: "Deargynac - Healthcare Platform",
+  title: "DearGynac",
+  description: "DearGynac — India's trusted women's health platform",
+  icons: {
+    icon: [{ url: "/logo.jpg", type: "image/jpeg" }],
+    apple: [{ url: "/logo.jpg", type: "image/jpeg" }],
+  },
 };
 
 export default async function RootLayout({

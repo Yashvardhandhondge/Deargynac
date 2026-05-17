@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useIsMobile } from "@/hooks/useWindowSize";
+import { SUBPAGE_SECTION_PADDING } from "@/components/marketing/sectionSpacing";
 
 interface PrivacyFeature {
   icon: LucideIcon;
@@ -63,7 +64,7 @@ const badges = [
 export default function PrivacySection() {
   const isMobile = useIsMobile();
   return (
-    <section id="trust" style={{ backgroundColor: "white", padding: "6rem 0" }}>
+    <section id="trust" style={{ backgroundColor: "white", padding: SUBPAGE_SECTION_PADDING }}>
       <div style={{ maxWidth: "80rem", marginLeft: "auto", marginRight: "auto", padding: "0 1rem" }}>
         {/* Header */}
         <div style={{ textAlign: "center" }}>

@@ -4,6 +4,7 @@ import { MessageSquare, HeartPulse, Star, Check, X } from "lucide-react";
 import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
 import { useIsMobile } from "@/hooks/useWindowSize";
+import { SUBPAGE_SECTION_PADDING } from "@/components/marketing/sectionSpacing";
 
 interface Feature {
   text: string;
@@ -86,7 +87,7 @@ const plans: PricingCard[] = [
 export default function PricingSection() {
   const isMobile = useIsMobile();
   return (
-    <section style={{ backgroundColor: "white", padding: "6rem 0" }}>
+    <section style={{ backgroundColor: "white", padding: SUBPAGE_SECTION_PADDING }}>
       <div style={{ maxWidth: "80rem", marginLeft: "auto", marginRight: "auto", padding: "0 1rem" }}>
         {/* Header */}
         <div style={{ textAlign: "center" }}>

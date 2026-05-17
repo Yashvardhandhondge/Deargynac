@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import MarketingSubPage from "@/components/marketing/MarketingSubPage";
-import MarketingPageHeader from "@/components/marketing/MarketingPageHeader";
 import TestimonialsSection from "@/components/marketing/TestimonialsSection";
 
 export const metadata: Metadata = {
@@ -11,10 +10,6 @@ export const metadata: Metadata = {
 export default function StoriesPage() {
   return (
     <MarketingSubPage>
-      <MarketingPageHeader
-        title="Patient stories"
-        subtitle="Illustrative experiences from women across India — names may be anonymised."
-      />
       <TestimonialsSection />
     </MarketingSubPage>
   );

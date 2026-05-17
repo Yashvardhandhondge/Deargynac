@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import MarketingSubPage from "@/components/marketing/MarketingSubPage";
-import MarketingPageHeader from "@/components/marketing/MarketingPageHeader";
 import ProblemSection from "@/components/marketing/ProblemSection";
 
 export const metadata: Metadata = {
@@ -12,10 +11,6 @@ export const metadata: Metadata = {
 export default function WhyDearGynacPage() {
   return (
     <MarketingSubPage bgClassName="bg-white">
-      <MarketingPageHeader
-        title="Why DearGynac"
-        subtitle="Context on women’s health access in India — without noise on the homepage."
-      />
       <ProblemSection />
     </MarketingSubPage>
   );

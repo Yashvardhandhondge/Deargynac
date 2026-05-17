@@ -1,6 +1,7 @@
 "use client";
 
 import { useIsMobile } from "@/hooks/useWindowSize";
+import { SUBPAGE_SECTION_PADDING } from "@/components/marketing/sectionSpacing";
 
 const testimonials = [
   {
@@ -32,7 +33,7 @@ const testimonials = [
 export default function TestimonialsSection() {
   const isMobile = useIsMobile();
   return (
-    <section style={{ backgroundColor: "#FFF7F9", padding: "6rem 0" }}>
+    <section style={{ backgroundColor: "#FFF7F9", padding: SUBPAGE_SECTION_PADDING }}>
       <div style={{ maxWidth: "80rem", marginLeft: "auto", marginRight: "auto", padding: "0 1rem" }}>
         {/* Header */}
         <div style={{ textAlign: "center" }}>

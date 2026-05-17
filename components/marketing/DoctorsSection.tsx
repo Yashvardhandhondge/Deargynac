@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useIsMobile, useIsTablet } from "@/hooks/useWindowSize";
+import { SUBPAGE_SECTION_PADDING } from "@/components/marketing/sectionSpacing";
 
 interface DoctorCard {
   name: string;
@@ -103,7 +104,7 @@ export default function DoctorsSection() {
   const isTablet = useIsTablet();
 
   return (
-    <section id="team" style={{ backgroundColor: "#FFF7F9", padding: "6rem 0" }}>
+    <section id="team" style={{ backgroundColor: "#FFF7F9", padding: SUBPAGE_SECTION_PADDING }}>
       <div style={{ maxWidth: "80rem", marginLeft: "auto", marginRight: "auto", padding: "0 1rem" }}>
         {/* Header */}
         <div style={{ textAlign: "center" }}>
